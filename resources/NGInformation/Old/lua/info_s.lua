@@ -1,0 +1,5 @@
+addEvent ( "NGInfo:onClientRequestServerSideInformation", true )
+addEventHandler ( "NGInfo:onClientRequestServerSideInformation", root, function ( )
+	local staff = exports['NGAdministration']:getAllStaff ( )
+	triggerClientEvent ( source, "NGInfo:onServerSendClientRequestedInformation", source, staff )
+end )

@@ -1,0 +1,4 @@
+<meta>
+	<info author="xXMADEXx" name="NG FPS Script" type="script" version="1.0" />
+	<script src="draw_c.lua" type="client" />
+</meta>

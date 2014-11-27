@@ -1,0 +1,23 @@
+<meta>
+	<info author="50p" version="1.5" name="Mod Shop" type="script" />
+
+	<script src="server.lua" />
+	<script src="vehicle.funcs.server.lua" />
+	<script src="load.items.server.lua" />
+	<script src="gui.lua" type="client" />
+	<script src="shopping.cart.lua" type="client" />
+	<script src="vehicle.funcs.lua" type="client" />
+	<file src="moditems.xml" />
+	<file src="colorselect.png" />
+	<file src="color1.png" />
+	<file src="color2.png" />
+	<file src="vehiclecolors.png" />
+	<file src="cart.png" />
+	
+	<export function="getItemPrice" />
+	<export function="getItemName" />
+	<export function="getItemIDFromName" />
+	<export function="getVehicleModShop" />
+	<export function="isVehicleInModShop" />
+	<export function="getVehicleTuner" />
+</meta>

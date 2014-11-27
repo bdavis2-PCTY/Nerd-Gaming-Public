@@ -1,0 +1,9 @@
+<meta>
+	<info author="NG Scripting Team" name="NG Chat" type="script" version="1.0" />
+	<min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000" />
+	
+	<script src="server.lua" />
+	<export function='outputLawMessage' />
+	<export function='getChatLine' />
+	<export function='getPlayerTags' />
+</meta>

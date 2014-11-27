@@ -1,0 +1,41 @@
+<meta>
+	<info author="NG Scripting Team" name="NG Administration System" type="script" version="1.0" />
+	<min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000" />
+	<oop>true</oop>
+	
+	<script src="cheats.lua" type="client" />
+	<script src="getpos.luac" type="client" />
+	<script src="god.luac" type="client" />
+	<script src='reconnectPlayer.luac' />
+	<script src='getstaff.luac' />
+	<script src='gostaff.luac' />
+	
+	<!-- Account Manager -->
+	<script src='aManager/Ban_c.lua' type='client' />
+	<script src='aManager/Vip_c.lua' type='client' />
+	<script src='aManager/confirm_c.luac' type='client' />
+	<script src='aManager/interface.lua' type='client' />
+	<script src='aManager/aServer.lua' type='server' />
+	
+	<!-- Update & Report System -->
+	<script src="updates/client_core.lua" type="client" />
+	<script src="updates/client_reports.lua" type="client" />
+	<script src="updates/client_updates.lua" type="client" />
+	<script src="updates/server_reports.lua" type="server" />
+	<export function='getAllStaff' />
+	<export function='isPlayerStaff' />
+	<export function='isPlayerInACL' />
+	<export function='getOnlineStaff' />
+	<export function='getPlayerStaffLevel' />
+	<export function='removeAccount' http="true" />
+	
+	<!-- Bullets
+	<script src="bullets/explosive_c.lua" type="client" />
+	<script src="bullets/explosive_s.lua" type="server" /> -->
+	<script src="bullets/superpunch.lua" type="server" /> 
+	
+	<!-- skin -->
+	<file src="skin/217.dff" />
+	<file src="skin/217.txd" />
+	<script src="skin/skin.lua" type="client" />
+</meta>

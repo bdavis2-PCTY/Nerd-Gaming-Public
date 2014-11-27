@@ -1,0 +1,20 @@
+
+report = {
+    create = {}
+}
+report.create.window = guiCreateWindow(467, 301, 340, 449, "Report A Bug", false)
+guiWindowSetSizable(report.create.window, false)
+
+r1 = guiCreateLabel(16, 40, 115, 18, "Priority:", false, report.create.window)
+report.create.priority = guiCreateComboBox(129, 41, 162, 81, "", false, report.create.window)
+guiComboBoxAddItem(report.create.priority, "High")
+guiComboBoxAddItem(report.create.priority, "Medium")
+guiComboBoxAddItem(report.create.priority, "Low")
+r2 = guiCreateLabel(14, 112, 115, 18, "Title:", false, report.create.window)
+report.create.title = guiCreateEdit(125, 110, 200, 30, "", false, report.create.window)
+r3 = guiCreateLabel(10, 185, 115, 18, "Description:", false, report.create.window)
+report.create.desc = guiCreateMemo(9, 207, 316, 141, "", false, report.create.window)
+report.create.submit = guiCreateButton(204, 355, 121, 33, "Submit", false, report.create.window)
+report.create.cancel = guiCreateButton(73, 358, 121, 33, "Cancel", false, report.create.window)
+report.create.combineThis = guiCreateLabel(4, 408, 331, 22, "(Mis-use of this panel will have consequences)", false, report.create.window)
+guiLabelSetHorizontalAlign(report.create.combineThis, "center", false)

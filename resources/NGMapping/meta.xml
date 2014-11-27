@@ -1,0 +1,6 @@
+<meta>
+	<info type="Script" version="1.0" author="Nerd Gaming Mappers" name="Maps for NG" />
+	<script src="lv-hosp.lua" type="client" />
+	<script src="ls-hosp.lua" type="client" />
+	<script src="ls-pd.lua" type="client" />
+</meta>

@@ -1,0 +1,15 @@
+<meta>
+	<info author="xXMADEXx" name="Nerd Gaming VIP System" version="1.0" type="script" />
+	<script src="vip_s.lua" type="server" />
+	<script src="vip_c.lua" type="client" />
+	<export function="checkPlayerVipTime" type="server" />
+	<export function="isDatePassed" type="server" />
+	<export function="getVipPayoutTimerDetails" type="server" />
+	<export function="getVipLevelFromName" type="server" />
+	<export function="getVipLevelFromName" type="client" />
+	<export function="isPlayerVIP" type="client" />
+	<export function="isPlayerVIP" type="server" />
+	
+	<script src="laser_s.lua" type="server" />
+	<script src="laser_c.lua" type="client" />
+</meta>

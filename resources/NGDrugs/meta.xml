@@ -1,0 +1,27 @@
+<meta>
+	<info author="xXMADEXx" type="script" name="NG Drug System" version="1.0" />
+
+	<script src="core_client.lua" 	type="client" />
+	<script src="core_server.lua" 	type="server" />
+	<script src="download_c.lua" 	type="client" />
+	<export function="useDrug" 		type="client" />
+	<oop>true</oop>
+
+	<!-- LSD -->
+	<script src="lsd_client.lua" 		type="client" />
+	<script src="lsd_server.lua" 		type="server" />
+	<file src="files/lsd_music.mp3" 	download="false" />
+	<file src="files/lsd_icon.png" 		download="false" />
+	<file src="files/lsd_1.jpg" 		download="false" />
+	<file src="files/lsd_2.jpg" 		download="false" />
+	<file src="files/lsd_3.jpg" 		download="false" />
+	<file src="files/lsd_monster.txd" 	download="false" />
+	<file src="files/lsd_monster.dff" 	download="false" />
+
+	<!-- Weed -->
+	<script src="weed_client.lua" 		type="client" />
+	<script src="weed_server.lua" 		type="server" />
+	<file src="files/weed_icon.png" 	download="false" />
+	<file src="files/weed_music.mp3" 	download="false" />
+	
+</meta>

@@ -1,0 +1,9 @@
+<meta>
+    <info author="xXMADEXx" name="Top Chat" type="script" version="1.3" />
+    <script src="c.lua" type="client" />
+    <script src="s.lua" type="server" />
+    <script src="auto_messages.lua" type="server" />
+    <export function="sendClientMessage" type="client" />
+    <export function="sendClientMessage" type="server" />
+    <min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000"></min_mta_version>
+</meta>

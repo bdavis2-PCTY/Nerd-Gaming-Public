@@ -1,0 +1,52 @@
+<meta>
+    <info author="NG Scripting Team" name="NG Player Functions" type="script" version="1.0" />
+    
+	<!-- Server -->
+	<script src="server/antiafk.lua" />
+	<script src="server/blipfix.luac" />
+    <script src="server/teams.luac" />
+    <script src="server/money.luac" />
+    <script src="server/playtime.lua" />
+    <script src="server/functions.luac" />
+    <script src="server/downloadtext.luac" />
+    <script src="server/math.lua" />
+    <script src="server/kills_deaths.luac" />
+	<script src="server/kill_s.lua" />
+	<script src="server/eject.lua" />
+    <export function="getPlayerPlaytime" />
+    <export function="setPlayerPlaytime" />
+    <export function="deletePlayerPlaytime" />
+    <export function="setTeam" />
+    <export function="isTeamLaw" />
+    <export function="getPlayerFromNamePart" />
+    <export function="getPlayerFromAcocunt" />
+    <export function="getRunningMathEquation" />
+    
+	
+	<!-- Client -->
+	<file src="files/click.mp3" />
+	<file src="files/waypoint.png" />
+    <file src="files/KOMIKAX.ttf" />
+    <script src="client/hudmods.lua" type="client" />
+    <script src="client/cursor.luac" type="client" />
+    <script src="client/moneylog.lua" type="client" />
+    <script src="client/waypoint.lua" type="client" />
+    <script src="client/downloadFinish.luac" type="client" />
+	<script src="client/kill_c.lua" type="client" />
+	<script src="client/playerblips.lua" type="client" />
+	<script src="client/sounds.lua" type="client" />
+    <export function="isClientCursorShowing" type="client" />
+    <export function="outputDxLog" type="client" />
+    <export function="createWaypointLoc" type="client" />
+    <export function="waypointUnlocate" type="client" />
+    
+	
+	<!-- Shared -->
+    <script src="shared/getdate.luac" type="shared" />
+    <export function="getToday" type="client" />
+    <export function="getToday" type="server" />
+    
+	
+	<!-- Other Shit -->
+    <min_mta_version server="1.3.4-0.00000" client="1.3.5"></min_mta_version>
+</meta>

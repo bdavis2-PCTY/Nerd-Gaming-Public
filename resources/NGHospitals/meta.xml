@@ -1,0 +1,8 @@
+<meta>
+	<info author="NG Scripting Team" type="script" name="NG Hospitals" version="1.0" />
+	<min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000" />
+	
+	<script src="respawn_c.lua" type="client" />
+	<script src="respawn_s.lua" type="server" />
+	<export function='isClientDead' type='client' />
+</meta>

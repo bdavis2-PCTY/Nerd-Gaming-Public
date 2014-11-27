@@ -1,0 +1,12 @@
+<meta>
+    <info author="NG Scripting Team" name="NG SQL" type="script" version="1.0" />
+    
+    <script src="sql.lua" />
+    
+    <export function="db_query" />
+    <export function="db_exec" />
+    <export function="createAccount" />
+    <export function="account_exist" />
+    <export function="saveAllData" />
+    <min_mta_version server="1.3.4-0.00000"></min_mta_version>
+</meta>

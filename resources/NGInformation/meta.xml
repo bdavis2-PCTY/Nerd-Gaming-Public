@@ -1,0 +1,7 @@
+<meta>
+    <info author="NG Scripting Team" name="NG Information" type="script" version="1.0" />
+    <oop>true</oop>
+    <script src="data_c.lua" type="client" />
+    <script src="info_c.lua" type="client" />
+    <min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000"></min_mta_version>
+</meta>

@@ -1,0 +1,5 @@
+<meta>
+	<script src="s.lua" />
+	<include resource="ajax" />
+	<export function="getStatsForWebsite" http="true" />
+</meta>

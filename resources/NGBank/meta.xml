@@ -1,0 +1,14 @@
+<meta>
+    <info author="NG Scripting Team" version="1.0" type="script" name="NG bank system" />
+    <script src="bank_server.lua" type="server" />
+    <script src="bank_client.lua" type="client" />
+    <export function="doesBankAccountExist" />
+    <export function="createBankAccount" />
+    <export function="saveBankAccounts" />
+    <export function="getBankAccounts" />
+    <export function="withdraw" />
+    <export function="deposit" />
+    <export function="getPlayerBank" />
+    <export function="getAccountBalance" />
+    <min_mta_version client="1.3.5"></min_mta_version>
+</meta>

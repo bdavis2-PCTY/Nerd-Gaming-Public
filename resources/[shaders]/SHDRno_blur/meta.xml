@@ -1,0 +1,5 @@
+<meta>
+    <info author="DazzaJay" name="No Speed Blur" version="2.0.1" type="script" />
+    <script src="noblur.lua" type="server" />
+    <min_mta_version server="1.3.4-0.00000"></min_mta_version>
+</meta>

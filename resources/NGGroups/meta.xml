@@ -1,0 +1,35 @@
+<meta>
+	<info author="xXMADEXx" name="Group System" version="1.0" type="script" />
+	<script src="group_c.lua" 		type="client" />
+	<script src="confirm_c.lua" 	type="client" />
+	<script src="group_s.lua" 		type="server" />
+
+	<!-- General Group Functions -->
+	<export function="doesGroupExist" 		type="server" />
+	<export function="isRankInGroup" 		type="server" />
+	<export function="saveGroups" 			type="server" />
+	<export function="getGroups" 			type="server" />
+	<export function="getGroupColor"		type="server" />
+	<export function="createGroup"			type="server" />
+	<export function="deleteGroup"			type="server" />
+
+	<!-- Player/Group functions -->
+	<export function="setAccountRank"		type="server" />
+	<export function="setPlayerGroup"		type="server" />
+
+
+	<!-- Group bank functions -->
+	<export function="getGroupBank"			type="server" />
+	<export function="setGroupBank"			type="server" />
+
+	<!-- Group logging functions -->
+	<export function="groupClearLog"		type="server" />
+	<export function="outputGroupLog"		type="server" />
+	<export function="getGroupLog"			type="server" />
+
+	<!-- Other type of functions -->
+	<export function="isRankInGroup"		type="server" />
+	<export function="getPlayerGroup"		type="server" />
+	<export function="outputGroupMessage"	type="server" />
+	<oop>true</oop>
+</meta>

@@ -1,0 +1,6 @@
+<meta>
+    <info author="Aiboforcen" version="1.0.3" type="script" name="GUI Tooltips" description="Tooltips display and stuff" />
+    <script src="tooltips_client.luac" type="client" />
+    <file src="sprite.png" />
+    <min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000"></min_mta_version>
+</meta>

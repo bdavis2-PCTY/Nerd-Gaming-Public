@@ -1,0 +1,232 @@
+[2014-8-9 1:53:13] 
+------ new log ------
+[2014-8-9 1:55:24] 
+------ new log ------
+[2014-8-9 1:55:24] -> USER echobot MCvarial MCv :Echobot by MCvarial
+[2014-8-9 1:55:24] -> NICK NG-User
+[2014-8-9 1:55:24] :irc.rizon.us 439 * :Please wait while we process your connection.
+[2014-8-9 1:55:24] :irc.rizon.us NOTICE AUTH :*** Looking up your hostname...
+[2014-8-9 1:55:24] :irc.rizon.us NOTICE AUTH :*** Checking Ident
+[2014-8-9 1:55:24] :irc.rizon.us NOTICE AUTH :*** Found your hostname
+[2014-8-9 1:55:25] :irc.rizon.us NOTICE AUTH :*** No Ident response
+[2014-8-9 1:55:25] :irc.rizon.us NOTICE NG-User :*** Your host is masked (Rizon-96130D33.bois.qwest.net)
+[2014-8-9 1:55:25] :irc.rizon.us 001 NG-User :Welcome to the Rizon Internet Relay Chat Network NG-User
+[2014-8-9 1:55:25] :irc.rizon.us 002 NG-User :Your host is irc.rizon.us, running version hybrid-7.2.3+plexus-3.1.0(20140407_0-541)
+[2014-8-9 1:55:25] :irc.rizon.us 003 NG-User :This server was created Apr  7 2014 at 17:47:48
+[2014-8-9 1:55:25] :irc.rizon.us 004 NG-User irc.rizon.us hybrid-7.2.3+plexus-3.1.0(20140407_0-541) CDFGNRSUWXabcdfgijklnopqrsuwxyz BIMNORSabcehiklmnopqstvz Iabehkloqv
+[2014-8-9 1:55:25] :irc.rizon.us 005 NG-User CALLERID CASEMAPPING=rfc1459 DEAF=D KICKLEN=160 MODES=4 NICKLEN=30 TOPICLEN=390 PREFIX=(qaohv)~&@%+ STATUSMSG=~&@%+ NETWORK=Rizon MAXLIST=beI:250 TARGMAX=ACCEPT:,KICK:1,LIST:1,NAMES:1,NOTICE:4,PRIVMSG:4,WHOIS:1 CHANTYPES=# :are supported by this server
+[2014-8-9 1:55:25] :irc.rizon.us 005 NG-User CHANLIMIT=#:75 CHANNELLEN=50 CHANMODES=beI,k,l,BCMNORScimnpstz ELIST=CMNTU SAFELIST FNC NAMESX UHNAMES AWAYLEN=160 KNOCK EXCEPTS=e INVEX=I :are supported by 
+[2014-8-9 1:55:25] this server
+[2014-8-9 1:55:25] :irc.rizon.us 042 NG-User 85CAATQGX :your unique ID
+[2014-8-9 1:55:25] :irc.rizon.us 251 NG-User :There are 27 users and 19565 invisible on 19 servers
+[2014-8-9 1:55:25] :irc.rizon.us 252 NG-User 68 :IRC Operators online
+[2014-8-9 1:55:25] :irc.rizon.us 253 NG-User 5 :unknown connection(s)
+[2014-8-9 1:55:25] :irc.rizon.us 254 NG-User 21272 :channels formed
+[2014-8-9 1:55:25] :irc.rizon.us 255 NG-User :I have 19592 clients and 19 servers
+[2014-8-9 1:55:25] :irc.rizon.us 265 NG-User 19592 24267 :Current local users 19592, max 24267
+[2014-8-9 1:55:25] :irc.rizon.us 266 NG-User 19592 24267 :Current global users 19592, max 24267
+[2014-8-9 1:55:25] :irc.rizon.us 375 NG-User :- irc.rizon.us Message of the Day - 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :-          11oo                            
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 88d888b. dP d888888b .d8888b. 88d888b. 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 88'  `88 88    .d8P' 88'  `88 88'  `88 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 1188       88  .Y8P    88.  .88 88    88 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 11dP       dP d888888P `88888P' dP    dP
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- Rizon Chat Network -- http://rizon.net
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- Listening on ports: 66
+[2014-8-9 1:55:25] 60 - 6669, 7000. SSL: 6697, 9999
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- Rules:
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o No spamming or flooding
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o No clones or malicious bots
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o No takeovers
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o No distribution of child pornography
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o Clients must respond to VERSION requests
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o Rizon staff may disconnect clients for any or no reason
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- First steps:
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o To register your nick: /msg NickServ HELP
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o To register your channel: /msg ChanServ HELP
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o To get a vHost: /msg HostServ HELP REQUEST
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- o For other help with Rizon: /join #help
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- Usage of this network is a privilege, not a right. Rizon is a
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User
+[2014-8-9 1:55:25]  :- transit provider, therefore no person or entity involved with
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- *.rizon.net or irc.rizon.us takes any responsibility for
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- users' actions. Absolutely no warranty is expressed or implied.
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- 
+[2014-8-9 1:55:25] :irc.rizon.us 372 NG-User :- Server sponsored in part by MediaMonks Inc. (www.mediamonks.com)
+[2014-8-9 1:55:25] :irc.rizon.us 376 NG-User :End of /MOTD command.
+[2014-8-9 1:55:25] -> JOIN #nerd_gaming_chat
+[2014-8-9 1:55:25] -> NAMES #nerd_gaming_chat
+[2014-8-9 1:55:25] -> PRIVMSG #nerd_gaming_chat :07* Resource 'irc' started!
+[2014-8-9 1:55:25] :NG-User!~echobot@Rizon-96130D33.bois.qwest.net MODE NG-User :+ix
+[2014-8-9 1:55:25] -> NAMES NG-User
+[2014-8-9 1:55:25] :Global!service@rizon.net NOTICE NG-User :[Logon News - May 21 2011] First time on Rizon? Be sure to read the FAQ! http://s.rizon.net/FAQ
+[2014-8-9 1:55:25] :Global!service@rizon.net NOTICE NG-User :[Logon News - Dec 16 2013] Own a large/active channel or plan to get one going? Please read http://s.rizon.net/authline
+[2014-8-9 1:55:25] :Global!service@rizon.net NOTICE NG-User :[Random News - Mar 20 2009] Idle on Rizon a lot? Why not play our idlerpg game, you can check it out at #RizonIRPG for more information visit the website http://idlerpg.rizon.net -Rizon Staff
+[2014-8-9 1:55:25] :NG-User!~echobot@Rizon-96130D33.bois.qwest.net JOIN :#nerd_gaming_chat
+[2014-8-9 1:55:25] :irc.rizon.us 353 NG-User = #nerd_gaming_chat :NG-User @xXMADEXx
+[2014-8-9 1:55:25] :irc.rizon.us 366 NG-User #nerd_gaming_chat :End of /NAMES list.
+[2014-8-9 1:55:25] :py-ctcp!ctcp@ctcp-scanner.rizon.net PRIVMSG NG-User :VERSION
+[2014-8-9 1:55:25] :irc.rizon.us 353 NG-User = #nerd_gaming_chat :NG-User @xXMADEXx
+[2014-8-9 1:55:25] :irc.rizon.us 366 NG-User #nerd_gaming_chat :End of /NAMES list.
+[2014-8-9 1:55:25] :irc.rizon.us 366 NG-User NG-User :End of /NAMES list.
+[2014-8-9 1:55:25] :peer!service@rizon.net NOTICE NG-User :For network safety, your client is being scanned for open proxies by scanner.rizon.net (80.65.51.220). This scan will not harm your computer.
+[2014-8-9 1:55:49] :xXMADEXx!cgiirc@Rizon-96130D33.bois.qwest.net QUIT :
+[2014-8-9 1:55:59] :xXMADEXx!cgiirc@Rizon-96130D33.bois.qwest.net JOIN :#nerd_gaming_chat
+[2014-8-9 1:57:26] PING :irc.rizon.us
+[2014-8-9 1:57:26] -> PONG irc.rizon.us
+[2014-8-9 1:58:10] :xXMADEXx!cgiirc@Rizon-96130D33.bois.qwest.net QUIT :
+[2014-8-9 1:59:8] -> QUIT :resource stopped
+[2014-8-9 1:59:9] 
+------ new log ------
+[2014-8-9 1:59:9] -> USER echobot MCvarial MCv :Echobot by MCvarial
+[2014-8-9 1:59:9] -> NICK NG-Server
+[2014-8-9 1:59:9] :irc.rizon.io 439 * :Please wait while we process your connection.
+[2014-8-9 1:59:9] :irc.rizon.io NOTICE AUTH :*** Looking up your hostname...
+[2014-8-9 1:59:9] :irc.rizon.io NOTICE AUTH :*** Checking Ident
+[2014-8-9 1:59:9] :irc.rizon.io NOTICE AUTH :*** Found your hostname
+[2014-8-9 1:59:10] :irc.rizon.io NOTICE AUTH :*** No Ident response
+[2014-8-9 1:59:10] :irc.rizon.io NOTICE NG-Server :*** Your host is masked (Rizon-96130D33.bois.qwest.net)
+[2014-8-9 1:59:10] :irc.rizon.io 001 NG-Server :Welcome to the Rizon Internet Relay Chat Network NG-Server
+[2014-8-9 1:59:10] :irc.rizon.io 002 NG-Server :Your host is irc.rizon.io, running version hybrid-7.2.3+plexus-3.1.0(20140509_0-542)
+[2014-8-9 1:59:10] :irc.rizon.io 003 NG-Server :This server was created May 10 2014 at 02:16:52
+[2014-8-9 1:59:10] :irc.rizon.io 004 NG-Server irc.rizon.io hybrid-7.2.3+plexus-3.1.0(20140509_0-542) CDFGNRSUWXabcdfgijklnopqrsuwxyz BIMNORSabcehiklmnopqstvz Iabehkloqv
+[2014-8-9 1:59:10] :irc.rizon.io 005 NG-Server CALLERID CASEMAPPING=rfc1459 DEAF=D KICKLEN=160 MODES=4 NICKLEN=30 TOPICLEN=390 PREFIX=(qaohv)~&@%+ STATUSMSG=~&@%+ NETWORK=Rizon MAXLIST=beI:250 TARGMAX=ACCEPT:,KICK:1,LIST:1,NAMES:1,NOTICE:4,PRIVMSG:4,WHOIS:1 CHANTYPES=# :are supported by this server
+[2014-8-9 1:59:10] :irc.rizon.io 005 NG-Server CHANLIMIT=#:75 CHANNELLEN=50 CHANMODES=beI,k,l,BCMNORScimnpstz ELIST=CMNTU SAFELIST AWAYLEN=160 KNOCK FNC NAMESX UHNAMES EXCEPTS=e INVEX=I :a
+[2014-8-9 1:59:10] re supported by this server
+[2014-8-9 1:59:10] :irc.rizon.io 042 NG-Server 89CAANOVQ :your unique ID
+[2014-8-9 1:59:10] :irc.rizon.io 251 NG-Server :There are 27 users and 19552 invisible on 19 servers
+[2014-8-9 1:59:10] :irc.rizon.io 252 NG-Server 68 :IRC Operators online
+[2014-8-9 1:59:10] :irc.rizon.io 253 NG-Server 4 :unknown connection(s)
+[2014-8-9 1:59:10] :irc.rizon.io 254 NG-Server 21274 :channels formed
+[2014-8-9 1:59:10] :irc.rizon.io 255 NG-Server :I have 19579 clients and 19 servers
+[2014-8-9 1:59:10] :irc.rizon.io 265 NG-Server 19579 23047 :Current local users 19579, max 23047
+[2014-8-9 1:59:10] :irc.rizon.io 266 NG-Server 19579 23047 :Current global users 19579, max 23047
+[2014-8-9 1:59:10] :irc.rizon.io 375 NG-Server :- irc.rizon.io Message of the Day - 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :-          11oo                            
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 88d888b. dP d888888b .d8888b. 88d888b. 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 88'  `88 88    .d8P' 88'  `88 88'  `88 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 1188       88  .Y8P    88.  .88 88    88 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 11dP       dP d888888P `88888P' dP    dP
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- Rizon Chat Network -- http://rizon.net
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 
+[2014-8-9 1:59:10] :irc.rizon.io 372 N
+[2014-8-9 1:59:10] G-Server :- Listening on ports: 6660 - 6669, 7000. SSL: 6697, 9999
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- Rules:
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o No spamming or flooding
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o No clones or malicious bots
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o No takeovers
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o No distribution of child pornography
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o Clients must respond to VERSION requests
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o Rizon staff may disconnect clients for any or no reason
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- First steps:
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o To register your nick: /msg NickServ HELP
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o To register your channel: /msg ChanServ HELP
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o To get a vHost: /msg HostServ HELP REQUEST
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- o For other help with Rizon: /join #help
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- 
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- Usage of this network 
+[2014-8-9 1:59:10] is a privilege, not a right. Rizon is a
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- transit provider, therefore no person or entity involved with
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- *.rizon.net or irc.rizon.io takes any responsibility for
+[2014-8-9 1:59:10] :irc.rizon.io 372 NG-Server :- users' actions. Absolutely no warranty is expressed or implied.
+[2014-8-9 1:59:10] :irc.rizon.io 376 NG-Server :End of /MOTD command.
+[2014-8-9 1:59:10] -> JOIN #nerd_gaming_chat
+[2014-8-9 1:59:10] -> NAMES #nerd_gaming_chat
+[2014-8-9 1:59:10] -> PRIVMSG #nerd_gaming_chat :07* Resource 'irc' started!
+[2014-8-9 1:59:10] :NG-Server!~echobot@Rizon-96130D33.bois.qwest.net MODE NG-Server :+ix
+[2014-8-9 1:59:10] -> NAMES NG-Server
+[2014-8-9 1:59:10] :Global!service@rizon.net NOTICE NG-Server :[Logon News - May 21 2011] First time on Rizon? Be sure to read the FAQ! http://s.rizon.net/FAQ
+[2014-8-9 1:59:10] :Global!service@rizon.net NOTICE NG-Server :[Logon News - Dec 16 2013] Own a large/active channel or plan to get one going? Please read http://s.rizon.net/authline
+[2014-8-9 1:59:10] :Global!service@rizon.net NOTICE NG-Server :[Random News - Mar 20 2009] Idle on Rizon a lot? Why not play our idlerpg game, you can check it out at #RizonIRPG for more information visit the website http://idlerpg.rizon.net -Rizon Staff
+[2014-8-9 1:59:10] :py-ctcp!ctcp@ctcp-scanner.rizon.net PRIVMSG NG-Server :VERSION
+[2014-8-9 1:59:10] :NG-Server!~echobot@Rizon-96130D33.bois.qwest.net JOIN :#nerd_gaming_chat
+[2014-8-9 1:59:10] :irc.rizon.io MODE #nerd_gaming_chat +nt
+[2014-8-9 1:59:10] -> NAMES #nerd_gaming_chat
+[2014-8-9 1:59:10] :irc.rizon.io 353 NG-Server = #nerd_gaming_chat :@NG-Server
+[2014-8-9 1:59:10] :irc.rizon.io 366 NG-Server #nerd_gaming_chat :End of /NAMES list.
+[2014-8-9 1:59:10] :irc.rizon.io 353 NG-Server = #nerd_gaming_chat :@NG-Server
+[2014-8-9 1:59:10] :irc.rizon.io 366 NG-Server #nerd_gaming_chat :End of /NAMES list.
+[2014-8-9 1:59:10] :irc.rizon.io 366 NG-Server NG-Server :End of /NAMES list.
+[2014-8-9 1:59:10] :peer!service@rizon.net NOTICE NG-Server :For network safety, your client is being scanned for open proxies by scanner.rizon.net (80.65.51.220). This scan will not harm your computer.
+[2014-8-9 1:59:10] :irc.rizon.io 353 NG-Server = #nerd_gaming_chat :@NG-Server
+[2014-8-9 1:59:10] :irc.rizon.io 366 NG-Server #nerd_gaming_chat :End of /NAMES list.
+[2014-8-9 1:59:38] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net JOIN :#nerd_gaming_chat
+[2014-8-9 2:0:18] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net PRIVMSG #nerd_gaming_chat :!kick
+[2014-8-9 2:0:26] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net PRIVMSG #nerd_gaming_chat :!s
+[2014-8-9 2:0:26] -> NOTICE xXMADEX :syntax is !s <message>
+[2014-8-9 2:0:41] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net PRIVMSG #nerd_gaming_chat :!money
+[2014-8-9 2:0:41] -> NOTICE xXMADEX :syntax is !money <name>
+[2014-8-9 2:0:47] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net PRIVMSG #nerd_gaming_chat :!money nil
+[2014-8-9 2:0:47] -> NOTICE xXMADEX :'nil' no such player
+[2014-8-9 2:0:51] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net PRIVMSG #nerd_gaming_chat :!s
+[2014-8-9 2:0:51] -> NOTICE xXMADEX :syntax is !s <message>
+[2014-8-9 2:0:53] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net PRIVMSG #nerd_gaming_chat :!kick
+[2014-8-9 2:1:15] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net PRIVMSG #nerd_gaming_chat :!map
+[2014-8-9 2:1:15] -> PRIVMSG #nerd_gaming_chat :12* Current Map: 01None
+[2014-8-9 2:3:18] PING :irc.rizon.io
+[2014-8-9 2:3:18] -> PONG irc.rizon.io
+[2014-8-9 2:3:21] :xXMADEX!Mibbit@Rizon-96130D33.bois.qwest.net QUIT :
+[2014-8-9 2:3:47] -> PRIVMSG #nerd_gaming_chat :07* Resource 'webadmin' started!
+[2014-8-9 2:3:49] -> PRIVMSG #nerd_gaming_chat :07* Resource 'webmap' started!
+[2014-8-9 2:4:14] -> PRIVMSG #nerd_gaming_chat :07* Resource 'webstats' started!
+[2014-8-9 2:5:29] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGAdministration' stopped!
+[2014-8-9 2:5:29] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGAmmunation' stopped!
+[2014-8-9 2:5:29] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGAntiRestart' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGBank' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGBans' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGChat' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGDrugs' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGEvents' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGFPS' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGGlue' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGGroups' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGHospitals' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGInformation' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGInventory' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGJobs' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGLogin' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGLogs' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGLottery' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGMessages' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGModshop' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGPHP' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGPhone' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGPlayerFunctions' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGPolice' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGSQL' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGShops' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGSpawners' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGTurf' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGVIP' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGVehicles' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGWarpManager' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'NGWeapons' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRBloom' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRContrast' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRDetail' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRRoadShine' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRSkyBox' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRVehicleReflections' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRWater' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRWetRoads' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'SHDRno_blur' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'Superman' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'admin' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'ajax' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'bone_attach' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'cpicker' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'customblips' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'elementbrowser' stopped!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'ajax' started!
+[2014-8-9 2:5:30] -> PRIVMSG #nerd_gaming_chat :07* Resource 'guirun' stopped!
+[2014-8-9 2:5:30] -> QUIT :resource stopped
