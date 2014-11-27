@@ -1,0 +1,16 @@
+<meta>
+		<info author="Jax + Talidan" description="Parachutes script" version="1.0.0"/>
+		<script src="utility.luac" type="client"/>
+		<script src="parachute.luac"/>
+		<script src="parachute_cl.luac" type="client"/>
+		<script src="skydiving_cl.luac" type="client"/>
+		<script src="openChute.luac" type="client"/>
+		<script src="client_anim.luac" type="client"/>
+		<file src="parachuteopen.mp3" />
+		
+		<export function="removeParachute" type="client"/>
+		<export function="stopSkyDiving" type="client"/>
+		
+		<export function="isPlayerSkyDiving" type="client"/>
+		<export function="isPlayerParachuting" type="client"/>
+</meta>

@@ -1,0 +1,6 @@
+<meta>
+    <info author="[Vio]Zipper" type="script" version="1.0.0" />
+    <script src="reload_client.lua" type="client" />
+    <script src="reload_server.lua" type="server" />
+    <min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000"></min_mta_version>
+</meta>
