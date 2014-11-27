@@ -1,0 +1,6 @@
+addEvent ( "NGPhone:App->Bank:getClientBankLog", true )
+addEventHandler ( "NGPhone:App->Bank:getClientBankLog", root, function ( )
+	local a = getAccountName ( getPlayerAccount ( source ) )
+	local q = exports.NGSQL:db_query ( "SELECT * FROM bank_transactions WHERE account=?", a )
+	triggerClientEvent ( source, "NGPhone:App->Bank:sendClientBankLog", source, q )
+end )

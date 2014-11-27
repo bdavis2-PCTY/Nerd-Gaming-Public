@@ -1,0 +1,12 @@
+<meta>
+	<info author="NG Scripting Team" name="NGEvents" type="script" version="1.0" />
+	<script src="event-server.lua" type="server" />
+	<script src="events/EverestRace_S.lua" type="server" />
+	<script src="events/EverestRace_C.lua" type="client" />
+	<script src="events/OneInTheChamber_S.lua" type="server" />
+	<script src="events/LSRace_s.lua" type="server" />
+	<script src="events/LSRace_c.lua" type="client" />
+	
+	<export function="isPlayerInEvent"  />
+	<export function="getEventInfo"  />
+</meta>

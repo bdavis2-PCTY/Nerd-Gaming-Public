@@ -1,0 +1,9 @@
+<meta>
+	<info author="xXMADEXx" name="NG Turfing System" type='script' version="1.0" />
+	<script src="server.lua" type="server" />
+	<script src='client.lua' type='client' />
+	<export function="turfLocs" />
+	<export function="setTurfOwner" />
+	<export function="saveTurfs" />
+	<export function="updateTurfGroupColor" />
+</meta>

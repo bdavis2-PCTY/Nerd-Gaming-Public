@@ -1,0 +1,25 @@
+function changeVehicleLightState ( p )
+	if ( isPedInVehicle ( p ) ) then
+		local c = getPedOccupiedVehicle ( p )
+		--outputChatBox ( 'x' )
+		if ( getVehicleController ( c ) == p ) then
+			local s = nil
+			if ( getVehicleOverrideLights ( c ) == 0 or getVehicleOverrideLights ( c ) == 1 ) then
+				s = 2
+			else
+				s = 1
+			end
+			setVehicleOverrideLights ( c, s )
+		end
+	end
+end
+
+for i, v in ipairs ( getElementsByType ( 'player' ) ) do 
+	if ( not isGuestAccount ( getPlayerAccount ( v ) ) ) then
+		bindKey ( v, "l", "down", changeVehicleLightState )
+	end
+end
+
+addEventHandler ( "onPlayerLogin", root, function ( ) 
+	bindKey ( source, "l", "down", changeVehicleLightState )
+end )

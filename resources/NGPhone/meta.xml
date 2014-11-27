@@ -1,0 +1,66 @@
+<meta>
+    <info author="xXMADEXx" type="script" version="1.0" name="NG Phone" />
+    <!-- scripts -->
+    <script src="client_core.lua" type="client" />
+    <script src="shared_core.lua" type="shared" />
+    <script src="apps/2048_c.lua" type="client" />
+    <script src="apps/bank_client.lua" type="client" />
+    <script src="apps/bank_server.lua" type="server" />
+    <script src="apps/default_settings.lua" type="client" />
+    <script src="apps/flappyBird.lua" type="client" />
+    <script src="apps/money_server.lua" type="server" />
+    <script src="apps/music_client.lua" type="client" />
+    <script src="apps/settings_client.lua" type="client" />
+    <script src="apps/settings_server.lua" type="server" />
+    <script src="apps/sms_client.lua" type="client" />
+    <script src="apps/sms_server.lua" type="server" />
+    <script src="apps/stats_client.lua" type="client" />
+    <script src="apps/stats_server.lua" type="server" />
+    <script src="apps/vehicles_client.lua" type="client" />
+    <script src="apps/vehicles_server.lua" type="server" />
+    <script src="apps/waypoints.lua" type="client" />
+	
+    <!-- files -> Images -->
+		<!-- Apps -->
+		<file src="images/phone.png" />
+		<file src="images/flappyBird.png" />
+		<file src="images/app_2048.png" />
+		<file src="images/app_bank.png" />
+		<file src="images/app_money.png" />
+		<file src="images/app_music.png" />
+		<file src="images/app_notes.png" />
+		<file src="images/app_settings.png" />
+		<file src="images/app_sms.png" />
+		<file src="images/app_stats.png" />
+		<file src="images/app_vehicle.png" />
+		<file src="images/app_waypoints.png" />
+		<file src="images/app_flappybird.png" />
+		<!-- Others -->
+		<file src="images/backgrounds/background_1.png" />
+		<file src="images/2048/0.png" />
+		<file src="images/2048/2.png" />
+		<file src="images/2048/4.png" />
+		<file src="images/2048/8.png" />
+		<file src="images/2048/16.png" />
+		<file src="images/2048/32.png" />
+		<file src="images/2048/64.png" />
+		<file src="images/2048/128.png" />
+		<file src="images/2048/256.png" />
+		<file src="images/2048/512.png" />
+		<file src="images/2048/1024.png" />
+		<file src="images/2048/2048.png" />
+		<file src="images/2048/background.png" />
+		
+	<!-- files -> Audio -->
+		<!-- Flappybird -->
+		<file src="audio/flappy_bird/sfx_die.ogg" />
+		<file src="audio/flappy_bird/sfx_hit.ogg" />
+		<file src="audio/flappy_bird/sfx_point.ogg" />
+		<file src="audio/flappy_bird/sfx_swooshing.ogg" />
+		<file src="audio/flappy_bird/sfx_wing.ogg" />
+		
+    <!-- exports -->
+    <export function="getSetting" type="client" />
+    <export function="updateSetting" type="client" />
+    <min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000"></min_mta_version>
+</meta>
