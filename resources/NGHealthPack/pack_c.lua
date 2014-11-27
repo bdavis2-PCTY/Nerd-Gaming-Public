@@ -6,7 +6,7 @@ function openBuyWindow ( )
 		destroyBuyWindow ( )
 	end 
 	gui.window = guiCreateWindow((sx/2-359/2), (sy/2-193/2), 359, 193, "Health Packs", false)
-	guiWindowSetSizable(gui.window, false)
+	guiWindowSetSizable(gui.window, false) fa
 	gui.Image = guiCreateStaticImage(10, 28, 100, 112, "pack.png", false, gui.window)
 	gui.Label = guiCreateLabel(128, 28, 215, 85, "You can buy a health pack for $500, and use it if your health is starting to get low. It will re-generate 10% health.", false, gui.window)
 	guiLabelSetHorizontalAlign ( gui.Label, "left", true )
