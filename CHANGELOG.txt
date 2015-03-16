@@ -1,0 +1,10 @@
+Version 1.1
+	- Added public acl.xml
+	- Added public mtaserver.conf
+	- Fixed Pilot job window automatically showing
+	- Fixed admin resource
+	- Fixed vehicle reflection shader enable/disable errors
+	- Fixed a bug at user-shop, when user didn't have any items
+	- Exported savePlayerData in NGSQL
+	- Fixed players data not saving
+	- Added "NGGamemode" resource for self-checking updates
