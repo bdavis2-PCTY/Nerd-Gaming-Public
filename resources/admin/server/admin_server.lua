@@ -20,6 +20,8 @@ aReports = {}
 aWeathers = {}
 aNickChangeTime = {}
 
+local aUnmuteTimerList = {}
+
 function notifyPlayerLoggedIn(player)
 	outputChatBox ( "Press 'p' to open your admin panel", player )
 	local unread = 0
@@ -29,19 +31,6 @@ function notifyPlayerLoggedIn(player)
 	if unread > 0 then
 		outputChatBox( unread .. " unread Admin message" .. ( unread==1 and "" or "s" ), player, 255, 0, 0 )
 	end
-end
-
-_getPlayerName = getPlayerName
-function getPlayerName(player)
-if get("hexRemove") == "true" then
-if string.find(_getPlayerName(player), "#%x%x%x%x%x%x") then
-	return string.gsub(_getPlayerName(player), "#%x%x%x%x%x%x", "")
-else
-	return _getPlayerName(player)
-end
-else
-	return _getPlayerName(player)
-end
 end
 
 addEventHandler ( "onResourceStart", _root, function ( resource )
@@ -226,6 +215,15 @@ addEventHandler ( "onResourceStop", _root, function ( resource )
 		end
 		xmlSaveFile ( node )
 		xmlUnloadFile ( node )
+		
+		-- Unmute anybody muted by admin
+		for i, player in ipairs(getElementsByType("player")) do
+			local serial = getPlayerSerial( player )
+			if (aUnmuteTimerList[serial]) then
+				aUnmuteTimerList[serial] = nil
+				setPlayerMuted(player, false)
+			end
+		end
 	end
 	aclSave ()
 end )
@@ -313,7 +311,6 @@ addEventHandler ( "onPlayerJoin", _root, function ()
 end )
 
 -- Allows for timed mutes across reconnects
-local aUnmuteTimerList = {}
 function aAddUnmuteTimer( player, length )
 	aRemoveUnmuteTimer( player )
 	local serial = getPlayerSerial( player )
@@ -386,7 +383,7 @@ function aPlayerInitialize ( player )
 		kickPlayer ( player, "Invalid Serial" )
 	else
 		bindKey ( player, "p", "down", "admin" )
-		callRemote ( "http://community.mtasa.com/mta/verify.php", aPlayerSerialCheck, player, getPlayerUserName ( player ), getPlayerSerial ( player ) )
+		--callRemote ( "http://community.mtasa.com/mta/verify.php", aPlayerSerialCheck, player, getPlayerUserName ( player ), getPlayerSerial ( player ) )
 		aPlayers[player] = {}
 		aPlayers[player]["country"] = getPlayerCountry ( player )
 		aPlayers[player]["money"] = getPlayerMoney ( player )
@@ -445,6 +442,49 @@ addEventHandler ( "onPlayerLogin", _root, function ( previous, account, auto )
 		triggerEvent ( "aPermissions", source )
 		notifyPlayerLoggedIn( source )
 	end
+end )
+
+addCommandHandler ( "register", function ( player, command, arg1, arg2 )
+	local username = getPlayerName ( player )
+	local password = arg1
+	if ( arg2 ) then
+		username = arg1
+		password = arg2
+	end
+	if ( password ~= nil ) then
+		if ( string.len ( password ) < 4 ) then
+			outputChatBox ( "register: - Password should be at least 4 characters long", player, 255, 100, 70 )
+		elseif ( addAccount ( username, password ) ) then
+			outputChatBox ( "You have successfully registered! Username: '"..username.."', Password: '"..password.."'(Remember it)", player, 255, 100, 70 )
+			outputServerLog ( "ADMIN: "..getPlayerName ( player ).." registered account '"..username.."' (IP: "..getPlayerIP(player).."  Serial: "..getPlayerSerial(player)..")" )
+		elseif ( getAccount ( username ) ) then
+			outputChatBox ( "register: - Account with this name already exists.", player, 255, 100, 70 )
+		else
+			outputChatBox ( "Unknown Error", player, 255, 100, 70 )
+		end
+	else
+		outputChatBox ( "register: - Syntax is 'register [<nick>] <password>'", player, 255, 100, 70 )
+	end
+end )
+
+-- This requires "function.removeAccount" permission for both the admin resource and the player
+addCommandHandler ( "unregister", function ( player, command, arg1, arg2 )
+	local username = arg1 or ""
+	local result = "failed - No permission"
+	if ( hasObjectPermissionTo ( player, "function.removeAccount" ) ) then
+		local account = getAccount ( username )
+		if not account then
+			result = "failed - Does not exist"
+		elseif #aclGetAccountGroups ( account ) > 1 then
+			result = "failed - Account in more than one ACL group"
+		elseif removeAccount( account ) then
+			result = "succeeded"
+		else
+			result = "failed - Check resource has permission"
+		end
+	end
+	outputChatBox ( "Unregistering account '"..username.."' "..result, player, 255, 100, 70 )
+	outputServerLog ( "ADMIN: "..getAdminNameForLog ( player ).." unregistering account '"..username.."' "..result.." (IP: "..getPlayerIP(player).."  Serial: "..getPlayerSerial(player)..")" )	
 end )
 
 -- Returns "name" or "name(accountname)" if they differ
@@ -784,7 +824,6 @@ addEventHandler ( "aPlayer", _root, function ( player, action, data, additional,
 			local reason = data or ""
 			mdata = reason~="" and ( "(" .. reason .. ")" ) or ""
 			setTimer ( kickPlayer, 100, 1, player, source, reason )
-			exports.nglogs:outputPunishLog ( player, source, "Kicked - "..tostring(reason) )
 		elseif ( action == "ban" ) then
 			local reason = data or ""
 			local seconds = tonumber(additional) and tonumber(additional) > 0 and tonumber(additional)
@@ -802,10 +841,10 @@ addEventHandler ( "aPlayer", _root, function ( player, action, data, additional,
 			end
 			if bUseSerial then
 				outputChatBox ( "You banned serial " .. getPlayerSerial( player ), source, 255, 100, 70 )
-				setTimer ( addBan, 100, 1, nil, nil, getPlayerSerial(player), source, reason, seconds )
+				setTimer ( addBan, 100, 1, nil, nil, getPlayerSerial(player), source, reason, seconds or 0 )
 			else
 				outputChatBox ( "You banned IP " .. getPlayerIP( player ), source, 255, 100, 70 )
-				setTimer ( banPlayer, 100, 1, player, true, false, false, source, reason, seconds )
+				setTimer ( banPlayer, 100, 1, player, true, false, false, source, reason, seconds or 0 )
 			end
 			setTimer( triggerEvent, 1000, 1, "aSync", _root, "bansdirty" )
 		elseif ( action == "mute" )  then
@@ -815,17 +854,9 @@ addEventHandler ( "aPlayer", _root, function ( player, action, data, additional,
 			mdata = reason~="" and ( "(" .. reason .. ")" ) or ""
 			more = seconds and ( "(" .. secondsToTimeDesc(seconds) .. ")" ) or ""
 			aSetPlayerMuted ( player, not isPlayerMuted ( player ), seconds )
-
-			if ( isPlayerMuted ( player ) ) then
-				exports.nglogs:outputPunishLog ( player, source, "Muted for "..tostring(seconds).." seconds, reason: "..tostring(reason) )
-			end 
-
 		elseif ( action == "freeze" )  then
 			if ( isPlayerFrozen ( player ) ) then action = "un"..action end
 			aSetPlayerFrozen ( player, not isPlayerFrozen ( player ) )
-			if ( isPlayerFrozen ( player ) ) then
-				exports.nglogs:outputPunishLog ( player, source, "Frozen..." )
-			end 
 		elseif ( action == "setnick" )  then
 			local playername = getPlayerName(player)
 			if setPlayerName( player, data ) then
@@ -1005,10 +1036,12 @@ addEventHandler ( "aPlayer", _root, function ( player, action, data, additional,
 			end
 		elseif ( action == "slap" ) then
 			if ( getElementHealth ( player ) > 0 ) and ( not isPedDead ( player ) ) then
-				if ( ( not data ) or ( not tonumber ( data ) ) ) then data = 20 end
-				if ( ( tonumber ( data ) >= 0 ) ) then
-					if ( tonumber ( data ) > getElementHealth ( player ) ) then setTimer ( killPed, 50, 1, player )
-					else setElementHealth ( player, getElementHealth ( player ) - data ) end
+				local slap = tonumber(data) or 20
+				if ( slap >= 0 ) then
+					if ( slap > 0 ) then
+						if ( slap > getElementHealth ( player ) ) then setTimer ( killPed, 50, 1, player )
+						else setElementHealth ( player, getElementHealth ( player ) - data ) end
+					end
 					local x, y, z = getElementVelocity ( player )
 					setElementVelocity ( player, x , y, z + 0.2 )
 					mdata = data
@@ -1123,10 +1156,8 @@ addEventHandler ( "aVehicle", _root, function ( player, action, data )
 					end
 			elseif ( action == "blowvehicle" ) then
 				setTimer ( blowVehicle, 100, 1, vehicle )
-				exports.nglogs:outputPunishLog ( player, source, "Vehicle has been blown" )
 			elseif ( action == "destroyvehicle" ) then
 				setTimer ( destroyElement, 100, 1, vehicle )
-				exports.nglogs:outputPunishLog ( player, source, "Vehicle has been destroyed" )
 			else
 				action = nil
 			end
@@ -1317,6 +1348,16 @@ addEventHandler ( "aMessage", _root, function ( action, data )
 	end
 end )
 
+addEvent ( "aModdetails", true )
+addEventHandler ( "aModdetails", resourceRoot, function ( action, player )
+	if checkClient( false, client, 'aModdetails', action ) then return end
+	if ( hasObjectPermissionTo ( client, "general.adminpanel" ) ) then
+		if ( action == "get" ) then
+			triggerClientEvent ( client, "aModdetails", resourceRoot, "get", getPlayerImgModsList(player), player )
+		end
+	end
+end )
+
 addEvent ( "aBans", true )
 addEventHandler ( "aBans", _root, function ( action, data )
 	if checkClient( "command."..action, source, 'aBans', action ) then return end
@@ -1411,7 +1452,35 @@ addEventHandler('onElementDataChange', root,
 
 -- returns true if there is trouble
 function checkClient(checkAccess,player,...)
-	--outputDebugString ( getPlayerName ( client ).." has been checked by admin." )
+	if client and client ~= player and g_Prefs.securitylevel >= 2 then
+		local desc = table.concat({...}," ")
+		local ipAddress = getPlayerIP(client)
+		outputDebugString( "Admin security - Client/player mismatch from " .. tostring(ipAddress) .. " (" .. tostring(desc) .. ")", 1 )
+		cancelEvent()
+		if g_Prefs.clientcheckban then
+			local reason = "admin checkClient (" .. tostring(desc) .. ")"
+			addBan ( ipAddress, nil, nil, getRootElement(), reason )
+		end
+		return true
+	end
+	if checkAccess and g_Prefs.securitylevel >= 1 then
+		if type(checkAccess) == 'string' then
+			if hasObjectPermissionTo ( player, checkAccess ) then
+				return false	-- Access ok
+			end
+			if hasObjectPermissionTo ( player, "general.adminpanel" ) then
+				outputDebugString( "Admin security - Client does not have required rights ("..checkAccess.."). " .. tostring(ipAddress) .. " (" .. tostring(desc) .. ")" )
+				return true		-- Low risk fail - Can't do specific command, but has access to admin panel
+			end
+		end
+		if not hasObjectPermissionTo ( player, "general.adminpanel" ) then
+			local desc = table.concat({...}," ")
+			local ipAddress = getPlayerIP(client or player)
+			outputDebugString( "Admin security - Client without admin panel rights trigged an admin panel event. " .. tostring(ipAddress) .. " (" .. tostring(desc) .. ")", 2 )
+			return true			-- High risk fail - No access to admin panel
+		end
+	end
+	return false
 end
 
 function checkNickOnChange(old, new)

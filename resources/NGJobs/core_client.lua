@@ -1,3 +1,11 @@
+local _guiSetVisible = guiSetVisible
+function guiSetVisible ( window, visible )
+	--outputChatBox ( tostring ( window )..": "..tostring( visible ) )
+	_guiSetVisible ( window, visible );
+end
+
+
+
 local do3dtextrender = false
 setTimer ( function ( )
 	do3dtextrender = exports.NGLogin:isClientLoggedin ( )

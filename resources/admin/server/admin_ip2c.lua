@@ -1,198 +1,159 @@
 ﻿--[[**********************************
 *
-*       Multi Theft Auto - Admin Panel
+*	Multi Theft Auto - Admin Panel
 *
-*       admin_ip2c.lua
+*	admin_ip2c.lua
 *
-*       Original File by lil_Toady
+*	Original File by lil_Toady
 *
 **************************************]]
 
--- Code addition by csmit195:
-addCommandHandler('updateadmin',
-function(player)
-        if isGuestAccount(getPlayerAccount(player)) then return end
-        local accName = getAccountName(getPlayerAccount(player))
-        if isObjectInACLGroup('user.'..accName, aclGetGroup('Admin')) then
-                makeAndTestCompactCsv = true
-                outputChatBox('Admin countries downloading!', player, 200, 200, 200)
-                fetchRemote("killallnoobs-clan.net/adminupdate.php", returnDownload, "", false, player)
-        end
-end )
-function returnDownload(responseData, errno, player)
-        outputChatBox('Download complete!', player)
-        file = fileCreate('conf/IpToCountry.csv')
-        fileWrite(file, responseData)
-        fileClose(file)
-        makecsv()
-end
-
-
 local aCountries = {}
-local makeCor
+local IP2C_FILENAME = "conf/IpToCountryCompact.csv"
+local IP2C_UPDATE_URL = "http://mirror.multitheftauto.com/mtasa/scripts/IpToCountryCompact.csv"
+local IP2C_UPDATE_INTERVAL_SECONDS = 60 * 60 * 24 * 1	-- Update no more than once a day
 
 function getPlayerCountry ( player )
-        return getIpCountry ( getPlayerIP ( player ) )
+	return getIpCountry ( getPlayerIP ( player ) )
 end
 function getIpCountry ( ip )
-        if not loadIPGroupsIsReady() then return false end
-        local ip_group = tonumber ( gettok ( ip, 1, 46 ) )
-        local ip_code = ( gettok ( ip, 2, 46 ) * 65536 ) + ( gettok ( ip, 3, 46 ) * 256 ) + ( gettok ( ip, 4, 46 ) )
-        if ( not aCountries[ip_group] ) then
-                return false
-        end
-        for id, group in ipairs ( aCountries[ip_group] ) do
-                local buffer = ByteBuffer:new( group )
-                local rstart = buffer:readInt24()
-                if ip_code >= rstart then
-                        local rend = buffer:readInt24()
-                        if ip_code <= rend then
-                                local rcountry = buffer:readBytes( 2 )
-                                return rcountry ~= "ZZ" and rcountry
-                        end
-                end
-        end
-        return false
+	if not loadIPGroupsIsReady() then return false end
+	local ip_group = tonumber ( gettok ( ip, 1, 46 ) )
+	local ip_code = ( gettok ( ip, 2, 46 ) * 65536 ) + ( gettok ( ip, 3, 46 ) * 256 ) + ( gettok ( ip, 4, 46 ) )
+	if ( not aCountries[ip_group] ) then
+		return false
+	end
+	for id, group in ipairs ( aCountries[ip_group] ) do
+		local buffer = ByteBuffer:new( group )
+		local rstart = buffer:readInt24()
+		if ip_code >= rstart then
+			local rend = buffer:readInt24()
+			if ip_code <= rend then
+				local rcountry = buffer:readBytes( 2 )
+				return rcountry ~= "ZZ" and rcountry
+			end
+		end
+	end
+	return false
 end
 
 -- Returns false if aCountries is not ready
 function loadIPGroupsIsReady ()
-        if ( get ( "*useip2c" ) == "false" ) then return false end
-        if ( #aCountries == 0 and not makeCor) then
-        makeCor = coroutine.create(loadIPGroupsWorker)
-        coroutine.resume(makeCor)
-        end
-        return makeCor == nil
+	if ( get ( "*useip2c" ) == "false" ) then return false end
+	if not ipGroupsStatus then
+		ipGroupsStatus = "working"
+		CoroutineSleeper:new( loadIPGroupsWorker )
+	end
+	return ipGroupsStatus == "ready"
 end
 setTimer( loadIPGroupsIsReady, 1000, 1 )
 
+
 -- Load all IP groups from "conf/IpToCountryCompact.csv"
-function loadIPGroupsWorker ()
-        unrelPosReset()
+function loadIPGroupsWorker ( cor )
 
-        local readFilename = "conf/IpToCountryCompact.csv";
-        local hReadFile = fileOpen( readFilename, true )
-        if not hReadFile then
-                outputHere ( "Cannot read " .. readFilename )
-                return
-        end
+	-- Maybe update file using the 'internet'
+	checkForIp2cFileUpdate( cor )
 
-        local buffer = ""
-        local tick = getTickCount()
-        while true do
-                local endpos = string.find(buffer, "\n")
+	-- Read file
+	unrelPosReset()
+	local tick = getTickCount()
+	local fileReader = FileLineReader:new( IP2C_FILENAME )
+	while true do
+		local line = fileReader:readLine()
+		if not line then
+			break
+		end
 
-                if makeCor and ( getTickCount() > tick + 50 ) then
-                        -- Execution exceeded 50ms so pause and resume in 50ms
-                        setTimer(function()
-                                local status = coroutine.status(makeCor)
-                                if (status == "suspended") then
-                                        coroutine.resume(makeCor)
-                                elseif (status == "dead") then
-                                        makeCor = nil
-                                end
-                        end, 50, 1)
-                        coroutine.yield()
-                        tick = getTickCount()
-                end
+		-- See if time to pause execution
+		if getTickCount() > tick + 50 then
+			cor:sleep(50)
+			tick = getTickCount()
+		end
 
-                -- If can't find CR, try to load more from the file
-                if not endpos then
-                        if fileIsEOF( hReadFile ) then
-                                break
-                        end
-                        buffer = buffer .. fileRead( hReadFile, 500 )
-                end
+		-- Parse line
+		local parts = split( line, string.byte(',') )
+		if #parts > 2 then
+			local rstart = tonumber(parts[1])
+			local rend = tonumber(parts[2])
+			local rcountry = parts[3]
 
-                if endpos then
-                        -- Process line
-                        local line = string.sub(buffer, 1, endpos - 1)
-                        buffer = string.sub(buffer, endpos + 1)
+			-- Relative to absolute numbers
+			rstart = unrelRange ( rstart )
+			rend = unrelRange ( rend )
 
-                        local parts = split( line, string.byte(',') )
-                        if #parts > 2 then
-                                local rstart = tonumber(parts[1])
-                                local rend = tonumber(parts[2])
-                                local rcountry = parts[3]
+			-- Top byte is group
+			local group = math.floor( rstart / 0x1000000 )
 
-                                -- Relative to absolute numbers
-                                rstart = unrelRange ( rstart )
-                                rend = unrelRange ( rend )
+			-- Remove top byte from ranges
+			rstart = rstart - group * 0x1000000
+			rend = rend - group * 0x1000000
 
-                                -- Top byte is group
-                                local group = math.floor( rstart / 0x1000000 )
+			if not aCountries[group] then
+				aCountries[group] = {}
+			end
+			local count = #aCountries[group] + 1
 
-                                -- Remove top byte from ranges
-                                rstart = rstart - group * 0x1000000
-                                rend = rend - group * 0x1000000
+			-- Add country/IP range to aCountries
+			local buffer = ByteBuffer:new()
+			buffer:writeInt24( rstart )
+			buffer:writeInt24( rend )
+			buffer:writeBytes( rcountry, 2 )
+			aCountries[group][count] = buffer.data
+		end
+	end
+	ipGroupsStatus = "ready"
+	collectgarbage("collect")
 
-                                if not aCountries[group] then
-                                        aCountries[group] = {}
-                                end
-                                local count = #aCountries[group] + 1
+	-- Update currently connected players
+	for user,info in pairs( aPlayers ) do
+		info["country"] = getPlayerCountry ( user )
 
-                                -- Add country/IP range to aCountries
-                                local buffer = ByteBuffer:new()
-                                buffer:writeInt24( rstart )
-                                buffer:writeInt24( rend )
-                                buffer:writeBytes( rcountry, 2 )
-                                aCountries[group][count] = buffer.data
-                        end
-                end
-        end
-        fileClose(hReadFile)
-        makeCor = nil
-        collectgarbage("collect")
+		-- Send info to all admins
+		for id, admin in ipairs(getElementsByType("player")) do
+			if ( hasObjectPermissionTo ( admin, "general.adminpanel" ) ) then
+				triggerClientEvent ( admin, "aClientPlayerJoin", user, false, false, false, false, false, aPlayers[user]["country"] )
+			end
+		end
+	end
 
-        -- Update currently connected players
-        for user,info in pairs( aPlayers ) do
-                info["country"] = getPlayerCountry ( user )
-
-                -- Send info to all admins
-                for id, admin in ipairs(getElementsByType("player")) do
-                        if ( hasObjectPermissionTo ( admin, "general.adminpanel" ) ) then
-                                triggerClientEvent ( admin, "aClientPlayerJoin", user, false, false, false, false, false, aPlayers[user]["country"] )
-                        end
-                end
-        end
-
-        return true
+	return true
 end
 
 -- For squeezing data together
 ByteBuffer = {
-        new = function(self, indata)
-                local newItem = { data = indata or "", readPos = 1 }
-                return setmetatable(newItem, { __index = ByteBuffer })
-        end,
+	new = function(self, indata)
+		local newItem = { data = indata or "", readPos = 1 }
+		return setmetatable(newItem, { __index = ByteBuffer })
+	end,
 
-        Copy = function(self)
-                return ByteBuffer:new(self.data)
-        end,
+	Copy = function(self)
+		return ByteBuffer:new(self.data)
+	end,
 
-        -- Write
-        writeInt24 = function(self,value)
-                local b0 = math.floor(value / 1) % 256
-                local b1 = math.floor(value / 256) % 256
-                local b2 = math.floor(value / 65536) % 256
-                self.data = self.data .. string.char(b0,b1,b2)
-        end,
+	-- Write
+	writeInt24 = function(self,value)
+		local b0 = math.floor(value / 1) % 256
+		local b1 = math.floor(value / 256) % 256
+		local b2 = math.floor(value / 65536) % 256
+		self.data = self.data .. string.char(b0,b1,b2)
+	end,
 
-        writeBytes = function(self, chars, count)
-                self.data = self.data .. string.sub(chars,1,count)
-        end,
+	writeBytes = function(self, chars, count)
+		self.data = self.data .. string.sub(chars,1,count)
+	end,
 
-        -- Read
-        readInt24 = function(self,value)
-                local b0,b1,b2 = string.byte(self.data, self.readPos, self.readPos+2)
-                self.readPos = self.readPos + 3
-                return b0 + b1 * 256 + b2 * 65536
-        end,
+	-- Read
+	readInt24 = function(self,value)
+		local b0,b1,b2 = string.byte(self.data, self.readPos, self.readPos+2)
+		self.readPos = self.readPos + 3
+		return b0 + b1 * 256 + b2 * 65536
+	end,
 
-        readBytes = function(self, count)
-                self.readPos = self.readPos + count
-                return string.sub(self.data, self.readPos - count, self.readPos - 1)
-        end,
+	readBytes = function(self, count)
+		self.readPos = self.readPos + count
+		return string.sub(self.data, self.readPos - count, self.readPos - 1)
+	end,
 }
 
 
@@ -200,152 +161,193 @@ ByteBuffer = {
 -- Make a stream of absolute numbers relative to each other
 local relPos = 0
 function relPosReset()
-        relPos = 0
+	relPos = 0
 end
 function relRange( v )
-        local rel = v - relPos
-        relPos = v
-        return rel
+	local rel = v - relPos
+	relPos = v
+	return rel
 end
 
 -- Make a stream of relative numbers absolute
 local unrelPos = 0
 function unrelPosReset()
-        unrelPos = 0
+	unrelPos = 0
 end
 function unrelRange( v )
-        local unrel = v + unrelPos
-        unrelPos = unrel
-        return unrel
-end
-
-
--- IP2C logging
-function outputHere( msg )
-        --outputServerLog ( msg )
-        outputChatBox ( msg )
+	local unrel = v + unrelPos
+	unrelPos = unrel
+	return unrel
 end
 
 
 ----------------------------------------------------------------------------------------
---
--- Set to true to enable commands "makecsv" and "iptest"
---
+-- Check MTA HQ for possible update of IpToCountry file
 ----------------------------------------------------------------------------------------
-local makeAndTestCompactCsv = false
+function checkForIp2cFileUpdate( cor )
+	-- Time for update?
+	local timeNow = getRealTime().timestamp
+	local lastUpdateTime = tonumber( get( "ip2cUpdateTime" ) ) or 0
+	local timeSinceUpdate = timeNow - lastUpdateTime
+	if ( timeSinceUpdate >= 0 and timeSinceUpdate < IP2C_UPDATE_INTERVAL_SECONDS ) then
+		return	-- Not yet
+	end
 
+	set( "ip2cUpdateTime", timeNow )
 
-local makeCor
+	-- Get md5
+	local fetchedMd5,errno = fetchRemoteContent( cor, IP2C_UPDATE_URL .. ".md5" );
+	if errno ~= 0 then return end
 
--- Takes a 'IPV4 CSV' file sourced from http://software77.net/geo-ip/
--- and makes a smaller one for use by Admin
+	-- check md5 against current file
+	local currentMd5 = md5( fileLoadContent( IP2C_FILENAME ) );
+	if currentMd5 == string.upper(fetchedMd5) then
+		return  -- We already have the latest file
+	end
 
-function makecsv()
-        local status = makeCor and coroutine.status(makeCor)
-        if (status == "suspended") then
-                outputHere( "Please wait" )
-                return
-        end
-        makeCor = coroutine.create ( makeCompactCsvWorker )
-        coroutine.resume ( makeCor )
+	-- Fetch remote ip2c file
+	local fetchedCsv,errno = fetchRemoteContent( cor, IP2C_UPDATE_URL );
+	if errno ~= 0 then return end
+
+	-- Check download was correct
+	local newMd5 = md5( fetchedCsv );
+	if newMd5 ~= string.upper(fetchedMd5) then
+		return  -- Download error, or md5 file incorrect
+	end
+
+	-- Update file
+	fileSaveContent( IP2C_FILENAME, fetchedCsv );
 end
 
 
-function makeCompactCsvWorker ()
-        outputHere ( "makeCompactCsv started" )
-        relPosReset()
-
-        local readFilename = "conf/IpToCountry.csv";
-        local hReadFile = fileOpen( readFilename, true )
-        if not hReadFile then
-                outputHere ( "Cannot read " .. readFilename )
-                return
-        end
-
-        local writeFilename = "conf/IpToCountryCompact.csv";
-        local hWriteFile = fileCreate( writeFilename, true )
-        if not hWriteFile then
-                fileClose(hReadFile)
-                outputHere ( "Cannot create " .. writeFilename )
-                return
-        end
-
-        local tick = getTickCount()
-
-        local cur = {}
-        local buffer = ""
-        while true do
-
-                if ( makeCor and getTickCount() > tick + 50 ) then
-                        -- Execution exceeded 50ms so pause and resume in 50ms
-                        setTimer(function()
-                                local status = coroutine.status(makeCor)
-                                if (status == "suspended") then
-                                        coroutine.resume(makeCor)
-                                elseif (status == "dead") then
-                                        makeCor = nil
-                                end
-                        end, 50, 1)
-                        coroutine.yield()
-                        tick = getTickCount()
-                end
-
-                local endpos = string.find(buffer, "\n")
-
-                -- If can't find CR, try to load more from the file
-                if not endpos then
-                        if fileIsEOF( hReadFile ) then
-                                break
-                        end
-                        buffer = buffer .. fileRead( hReadFile, 500 )
-                end
-
-                if endpos then
-                        -- Process line
-                        local line = string.sub(buffer, 1, endpos - 1)
-                        buffer = string.sub(buffer, endpos + 1)
-
-                        -- If not a comment line
-                        if string.sub(line,1,1) ~= '#' then
-                                -- Parse out required fields
-                                local _,_,rstart,rend,rcountry = string.find(line, '"(%w+)","(%w+)","%w+","%w+","(%w+)"' )
-                                if rcountry then
-
-                                        rstart = tonumber(rstart)
-                                        rend = tonumber(rend)
-
-                                        --
-                                        -- Save memory by joining ranges here
-                                        --
-                                        local group = math.floor( rstart / 0x1000000 )
-                                        if group == cur.group and rstart == cur.rend + 1 and rcountry == cur.rcountry then
-                                                -- We can extend previous range
-                                                cur.rend = rend
-                                        else
-                                                -- Otherwise flush previous range
-                                                writeCountryRange(hWriteFile, cur.rstart, cur.rend, cur.rcountry)
-                                                -- and start a new one
-                                                cur.group = group
-                                                cur.rstart = rstart
-                                                cur.rend = rend
-                                                cur.rcountry = rcountry
-                                        end
-                                end
-                        end
-                end
-        end
-        -- Flush last range
-        writeCountryRange(hWriteFile, cur.rstart, cur.rend, cur.rcountry)
-        fileClose(hWriteFile)
-        fileClose(hReadFile)
-        outputHere ( "makeCompactCsv done" )
+----------------------------------------------------------------------------------------
+-- Fetch remote content and wait for response
+----------------------------------------------------------------------------------------
+function fetchRemoteContent( cor, url )
+	local dataOut,errnoOut = nil, nil
+	if fetchRemote( url, 2, function(data,errno) dataOut=data errnoOut=errno end ) then
+		while( errnoOut == nil ) do
+			cor:sleep(50)
+		end
+	end
+	return dataOut,errnoOut or -1
 end
 
-function writeCountryRange(hWriteFile, rstart, rend, rcountry)
-        if not rstart then return end
-        -- Absolute to relative numbers
-        rstart = relRange( rstart )
-        rend = relRange( rend )
-        -- Output line
-        fileWrite( hWriteFile, rstart .. "," .. rend .. "," .. rcountry .. "\n" )
+----------------------------------------------------------------------------------------
+-- Load file contents to a string
+----------------------------------------------------------------------------------------
+function fileLoadContent( filename )
+	local hFile = fileOpen( filename )
+	if ( hFile ) then
+		local data = fileRead( hFile, fileGetSize( hFile ) )
+		fileClose( hFile )
+		return data
+	else
+		return false
+	end
 end
+
+----------------------------------------------------------------------------------------
+-- Save a string to file
+----------------------------------------------------------------------------------------
+function fileSaveContent( filename, data )
+	local hFile = fileCreate( filename )
+	if ( hFile ) then
+		fileWrite( hFile, data )
+		fileClose( hFile )
+		return true
+	else
+		return false
+	end
+end
+
+----------------------------------------------------------------------------------------
+-- FileLineReader
+--   Read a file line by line
+----------------------------------------------------------------------------------------
+FileLineReader = {
+	-- filename is file to read
+	new = function(self, filename)
+		local obj = setmetatable({}, { __index = FileLineReader })
+		self.hFile = fileOpen( filename )
+		self.buffer = ""
+		return obj
+	end,
+
+	-- Close file
+	close = function(self)
+		if self.hFile then
+			fileClose( self.hFile )
+		end
+		self.hFile = nil
+	end,
+
+	-- Read line. Return false if EOF
+	readLine = function(self)
+		if not self.hFile then return false end
+		while true do
+			local endpos = string.find(self.buffer, "\n")
+			-- Found '\n' ?
+			if endpos then
+				local line = string.sub(self.buffer, 1, endpos - 1)
+				self.buffer = string.sub(self.buffer, endpos + 1)
+				return line
+			end
+			-- Get more bytes if possible
+			if fileIsEOF( self.hFile ) then
+				if string.len( self.buffer ) > 0 then
+					-- Last line has no '\n'
+					local line = self.buffer
+					self.buffer = ""
+					return line
+				end
+				self:close()
+				return false
+			end
+			self.buffer = self.buffer .. fileRead( self.hFile, 500 )
+		end
+	end,
+}
+
+----------------------------------------------------------------------------------------
+-- CoroutineSleeper
+--   Wrapper for coroutine which can sleep and automatically resume
+----------------------------------------------------------------------------------------
+CoroutineSleeper = {
+	-- myFunc is coroutine entry point
+	new = function(self, myFunc, ...)
+		local obj = setmetatable({}, { __index = CoroutineSleeper })
+		-- Use inner function to call myFunc, so we can auto :detach when finished
+    	obj.handle = coroutine.create( function(obj, ...)
+											myFunc(obj, ...)
+											obj:detach()
+										end )
+		coroutine.resume(obj.handle,obj, ...)
+		return obj
+	end,
+
+	-- Remove ref to coroutine
+	detach = function(self)
+		self.handle = nil
+	end,
+
+	-- Check if still has ref to coroutine
+	isAttached = function(self)
+		return self.handle ~= nil
+	end,
+
+	-- Sleep for a bit, then automatically resume
+	sleep = function(self, ms)
+		if not self:isAttached() then return end
+		setTimer( function()
+    		if not self:isAttached() then return end
+			local status = coroutine.status(self.handle)
+			if (status == "suspended") then
+				coroutine.resume(self.handle)
+			elseif (status == "dead") then
+				self.handle = nil
+			end
+		end, math.max( ms, 50 ), 1 )
+		coroutine.yield()
+	end,
+}

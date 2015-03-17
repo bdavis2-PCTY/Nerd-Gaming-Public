@@ -6,9 +6,8 @@ addEventHandler ( "NGJobs->Module->Job->Pilot->OnClientRequestF5Data", root, fun
 
 	local nextrank = "None"
 	local rankTable = { }
-	for i, v in ipairs ( foreachinorder ( jobRanks['pilot'] ) ) do
-		outputChatBox ( tostring ( i ).. tostring ( v[1] ))
-	end 
+
+	
 end )
 
 function foreachinorder(t, f, cmp)

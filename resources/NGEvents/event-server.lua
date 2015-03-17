@@ -486,7 +486,7 @@ addCommandHandler ( "makeevent", function ( p, cmd, id )
 end )
 
 addCommandHandler ( "stopevent",  function ( p )
-	if ( not if ( isPlayerInACL ( p, 'Admin' ) ) then
+	if ( not isPlayerInACL ( p, 'Admin' ) ) then
 		return 
 	end 
 	

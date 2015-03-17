@@ -33,13 +33,17 @@ end
 addEvent ( "onClientUserSettingChange", true )
 addEventHandler ( "onClientUserSettingChange", root, function ( n, v ) 
 	if ( n == "usersetting_shader_vehiclereflections" ) then
-		setShaderEnabled ( v )
+		if ( enabled and not v ) then 
+			setShaderEnabled ( false )
+		elseif ( not enabled and v ) then 
+			setShaderEnabled ( true )
+		end 
 	end
 end )
 
 addEvent ( "onClientPlayerLogin", true )
 addEventHandler ( "onClientPlayerLogin", root, function ( )
-		if ( exports.NGPhone:getSetting ( "usersetting_shader_vehiclereflections" ) ) then
+	if ( exports.NGPhone:getSetting ( "usersetting_shader_vehiclereflections" ) ) then
 		setShaderEnabled ( true )
 	end
 end )

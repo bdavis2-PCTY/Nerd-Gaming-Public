@@ -88,7 +88,7 @@ function createInventoryWindow ( )
 	inven.drop = guiCreateButton(414, 310, 81, 28, "Drop Item", false, inven.window)
 	inven.exit = guiCreateButton(319, 340, 81, 30, "Exit", false, inven.window)
 	showCursor ( true )
-	for i, v in pairs ( getElementData ( localPlayer, "NGUser:Items" ) ) do
+	for i, v in pairs ( getElementData ( localPlayer, "NGUser:Items" ) or { } ) do
 		if ( items [ i ] ) then
 			local r = guiGridListAddRow ( inven.list )
 			guiGridListSetItemText ( inven.list, r, 1, tostring ( items [ i ].nam ), false, false )

@@ -52,24 +52,8 @@ function aSetupCommands()
 		end
 		xmlUnloadFile ( node )
 	end
+
 end
-
---[[ mute command
-addCommandHandler ( "mute", function ( admin, _, player, time, ... )
-	local time = tonumber ( time )
-	local reason = table.concat ( { ... }, " " )
-	if ( not time or not reason or reason:gsub(" ","")=="" ) then
-		return outputChatBox ( "Syntax: /mute player time(seconds) reason", admin, 255, 0, 0 )
-	end
-
-	local p = exports.ngplayerfunctions:getPlayerFromNamePart ( player )
-	if ( not p ) then
-		return outputChatBox ( "Player not found", admin, 255, 0, 0 )
-	end
-
-	outputChatBox ( player.. " has been muted by "..getPlayerName(admin).." ("..time.." seconds) (Reason: "..tostring(reason)..")", root, 255, 0, 0 )
-	triggerEvent ( "aPlayer", admin, arg[1], call.action, arg[2], arg[3], arg[4] )
-end )]]
 
 function aCommand ( admin, command, ... )
 	local call = _commands[command]

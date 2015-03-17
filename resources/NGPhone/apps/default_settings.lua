@@ -140,21 +140,22 @@ function updateSetting ( name, value )
         xmlNodeSetAttribute ( child, "value", tostring ( value ) )
     end
 	
-	local value = tostring ( value );
-	local oldValue = tostring ( oldValue );
-    if ( value:lower ( ) == "true" ) then
+	local value = tostring ( value ):lower();
+	local oldValue = tostring ( oldValue ):lower();
+    if ( value == "true" ) then
 		value = true
-	elseif ( value:lower ( ) == "false" ) then
+	elseif ( value == "false" ) then
 		value = false
-	end if ( oldValue:lower() == "true" ) then
+	end if ( oldValue == "true" ) then
 		oldValue=true
-	elseif ( oldValue:lower() == "false" ) then
+	elseif ( oldValue == "false" ) then
 		oldValue = false
 	end
 	
 	local setts = getElementData ( localPlayer, "userSettings" )
 	setts [ name ] = value
 	setElementData ( localPlayer, "userSettings", setts )
+
 	
     triggerEvent ( "onClientUserSettingChange", localPlayer, tostring ( name ), value, oldValue )
     xmlSaveFile ( file )

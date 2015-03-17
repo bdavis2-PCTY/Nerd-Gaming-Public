@@ -213,6 +213,7 @@ Fisherman.GUI2.neededFish = guiCreateLabel(10, 146, 437, 18, "Next Rank: N/A  ||
 Fisherman.GUI2.jobDesc = guiCreateMemo(12, 187, 449, 98, "", false, Fisherman.GUI2.window)
 guiMemoSetReadOnly(Fisherman.GUI2.jobDesc, true)
 
+
 bindKey ( "F5", "down", function ( )
 	local j = getElementData ( localPlayer, "Job" )
 	if ( j ~= "Fisherman" ) then
@@ -249,3 +250,10 @@ function fisherman_onClientGUIClickUSerStats ( )
 	showCursor ( false )
 	removeEventHandler ( "onClientGUIClick", Fisherman.GUI2.close, fisherman_onClientGUIClickUSerStats )
 end
+
+addEventHandler ( "onClientResourceStart", resourceRoot, function ( )
+	setTimer ( function ( )
+		guiSetVisible ( Fisherman.GUI.window, false );
+		guiSetVisible ( Fisherman.GUI2.window, false );
+	end, 1000, 1 );
+end );

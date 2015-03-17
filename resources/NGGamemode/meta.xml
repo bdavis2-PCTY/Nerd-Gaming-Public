@@ -1,0 +1,15 @@
+<meta>
+	<!-- This script is used for general gamemode things
+		such as checking the version -->
+		
+	<info author="xXMADEXx" name="NGGameMode" type="script" version="1.1.0" />
+	<script src="ng_global.shared.lua" type="shared" />
+	<script src="ng_verCheck.server.lua" type="server" />
+	
+	
+	<settings>
+		<setting name="*check_ng_updates" value="true" friendlyname="Check for NG Gamemode updates" accept="true, false" desc="Check MTA community website for gamemode updates" />
+		<setting name="*notify_ng_updates" value="true" friendlyname="NG Gamemode Update Notifications" accept="true, false" desc="Print updates to server console and debugscript" />
+	</settings>
+	
+</meta>

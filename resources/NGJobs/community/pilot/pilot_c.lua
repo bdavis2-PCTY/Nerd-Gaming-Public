@@ -153,5 +153,3 @@ function createPilotInterface ( )
 	pilotGui.jobDesc = guiCreateMemo(12, 187, 449, 98, jobDescriptions['pilot'], false, pilotGui.window)
 	triggerServerEvent ( "NGJobs->Module->Job->Pilot->OnClientRequestF5Data", localPlayer )
 end
-
-createPilotInterface ( )

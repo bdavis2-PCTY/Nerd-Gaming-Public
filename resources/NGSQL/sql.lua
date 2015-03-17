@@ -1,7 +1,7 @@
 local dbData = { 
-	db = "",
-	host="",
-	user="",
+	db = "nerd_gaming",
+	host="127.0.0.1",
+	user="root",
 	pass="",
 	port=3306
 }
@@ -78,7 +78,12 @@ end
 
 ]]
 
-db_exec ( "CREATE TABLE IF NOT EXISTS accountdata ( Username TEXT, Money TEXT, Armour TEXT, Health TEXT, x TEXT, y TEXT, z TEXT, Skin INT, Interior INT, Dimension INT, Team TEXT, Job TEXT, Playtime_mins INT, JailTime INT, WL INT, Weapons TEXT, JobRank TEXT, GroupName TEXT, GroupRank TEXT, LastOnline DATE, LastSerial TEXT, LastIP TEXT, Kills INT, Deaths INT, weapstats TEXT, items TEXT, unemployedskin INT, vip TEXT, vipexp DATE, plrtosrvrsettings TEXT )" );
+db_exec ( [[CREATE TABLE IF NOT EXISTS accountdata ( Username VARCHAR(200), Money INT, Armour INT, Health INT, x VARCHAR(20), 
+y VARCHAR(20), z VARCHAR(20), Skin INT, Interior INT, Dimension INT, 
+Team VARCHAR(70), Job VARCHAR(70), Playtime_mins INT, JailTime INT, 
+WL INT, Weapons TEXT, JobRank VARCHAR(20), GroupName VARCHAR(100), GroupRank VARCHAR(100), LastOnline DATE, 
+LastSerial VARCHAR(50), LastIP VARCHAR(20), Kills INT, Deaths INT, weapstats TEXT, 
+items TEXT, unemployedskin INT, vip VARCHAR(100), vipexp DATE, plrtosrvrsettings TEXT )]] );
 
 local weapStats_ = { 
 	['9mm'] = 0, ['silenced'] = 0, ['deagle'] = 0, ['shotgun'] = 0, ['combat_shotgun'] = 0, 
@@ -98,9 +103,14 @@ function createAccount ( account )
 			outputDebugString ( "NGSQL: Creating account "..account.." for player N/A (Serial: None || IP: None)" );
 		end
 		local today = exports['NGPlayerFunctions']:getToday ( )
-		return db_exec ( "INSERT INTO `accountdata` (`Username`, `Money`, `Armour`, `Health`, `x`, `y`, `z`, `Skin`, `Interior`, `Dimension`, `Team`, `Job`, `Playtime_mins`, `JailTime`, `WL`, `Weapons`, `JobRank`, `GroupName`, `GroupRank`, `LastOnline`, `LastSerial`, `LastIP`, `Kills`, `Deaths`, `weapstats`, `items`, `unemployedskin`, `vip`, `vipexp`, `plrtosrvrsettings` ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );", 
-							account, '0', '0', '100', '0', '0', '0', '0', '0', '0', 'UnEmployed', 'UnEmployed', '0', '0', '0', 
-							'[ [ ] ]', 'None', 'None', 'None', today, autoSerial, autoIP, '0', '0', weapStats, toJSON ( { } ), '28', 'None', nil, toJSON ( { } ) )
+		return db_exec ( 
+[[INSERT INTO `accountdata` (`Username`, `Money`, `Armour`, `Health`, `x`, `y`, `z`, 
+`Skin`, `Interior`, `Dimension`, `Team`, `Job`, `Playtime_mins`, `JailTime`, `WL`, `Weapons`, `JobRank`, 
+`GroupName`, `GroupRank`, `LastOnline`, `LastSerial`, `LastIP`, `Kills`, `Deaths`, `weapstats`, `items`, 
+`unemployedskin`, `vip`, `vipexp`, `plrtosrvrsettings` ) 
+VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );]], 
+			account, '0', '0', '100', '0', '0', '0', '0', '0', '0', 'UnEmployed', 'UnEmployed', '0', '0', '0', 
+			'[ [ ] ]', 'None', 'None', 'None', today, autoSerial, autoIP, '0', '0', weapStats, toJSON ( { } ), '28', 'None', nil, toJSON ( { } ) )
 	end
 	return false
 end
@@ -308,7 +318,7 @@ function saveAllData ( useTime )
 	end
 end
 saveAllTimer = setTimer ( saveAllData, 3600000, 1, true )
---[[
+
 addEventHandler ( "onPlayerQuit", root, function ( ) 
 	if ( isGuestAccount ( getPlayerAccount ( source ) ) ) then return end 
 	savePlayerData ( source, false, true ) 
@@ -361,6 +371,6 @@ addCommandHandler ( 'saveall', function ( p, cmd )
 	if ( ( getPlayerName ( p ) == 'Console' ) or ( getAccountName ( getPlayerAccount ( p ) ) == 'xXMADEXx' ) ) then
 		saveAllData ( true )
 	end
-end )]]
+end )
 
 

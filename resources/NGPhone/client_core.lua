@@ -852,14 +852,16 @@ function clickingHandler2 ( b, s )
 		end
 	elseif ( LoadedPage == "settings" ) then
 		if ( source == pages['settings'].btnSave ) then
+			--outputConsole ( "==================================================");
 			for i, v in pairs ( pages['settings'] ) do
 				if ( doesSettingExist ( tostring ( i ) ) ) then
 					local to = tostring ( guiCheckBoxGetSelected ( v ) )
-					outputConsole ( "SETTING UPDATE: "..tostring ( i ).." updated to "..tostring ( to ) )
+					--outputConsole ( "SETTING UPDATE: "..tostring ( i ).." updated to "..tostring ( to ) )
+					outputDebugString ( "SETTING UPDATE: "..tostring ( i ).." updated to "..tostring ( to ) )
 					updateSetting ( i, to )
 				end
 			end
-
+			--outputConsole ( "==================================================");
 			exports.NGMessages:sendClientMessage ( "Client settings updated -- If something isn't displaying right, it's probably a shader issue.", 250, 120, 0 )
 		elseif ( source == pages['settings'].btnDefault_Looks ) then
 			for i, v in pairs ( SettingPreferences['looks'] ) do

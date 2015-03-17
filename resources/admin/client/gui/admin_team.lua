@@ -51,7 +51,6 @@ function aPlayerTeam ( player )
 end
 
 function aPlayerTeamClose ( destroy )
-	guiSetInputEnabled ( false )
 	if ( ( destroy ) or ( guiCheckBoxGetSelected ( aPerformanceTeam ) ) ) then
 		if ( aTeamForm ) then
 			removeEventHandler ( "onClientGUIClick", aTeamForm, aClientTeamClick )
@@ -87,7 +86,7 @@ function aClientTeamClick ( button )
 				aMessageBox ( "warning", "No team selected!" )
 			else
 				local team = guiGridListGetItemText ( aTeamList, guiGridListGetSelectedItem ( aTeamList ), 1 )
-				aMessageBox ( "question", "Are you sure to delete \""..team.."\"?", "triggerServerEvent ( \"aTeam\", getLocalPlayer(), \"destroyteam\", \""..team.."\" )" )
+				aMessageBox ( "question", "Are you sure to delete \""..team.."\"?", "deleteTeam", team )
 			end
 			setTimer ( aTeamsRefresh, 2000, 1 )
 		elseif ( source == aTeamCreate ) then
@@ -102,7 +101,7 @@ function aClientTeamClick ( button )
 			end
 			setTimer ( aTeamsRefresh, 2000, 1 )
 		elseif ( source == aTeamName ) then
-			guiSetInputEnabled ( true )
+			
 		elseif ( source == aTeamCancel ) then
 			aNewTeamShow ( false )
 		elseif ( source == aTeamAccept ) then
