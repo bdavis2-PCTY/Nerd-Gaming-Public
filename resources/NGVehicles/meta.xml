@@ -1,13 +1,12 @@
 <meta>
 	<info author="NG Scripting Team" name="NG Vehicles" type="script" version="1.0" />
-	<script src="hud_c.luac" type="client" />
-	<script src='binds.luac' type='server' />
+	<script src="hud_c.lua" type="client" />
 	<script src='cruise.lua' type='client' />
 	<export function="getVehicleSpeed" type="client" />
 	
-	<script src='vehicles/cc.luac' type='server' />
-	<script src='vehicles/policelights.luac' type='client' />
-	<script src="vehicles/shops_data.luac" type="shared" />
+	<script src='vehicles/cc.lua' type='server' />
+	<script src='vehicles/policelights.lua' type='client' />
+	<script src="vehicles/shops_data.lua" type="shared" />
 	<script src="vehicles/shops_s.lua" type="server" />
 	<script src="vehicles/shops_c.lua" type="client" />
 	<script src="vehicles/vehicles_s.lua" type="server" />
@@ -16,11 +15,11 @@
 	<export function='getAllAccountVehicles' />
 	<export function='warpVehicleToPlayer' />
 	
-	<script src="locks/locks_c.luac" type="client" />
-	<script src="locks/locks.luac" type="server" />
+	<script src="locks/locks_c.lua" type="client" />
+	<script src="locks/locks.lua" type="server" />
 	<file src="locks/beep.mp3" />
 	
-	<script src='fuel/timer.luac' type='server' />
+	<script src='fuel/timer.lua' type='server' />
 	<script src='fuel/refuel.lua' type='client' />
 	<script src='fuel/locations.lua' type='shared' />
 	<file src='fuel/fuel_icon.png' />

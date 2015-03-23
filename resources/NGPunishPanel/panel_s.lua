@@ -14,3 +14,26 @@ addEventHandler ( "NGPunishPanel->Modules->Punishments->RequestPlayerPunishList"
 
 	triggerClientEvent ( source, "NGPunishPanel->Modules->Punishments->OnServerSendClientPunishments", source, list)
 end )
+
+function outputPlayerPunishLog ( player, admin, log )
+	local time = getRealTime ( );
+	
+	local month = time.month +1;
+	if ( time.month+1 < 10 ) then
+		month = 0 .. month;
+	end
+	
+	local _time = table.concat ( { time.year + 1900, month, time.monthday }, "-" )
+	
+	local account = tostring ( player.account.name );
+	local serial = tostring ( player.serial );
+	local admin = admin or "Server"
+	local log = tostring ( log );
+	
+	exports.ngsql:db_exec ( "INSERT INTO log_punish ( _time, account, serial, admin, log ) VALUES ( ?, ?, ?, ?, ? )",
+		_time, account, serial, admin, log );
+	
+end
+
+
+

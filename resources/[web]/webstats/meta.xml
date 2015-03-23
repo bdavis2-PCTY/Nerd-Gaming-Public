@@ -1,8 +1,8 @@
 <meta>
     <include resource="ajax" />
     <info author="eAi" showInResourceBrowser="true" name="Statistics" description="View charts of statistics showing what&apos;s going on on your server" />
-    <script src="stats.luac" type="server" />
-    <script src="internal_stats.luac" type="server" />
+    <script src="stats.lua" type="server" />
+    <script src="internal_stats.lua" type="server" />
     <html src="FCF_Line.swf" raw="true" />
     <html src="FCF_StackedArea2D.swf" raw="true" />
     <html src="FCF_Pie2D.swf" raw="true" />

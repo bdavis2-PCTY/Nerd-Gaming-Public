@@ -5,7 +5,7 @@ end
 
 local turfLocs = { }
 function createTurf ( x, y, z, width, height, owner, forcedId )
-	local owner = tostring ( owner ) or "server"
+	local owner = tostring ( owner or "server" )
 	local r, g, b = exports.NGGroups:getGroupColor ( owner )
 	if not r then r = 255 end
 	if not g then g = 255 end
@@ -231,42 +231,47 @@ end
 addEventHandler( "onResourceStart", resourceRoot, function ( )
 	exports.NGSQL:db_exec ( "CREATE TABLE IF NOT EXISTS turfs ( id INT, owner VARCHAR(50), x FLOAT, y FLOAT, z FLOAT, width INT, height INT )" )
 	local query = exports.NGSQL:db_query ( "SELECT * FROM turfs" )
-	--[[local query = { }
-
-	local data = { 
-		{ -1867.8, -107.43, 15.1, 58, 65 },
-		{ -1866.5, -26.36, 15.29, 49, 200 },
-		{ -1811.33, 743.43, 20, 85, 85 },
-		{ -1991.5, 862.62, 34, 79, 42 },
-		{ -2799.25, -200.6, 7.19, 83, 120 },
-		{ -2136.84, 120.12, 30, 120, 190 },
-		{ -2516.52, 718.16, 27.97, 118, 80 },
-		{ -2516.41, 578.19, 16.62, 117, 120 },
-		{ -2596.49, 818.05, 49.98, 59, 80 },
-		{ -2453.17, 947.58, 45.43, 54, 80  },
-		{ -2740.6, 344.59, 4.41, 68, 61 },
-		{ -2696.24, 227.35, 4.33, 39.5, 50.5 },
-		{ -2397.31, 82.99, 35.3, 133, 160 },
-		{ -2095.33, -280.06, 35.32, 84, 176 },
-		{ -1980.58, 107.69, 27.68, 59, 62 },
-		{ -2129.01, 741.71, 48, 112, 57 },
-		{ -2243.24, 928.4, 66.65, 87, 154 },
-		{ -1701.62, 743.44, 10, 129, 83 },
-		{ -2696.23, -59.88, 4.73, 83, 89 },
-		{ -2541.18, -720.16, 135, 55, 125 }
-	}
-
-	for i, v in pairs ( data ) do 
-		query[i] = { 
-			['x'] = v[1],
-			['y'] = v[2],
-			['z'] = v[3],
-			['width'] = v[4],
-			['height'] = v[5],
-			['owner'] = "My_Group2"
+	if ( #query == 0 ) then 
+		local data = { 
+			{ -1867.8, -107.43, 15.1, 58, 65 },
+			{ -1866.5, -26.36, 15.29, 49, 200 },
+			{ -1811.33, 743.43, 20, 85, 85 },
+			{ -1991.5, 862.62, 34, 79, 42 },
+			{ -2799.25, -200.6, 7.19, 83, 120 },
+			{ -2136.84, 120.12, 30, 120, 190 },
+			{ -2516.52, 718.16, 27.97, 118, 80 },
+			{ -2516.41, 578.19, 16.62, 117, 120 },
+			{ -2596.49, 818.05, 49.98, 59, 80 },
+			{ -2453.17, 947.58, 45.43, 54, 80  },
+			{ -2740.6, 344.59, 4.41, 68, 61 },
+			{ -2696.24, 227.35, 4.33, 39.5, 50.5 },
+			{ -2397.31, 82.99, 35.3, 133, 160 },
+			{ -2095.33, -280.06, 35.32, 84, 176 },
+			{ -1980.58, 107.69, 27.68, 59, 62 },
+			{ -2129.01, 741.71, 48, 112, 57 },
+			{ -2243.24, 928.4, 66.65, 87, 154 },
+			{ -1701.62, 743.44, 10, 129, 83 },
+			{ -2696.23, -59.88, 4.73, 83, 89 },
+			{ -2541.18, -720.16, 135, 55, 125 }
 		}
-	end
-]]
+		outputDebugString ( "NGTurf: 0 Turfs found -- Generating ".. tostring ( #data ) )
+		for i, v in pairs ( data ) do 
+			x = { 
+				['x'] = v[1],
+				['y'] = v[2],
+				['z'] = v[3],
+				['width'] = v[4],
+				['height'] = v[5],
+				['owner'] = "server"
+			}
+			
+			query[i] = x;
+			
+			exports.NGSQL:db_exec ( "INSERT INTO turfs ( id, owner, x, y, z, width, height ) VALUES ( ?, ?, ?, ?, ?, ?, ? )",
+				tostring ( i ), "server", tostring ( x['x'] ), tostring ( x['y'] ), tostring ( x['z'] ), tostring ( x['width'] ), x['height'] );
+		end
+	end 
+	
 	for i, v in pairs ( query ) do
 		local id, owner, x, y, z, width, height = tonumber ( v['id'] ), v['owner'], tonumber ( v['x'] ), tonumber ( v['y'] ), tonumber ( v['z'] ), tonumber ( v['width'] ), tonumber ( v['height'] )
 		createTurf ( x, y, z, width, height, owner, id )
@@ -292,10 +297,10 @@ function sendTurfPayout ( )
 	for i, v in pairs ( getElementsByType ( 'player' ) ) do 
 		local g = exports.NGGroups:getPlayerGroup ( v ) 
 		if ( g and groupTurfs [ g ] and groupTurfs [ g ] > 0 ) then 
-			local c = groupTurfs [ g ] * 700
+			local c = groupTurfs [ g ] * tonumber ( get ( "*PAYOUT_CASH" ) )
 			givePlayerMoney ( v, c )
 			exports.NGMessages:sendClientMessage ( "Turfing: Here is $"..tostring(c).." for having "..tostring ( groupTurfs [ g ] ).." turfs ($700/turf)", v, 0, 255, 0 )
 		end
 	end
 end 
-setTimer ( sendTurfPayout, (60*30)*1000, 0 )
+setTimer ( sendTurfPayout, (60*tonumber(get("*PAYOUT_TIME")))*1000, 0 )

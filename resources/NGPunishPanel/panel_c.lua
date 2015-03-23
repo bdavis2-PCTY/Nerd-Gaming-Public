@@ -37,7 +37,7 @@ function loadPanel ( )
 	guiGridListClear ( punishlist[2] )
 	guiGridListSetItemText(punishlist[1],guiGridListAddRow(punishlist[1]),1,"Loading...",true,true)
 	guiGridListSetItemText(punishlist[2],guiGridListAddRow(punishlist[2]),1,"Loading...",true,true)
-	cdate.text = "Date: "..exports.ngplayerfunctions:getToday().." | Account: "..tostring(getElementData(localPlayer,"AccountData:Username")).. "\nIP: "..tostring ( getElementData ( localPlayer, "AccountData:IP" ) ).." | Serial: "..localPlayer.serial
+	cdate.text = "Date: "..exports.ngplayerfunctions:getToday().." | Account: "..tostring(getElementData(localPlayer,"AccountData:Username")).. "\nIP: "..tostring ( getElementData ( localPlayer, "AccountData:IP" ) ).." | Serial: ".. localPlayer:getSerial()
 	triggerServerEvent ( "NGPunishPanel->Modules->Punishments->RequestPlayerPunishList", localPlayer )
 end 
 

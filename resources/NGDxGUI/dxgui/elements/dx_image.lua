@@ -1,0 +1,1 @@
+dxImage = class ( 'dxImage', dxGUI )

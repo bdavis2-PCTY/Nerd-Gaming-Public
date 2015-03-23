@@ -1,10 +1,10 @@
 <meta>
     <info author="CrystalMV" version="1.2.0" name="Bone attachments" description="Attach elements to bones of peds and players" type="script" />
-    <script src="bone_attach.luac" />
-    <script src="bone_attach_c.luac" type="client" />
-    <script src="attach_func.luac" />
-    <script src="attach_func.luac" type="client" />
-    <script src="bone_pos_rot.luac" type="client" />
+    <script src="bone_attach.lua" />
+    <script src="bone_attach_c.lua" type="client" />
+    <script src="attach_func.lua" />
+    <script src="attach_func.lua" type="client" />
+    <script src="bone_pos_rot.lua" type="client" />
     
     <export function="attachElementToBone" type="server" />
     <export function="attachElementToBone" type="client" />

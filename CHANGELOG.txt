@@ -1,3 +1,16 @@
+Version 1.1.1
+	- Removed all compiled and excess files
+	- Changed c.lua to messages_c.lua in NGMessages
+	- Changed s.lua to messages_s.lua in NGMessages
+	- Removed resources that weren't associated with NG
+		(guied/GUI Edit, guirun/GUI Runcode)
+	- Added auto-turfs, if none are detected in NGTurf
+	- Created payout settings in NGTurf
+	- Removed default maps - NG is a basis, not an actual server
+	- Fixed speed hud showing after you die
+	- Fixed punishment logging
+	- Removed register/unregister commands
+
 Version 1.1
 	- Added public acl.xml
 	- Added public mtaserver.conf

@@ -1,7 +1,7 @@
 <meta>
-    <info author="xXMADEXx" name="Top Chat" type="script" version="1.3" />
-    <script src="c.lua" type="client" />
-    <script src="s.lua" type="server" />
+    <info author="xXMADEXx" name="Top Chat" type="script" version="1.3.1" />
+    <script src="messages_c.lua" type="client" />
+    <script src="messages_s.lua" type="server" />
     <script src="auto_messages.lua" type="server" />
     <export function="sendClientMessage" type="client" />
     <export function="sendClientMessage" type="server" />

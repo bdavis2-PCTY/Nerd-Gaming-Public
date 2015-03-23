@@ -12,16 +12,16 @@
     -->
   <player>
     <group action="ban" r="255" g="0" b="0">
-      <all>$player has been banned$by_admin_4all. $data2</all>
-      <log>ADMIN: $admin has banned $player $data $data2</log>
+      <all>$player has been banned$by_admin_4all. $data $data2 </all>
+	  <log>ADMIN: $admin has banned $player $data $data2</log>
     </group>
     <group action="kick" r="255" g="0" b="0">
-      <all>$player has been kicked$by_admin_4all.</all>
-      <log>ADMIN: $admin has kicked $player $data</log>
+      <all>$player has been kicked$by_admin_4all ($data).</all>
+      <log>ADMIN: $admin has kicked $player ($data)</log>
     </group>
     <group action="mute" r="255" g="0" b="0">
-      <all>$player has been muted$by_admin_4all. $data2</all>
-      <log>ADMIN: $admin has muted $player $data $data2</log>
+     <all>$player has been muted$by_admin_4all. ($data2 - $data) </all>
+	 <log>ADMIN: $admin has muted $player $data $data2</log>
     </group>
 	<group action="setnick" r="255" g="0" b="0">
       <log>ADMIN: $player name changed to $data2 $by_admin_4all.</log>

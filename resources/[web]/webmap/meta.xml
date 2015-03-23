@@ -1,6 +1,6 @@
 <meta>
     <include resource="ajax" />
-    <script src="map.luac" />
+    <script src="map.lua" />
     <html src="map.htm" default="true" />
     <html src="css.css" raw="true" />
     <html src="script.js" raw="true" />

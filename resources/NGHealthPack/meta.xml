@@ -1,8 +1,8 @@
 <meta>
     <info author="xXMADEXx" type="script" version="1.0" name="NG Health packs" />
     <file src="pack.png" />
-    <script src="pack_c.luac" type="client" />
-    <script src="pack_s.luac" type="server" />
+    <script src="pack_c.lua" type="client" />
+    <script src="pack_s.lua" type="server" />
     
     <export function="useHealthPack" type="client" />
     <export function="useHealthPack" type="server" />

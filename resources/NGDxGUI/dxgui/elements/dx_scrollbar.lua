@@ -1,0 +1,1 @@
+dxScrollbar = class ( 'dxScrollbar', dxGUI )

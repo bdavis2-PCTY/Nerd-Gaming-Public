@@ -1,12 +1,12 @@
 <meta>
     <info author="Awwu" type="script" name="Scoreboard" description="DirectX scoreboard resource" showInResourceBrowser="true" version="2.7.1" />
     
-    <script src="dxscoreboard_exports.luac" type="server" />
-    <script src="dxscoreboard_http.luac" type="server" />
-    <script src="dxscoreboard_client.luac" type="client" />
-    <script src="dxscoreboard_clientsettings.luac" type="client" />
-    <script src="dxscoreboard_shared.luac" type="server" />
-    <script src="dxscoreboard_shared.luac" type="client" />
+    <script src="dxscoreboard_exports.lua" type="server" />
+    <script src="dxscoreboard_http.lua" type="server" />
+    <script src="dxscoreboard_client.lua" type="client" />
+    <script src="dxscoreboard_clientsettings.lua" type="client" />
+    <script src="dxscoreboard_shared.lua" type="server" />
+    <script src="dxscoreboard_shared.lua" type="client" />
     
     <script src="colorpicker/colorpicker.lua" type="client" />
     <file src="colorpicker/palette.png" />
@@ -15,7 +15,7 @@
     <file src="arrow.png" />
     
     <!-- Render target speed up -->
-    <script src="dxscoreboard_rt.luac" type="client" />
+    <script src="dxscoreboard_rt.lua" type="client" />
     <file src="rt_blend.fx" type="client" />
     
     <!-- HTTP functions, original files by jbeta -->

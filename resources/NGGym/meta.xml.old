@@ -1,7 +1,0 @@
-<meta>
-	<info type="script" author="xXMADEXx" version="1.0" name="NG Gym System" />
-	<script src="walk_style_c.luac" type='client' />
-	<script src="server.luac" type="server" />
-
-	<oop>true</oop>
-</meta>

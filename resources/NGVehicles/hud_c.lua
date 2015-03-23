@@ -202,7 +202,7 @@ end ) addEventHandler ( "onClientVehicleStartExit", root, function ( source2 )
 		setSpeedoOpen ( false )
 	end
 end ) addEventHandler ( "onClientPlayerWasted", root, function ( )
-	if ( source == localPlayer and isPedInVehicle ( localPlayer ) ) then
+	if ( source == localPlayer ) then
 		setSpeedoOpen ( false )
 	end
 end )

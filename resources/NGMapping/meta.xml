@@ -1,6 +1,13 @@
 <meta>
 	<info type="Script" version="1.0" author="Nerd Gaming Mappers" name="Maps for NG" />
-	<script src="lv-hosp.lua" type="client" />
-	<script src="ls-hosp.lua" type="client" />
-	<script src="ls-pd.lua" type="client" />
+	<!--
+		ADD YOUR OWN MAP
+		
+		Create a .lua file in the NGMapping directory
+		Name it whatever the map name is (actually, any name will work 
+		
+		Add to here (the meta.xml, outside the noted/green area:
+		<script src="FILE_NAME.lua" type="client" />
+		(replace FILE_NAME.lua with the file name you just created -->
+	
 </meta>
