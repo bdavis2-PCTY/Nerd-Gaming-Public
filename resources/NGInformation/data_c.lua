@@ -7,7 +7,7 @@ Website: None]] },
 
 
 { "Commands", [[
-Nerd Gaming commands!9
+Nerd Gaming commands!
 
 /playtime - Output your playtime (Hours & Minutes)
 /re (or /reply) - Reply to the last person who sent you a message via F3

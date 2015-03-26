@@ -59,6 +59,7 @@ addEventHandler ( "onClientRender", root, function ( )
 					if ( getElementData ( v, 'NGVehicles:customLights' ) ) then
 						local lM = getElementData ( v, "NGVehicles:lightState" ) or 0
 						setVehicleOverrideLights ( v, 2 )
+						if ( getVehicleTowedByVehicle ( v ) ) then setVehicleOverrideLights ( getVehicleTowedByVehicle ( v ), 2 ) end
 						if ( lM == 0 ) then
 							setElementData ( v, "NGVehicles:lightState", 1, false )
 							setVehicleLightState ( v, 0, 0 )

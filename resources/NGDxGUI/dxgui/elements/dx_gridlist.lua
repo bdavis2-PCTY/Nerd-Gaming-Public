@@ -1,1 +1,0 @@
-dxGridlist = class ( 'dxGridlist', dxGUI )

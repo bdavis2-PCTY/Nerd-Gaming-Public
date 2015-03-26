@@ -7,6 +7,7 @@
 	<script src="gui.lua" type="client" />
 	<script src="shopping.cart.lua" type="client" />
 	<script src="vehicle.funcs.lua" type="client" />
+	<script src="cBlip.lua" type="client" />
 	<file src="moditems.xml" />
 	<file src="colorselect.png" />
 	<file src="color1.png" />

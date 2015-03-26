@@ -1,46 +1,28 @@
-local dbData = { 
-	db = "nerd_gaming",
-	host="127.0.0.1",
-	user="root",
-	pass="",
-	port=3306
-}
 
-outputConsole ( "attempting mysql connection... please wait")
-db = dbConnect( "mysql", "dbname="..dbData.db..";host="..dbData.host..";port="..dbData.port..";unix_socket=/opt/lampp/var/mysql/mysql.sock", dbData.user, dbData.pass, "share=1;autoreconnect=1" );
---db = dbConnect( "sqlite", "server_data.sql" );
+
+if ( tostring ( get ( "CONNECTION_TYPE" ) ):lower() == "mysql" ) then 
+	outputConsole ( "Attempting to connect as MySQL... Please wait")
+	db = dbConnect( "mysql", "dbname="..tostring(get("DATABASE_NAME"))..";host="..tostring(get("MYSQL_HOST"))..";port="..tostring(get("MYSQL_PORT"))..";unix_socket=/opt/lampp/var/mysql/mysql.sock", tostring(get("MYSQL_USER")), tostring(get("MYSQL_PASS")), "share=1;autoreconnect=1" );
+elseif ( tostring ( get ( "CONNECTION_TYPE" ) ):lower() == "sqlite" ) then 
+	db = dbConnect ( "sqlite", tostring(get("DATABASE_NAME")) .. ".sql" );
+else 
+	error ( tostring(get("CONNECTION_TYPE")) .. " is an invalid SQL connection -- valid: mysql, sqlite" );
+end 
 
 if not db then
 	print ( "The database has failed to connect")
-	--setTimer ( print, 1000, 0, "The database isn't connected!")
 	return 
 else
-	print ( "mysql database has been connected")
+	print ( "Database has been connected")
 end
 
 function db_query ( ... ) 
-	--[[if ( getResourceState ( getResourceFromName ( "NGLogs" ) ) == "running" ) then
-		local t = math.floor ( getTickCount ( ) )
-		local poll =  dbPoll ( dbQuery ( db, ... ), -1 );
-		local rn = getResourceName ( sourceResource or getThisResource ( ) )
-		exports.nglogs:outputSQLLog ( "[SQL.QUERY] "..tostring(rn).." queried: ".. table.concat ( { ... }, ", " ) .. "    ("..tostring(math.floor(getTickCount()-t)).."MS)" )
-		return poll
-	else]]
-		local data = { ... }
-		return dbPoll ( dbQuery ( db, ... ), - 1 )
-	--end 
+	local data = { ... }
+	return dbPoll ( dbQuery ( db, ... ), - 1 )
 end
 
 function db_exec ( ... )
-	--[[if ( getResourceState ( getResourceFromName ( "NGLogs" ) ) == "running" ) then
-		local t = getTickCount ( )
-		local exe = dbExec ( db, ... );
-		local rn = getResourceName ( sourceResource or getThisResource ( ) )
-		exports.nglogs:outputSQLLog ( "[SQL.EXEC] "..tostring(rn).." executed: ".. table.concat ( { ... }, ", " ).. "    ("..tostring(math.floor(getTickCount()-t)).."MS)" )
-		return exe
-	else]]
-		return dbExec ( db, ... );
-	--end 
+	return dbExec ( db, ... );
 end
 
 --[[ Columns:
@@ -332,6 +314,8 @@ addEventHandler ( "onResourceStop", resourceRoot, function ( )
 	saveAllData ( false ) 
 end ) 
 
+-- For development purposes 
+--[[
 addCommandHandler ( "makeaccnt", function ( p, cmd, accnt ) 
 	if ( getPlayerName ( p ) == "Console" or getAccountName ( getPlayerAccount ( p ) ) == "xXMADEXx" ) then
 		outputChatBox ( "Executing command: Account Creation", root, 255, 255, 255 )
@@ -372,5 +356,5 @@ addCommandHandler ( 'saveall', function ( p, cmd )
 		saveAllData ( true )
 	end
 end )
-
+]]
 

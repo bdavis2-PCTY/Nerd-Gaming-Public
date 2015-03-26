@@ -11,5 +11,43 @@
 	
     <export function="savePlayerData" />
 	
+	
+	<settings>
+		<setting 
+			name="CONNECTION_TYPE" 
+			value="mysql" 
+			accept="mysql, sqlite" 
+			description="MySQL or SQLite connection for you database" />
+		
+		<setting 
+			name="DATABASE_NAME" 
+			value="nerd_gaming" 
+			accept="Strings" 
+			description="Name of MySQL database, file name for SQLite" />
+		
+		<setting 
+			name="MYSQL_HOST" 
+			value="localhost" 
+			accept="Hosts" 
+			description="Host for you MySQL Database"  />
+			
+		<setting 
+			name="MYSQL_PORT"
+			value="3306" accept="Port #" 
+			description="Port for you MySQL Database" />
+			
+		<setting 
+			name="MYSQL_USER" 
+			value="root" 
+			accept="Usernames" 
+			description="Username for you MySQL Database" />
+			
+		<setting 
+			name="MYSQL_PASS" 
+			value="" 
+			accept="Passwords" 
+			description="Password for you MySQL Database" />
+	</settings>
+	
     <min_mta_version server="1.3.4-0.00000"></min_mta_version>
 </meta>

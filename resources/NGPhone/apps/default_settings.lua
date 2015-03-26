@@ -28,6 +28,7 @@ local defaultSettings = {
     { "usersetting_display_skinshopblips", "true" },
     { "usersetting_display_hospitalblips", "true" },
     { "usersetting_display_vehicleshopblips", "true" },
+    { "usersetting_display_modshopblips", "true" },
 	{ "user_waypoints", toJSON ( { } ) },
 	{ "usersetting_misc_playsoundonguiclick", "true" },
 	{ "usersettings_display_clouds", "false" },

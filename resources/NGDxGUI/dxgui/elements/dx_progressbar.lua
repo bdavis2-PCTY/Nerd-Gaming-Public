@@ -1,1 +1,0 @@
-dxProgressbar = class ( 'dxProgressbar', dxGUI )

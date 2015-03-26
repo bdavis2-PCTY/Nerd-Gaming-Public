@@ -15,8 +15,8 @@ function getThisProperWordShit ( w1, w1, value )
 	end
 	return w2
 end
-
+--[[
 addCommandHandler ( "bullets", function ( )
 	enabled = not enabled
 	exports.NGMessages:sendClientMessage ( "Explosive bullets are now ".. getThisProperWordShit ( "on", "off", enabled ), 255, 255, 0 )
-end )
+end )]]

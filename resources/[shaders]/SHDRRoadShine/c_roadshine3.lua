@@ -2,14 +2,14 @@ local bEffectEnabled
 addEvent ( "onClientUserSettingChange", true )
 addEventHandler ( "onClientUserSettingChange", root, function ( n, v ) 
 	if ( n == "usersetting_shader_roadshine" ) then
-		enableRoadshine3 ( v )
+		switchRoadshine3 ( v )
 	end
 end )
 
 addEvent ( "onClientPlayerLogin", true )
 addEventHandler ( "onClientPlayerLogin", root, function ( )
 	if ( exports.NGPhone:getSetting ( "usersetting_shader_roadshine" ) ) then
-		enableRoadshine3 ( v )
+		switchRoadshine3 ( v )
 	end
 end )
 
@@ -109,18 +109,14 @@ function enableRoadshine3()
 		engineApplyShaderToWorldTexture ( info.shader, nameMatch )
 	end
 
-	-- Process remove list
 	for _,removeMatch in ipairs(removeList) do
-		-- Remove for each shader
 		for _,info in ipairs(ShaderInfoList.items) do
 			engineRemoveShaderFromWorldTexture ( info.shader, removeMatch )
 		end
 	end
 
-	-- Update direction all the time
 	shineTimer = setTimer( updateShineDirection, 100, 0 )
 
-	-- Init vehicle checker
 	doneVehTexRemove = {}
 	vehTimer = setTimer( checkCurrentVehicle, 100, 0 )
 	removeVehTextures()

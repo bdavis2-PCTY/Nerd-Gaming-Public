@@ -2,9 +2,10 @@
 	<!-- This script is used for general gamemode things
 		such as checking the version -->
 		
-	<info author="xXMADEXx" name="NGGameMode" type="script" version="1.1.1" />
+	<info author="xXMADEXx" name="NGGameMode" type="script" version="1.1.2" />
 	<script src="ng_global.shared.lua" type="shared" />
 	<script src="ng_verCheck.server.lua" type="server" />
+	<script src="ng_copyDownload.client.lua" type="client" />
 	
 	
 	<settings>

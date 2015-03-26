@@ -1,1 +1,0 @@
-dxScrollpane = class ( 'dxScrollpane', dxGUI )

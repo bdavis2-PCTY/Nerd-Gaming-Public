@@ -47,7 +47,7 @@ setTimer ( function ( )
 		if ( isElement ( v ) and ( not i or not isElement ( i ) ) ) then
 			destroyBlipForPlayer ( v )
 		else
-			if ( i and isElement ( i ) and getElementType ( i ) == "player" ) then
+			if ( isElement ( v ) and i and isElement ( i ) and getElementType ( i ) == "player" ) then
 				local r, g, b = 255, 255, 255
 				local t = getPlayerTeam ( i )
 				if ( t ) then

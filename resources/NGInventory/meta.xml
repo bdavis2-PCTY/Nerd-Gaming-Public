@@ -1,5 +1,7 @@
 <meta>
 	<info author="NG Scripting Team" name="NGInventory" type="script" version="1.0" />
+	
+	<oop>true</oop>
 	<script src="drop_amount_c.lua" type="client" />
 	<script src="inven-client.lua" type="client" />
 	<script src="inven-server.lua" type="server" />

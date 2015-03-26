@@ -469,7 +469,7 @@ function isPlayerInACL ( player, acl )
 end
 
 addCommandHandler ( "makeevent", function ( p, cmd, id )
-	if ( isPlayerInACL ( p, 'Admin' ) ) then
+	if ( exports.ngadministration:getPlayerStaffLevel ( p, 'int' ) >= 2 ) then
 		if ( not tonumber ( id ) ) then
 			return exports.NGMessages:sendClientMessage ( "Usage: /"..cmd.." [event id(1-"..table.len(events)..")]", p, 255, 255, 0 )
 		end
@@ -486,7 +486,7 @@ addCommandHandler ( "makeevent", function ( p, cmd, id )
 end )
 
 addCommandHandler ( "stopevent",  function ( p )
-	if ( not isPlayerInACL ( p, 'Admin' ) ) then
+	if ( not exports.ngadministration:getPlayerStaffLevel ( p, 'int' ) >= 2 ) then
 		return 
 	end 
 	
@@ -516,7 +516,7 @@ addCommandHandler ( "eventhelp", function ( p )
 	outputChatBox ( "----- Event Help -----", p, 0,255, 255 )
 	outputChatBox ( "/joinevent - Join an event if there is one running", p, 0, 255, 255 )
 	outputChatBox ( "/leaveevent - Kill yourself out of the event", p, 0, 255, 255 )
-	if ( isPlayerInACL ( p, 'Admin' ) ) then
+	if ( exports.ngadministration:getPlayerStaffLevel ( p, 'int' ) >= 2 ) then
 		outputChatBox ( "----- For Staff -----", p, 255, 255, 0 )
 		outputChatBox ( "/makeevent - Create an event", p, 255, 255, 0 )
 		for i, v in pairs ( events ) do

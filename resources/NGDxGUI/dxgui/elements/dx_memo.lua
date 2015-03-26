@@ -1,1 +1,0 @@
-dxMemo = class ( 'dxMemo', dxGUI )

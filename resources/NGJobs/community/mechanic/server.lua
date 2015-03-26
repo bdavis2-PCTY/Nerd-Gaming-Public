@@ -204,3 +204,16 @@ function mechanic_reset ( p, s, car )
 	end
 	
 end
+
+
+
+-- Turn off lights and close doors
+-- of vehicle being towed
+addEventHandler ( "onTrailerAttach", root, function ( t )
+	if ( getVehicleName ( t ) == "Towtruck" ) then
+		setVehicleOverrideLights ( source, 1 );
+		for i = 0, 5 do 
+			setVehicleDoorState ( source, i, 0 )
+		end
+	end 
+end );

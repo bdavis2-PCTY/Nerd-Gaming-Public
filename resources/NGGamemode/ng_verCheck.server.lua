@@ -29,3 +29,15 @@ if ( NG.MIX.TOBOOL ( get ( "*check_ng_updates" ) ) ) then
 	NG.SERVER.CHECK_VERSION ( );
 	setTimer ( _G['NG'].SERVER.CHECK_VERSION, 60*60*1000, 0 ) -- Every hour
 end 
+
+addCommandHandler ( "ngupdate", function ( p )
+	if ( exports.ngadministration:getPlayerStaffLevel ( p, 'int' ) >= 4 ) then
+		outputChatBox ( "Checking for NG Gamemode update. Current: v"..NG.SERVER.VERSION, p );
+		outputChatBox ( "Please view console or debugscript for results", p );
+		NG.SERVER.CHECK_VERSION ( );
+	end
+end );
+
+addCommandHandler ( "ngver", function ( p )
+	outputChatBox ( "This server is running Nerd Gaming "..tostring ( NG.SERVER.VERSION ), p, 255, 255, 0 );
+end );

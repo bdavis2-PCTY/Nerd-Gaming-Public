@@ -207,7 +207,8 @@ local UserSettings = {
 		{ "usersetting_display_hospitalblips", 			"Hospital Blips"				},
 		{ "usersetting_display_usershopblips", 			"User Shop Blips"				},
 		{ "usersetting_display_vehicleshopblips", 		"Vehicle Shop Blips"			},
-		{ "usersetting_display_gymblips",				"Gym Blips"						}},
+		{ "usersetting_display_gymblips",				"Gym Blips"						},
+		{ "usersetting_display_modshopblips",			"Modshop Blips"					}},
 		
 	['Notifications'] = {
 		{ "usersetting_notification_joinquitmessages", 		"Show join/quit messages" 	},
@@ -247,6 +248,7 @@ local SettingPreferences = {
 		['usersetting_misc_playsoundonguiclick'] = true,		['usersettings_display_clouds'] = true,
 		['usersetting_display_usershopblips'] = true,			['usersettings_display_clienttoserverstats']=true,
 		['usersettings_display_lowfpswarning'] = true,			['usersetting_display_gymblips'] = true,
+		["usersetting_display_modshopblips"] = true,
 
 	}, 
 	['performance'] = {
@@ -265,6 +267,7 @@ local SettingPreferences = {
 		['usersetting_misc_playsoundonguiclick'] = false,		['usersettings_display_clouds'] = false,
 		['usersetting_display_usershopblips'] = false,			['usersettings_display_clienttoserverstats'] = false,
 		['usersettings_display_lowfpswarning'] = false,			['usersetting_display_gymblips'] = false,
+		["usersetting_display_modshopblips"] = false,
 	},
 	['mix'] = {
 		['UserSettings_UseCustomRadio'] = false, 				['UserSettings_UseCustomHud'] = false,
@@ -281,7 +284,8 @@ local SettingPreferences = {
 		['usersetting_display_hospitalblips'] = true,			['usersetting_display_vehicleshopblips'] = true,
 		['usersetting_misc_playsoundonguiclick'] = true,		['usersettings_display_clouds'] = false,
 		['usersetting_display_usershopblips'] = true,			['usersettings_display_clienttoserverstats'] = true,
-		['usersettings_display_lowfpswarning'] = true,			['usersetting_display_gymblips'] = true
+		['usersettings_display_lowfpswarning'] = true,			['usersetting_display_gymblips'] = true,
+		["usersetting_display_modshopblips"] = true
 	}
 }
 

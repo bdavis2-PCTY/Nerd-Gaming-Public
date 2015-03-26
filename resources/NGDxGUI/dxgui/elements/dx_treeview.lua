@@ -1,1 +1,0 @@
-dxTreeview = class ( 'dxTreeview', dxGUI )

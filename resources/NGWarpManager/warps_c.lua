@@ -95,7 +95,6 @@ local prog = 0
 local mode = true
 local sx_, sy_ = guiGetScreenSize ( )
 local sx, sy = sx_/1280, sy_/720
-local font = dxCreateFont ( "font.ttf", 15 )
 addEventHandler ( "onClientPreRender", root, function ( )
 	prog = prog + 0.01
 	for i, v in pairs ( warps ) do

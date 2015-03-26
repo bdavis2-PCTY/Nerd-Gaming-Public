@@ -68,7 +68,13 @@ function setShaderEnabled ( x )
 		engineApplyShaderToWorldTexture ( wetRoadsShader, "tar_1line256hvtodirt" )
 		engineApplyShaderToWorldTexture ( wetRoadsShader, "sw_farmroad*" )
 		removeEventHandler ( "onClientPreRender", root, onPreRender )
+		
 		destroyElement ( wetAmountTexture )
+		destroyElement ( wetRoadsShader )
+		destroyElement ( blurHShader )
+		destroyElement ( blurVShader )
+		destroyElement ( myScreenSource )
+		
 		blurHShader=nil
 		blurVShader=nil
 		wetRoadsShader=nil
@@ -162,7 +168,7 @@ end )
 
 addEvent ( "onClientPlayerLogin", true )
 addEventHandler ( "onClientPlayerLogin", root, function ( )
-		if ( exports.NGPhone:getSetting ( "usersetting_shader_wetroad" ) ) then
+	if ( exports.NGPhone:getSetting ( "usersetting_shader_wetroad" ) ) then
 		setShaderEnabled ( true )
 	end
 end )

@@ -1,1 +1,0 @@
-dxTabpanel = class ( 'dxTabpanel', dxGUI )

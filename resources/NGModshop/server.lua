@@ -21,8 +21,21 @@ for i, v in ipairs ( modshopPositions ) do
 	modShops [ i ].veh = false
 	local x, y, z = unpack ( v )
 	modShops [ i ].marker = createMarker ( x, y, z-1, "cylinder", 4, 255, 255, 0, 100 )
+	--modShops [ i ].blip = createBlip ( x, y, z, 27, 2, 255, 255, 255, 255, 0, 450 )
 	modShops [ i ].name = "Modshop " .. tostring ( i ) 
 end
+
+addEventHandler ( "onPlayerLogin", root, function ( )
+	triggerClientEvent ( source, "NGModshop:sendClientShopLocations", source, modshopPositions );
+end );
+
+addEventHandler ( "onResourceStart", resourceRoot, function ( )
+	setTimer ( function ( )
+		for i, source in pairs ( getElementsByType ( "player" ) ) do 
+			triggerClientEvent ( source, "NGModshop:sendClientShopLocations", source, modshopPositions );
+		end 
+	end, 3000, 1 );
+end );
 
 
 local TIME_IN_MODSHOP = 3 -- 3 minutes

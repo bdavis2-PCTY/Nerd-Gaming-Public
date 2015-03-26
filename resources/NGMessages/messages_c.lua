@@ -158,12 +158,13 @@ function tobool ( input )
 	end
 end
 
+--[[
 addCommandHandler ( 'rt', function ( )
 	for i=1,5 do
 		sendClientMessage ( tostring ( i ), 255, 255, 0 )
 	end
 end )
-
+]]
 
 -- join/quit messages
 addEventHandler ( "onClientPlayerJoin", root, function ( ) 

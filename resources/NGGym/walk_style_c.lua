@@ -260,7 +260,7 @@ function walk.bind.down ( )
 		end 
 	end 
 end 
-
+--[[
 addCommandHandler ( "f", function ( )
 	setCameraTarget ( localPlayer )
 	toggleControl ( "forwards", true )
@@ -273,7 +273,7 @@ addCommandHandler ( "f", function ( )
 	showChat ( true )
 	setPlayerHudComponentVisible ( "all", true )
 end )
-
+]]
 addEventHandler ( "onClientResourceStart", resourceRoot, function ( )
 	for i, v in pairs ( locations ) do
 		-- warps

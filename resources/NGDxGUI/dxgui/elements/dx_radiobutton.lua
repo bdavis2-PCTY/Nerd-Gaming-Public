@@ -1,1 +1,0 @@
-dxRadiobutton = class ( 'dxRadiobutton', dxGUI )

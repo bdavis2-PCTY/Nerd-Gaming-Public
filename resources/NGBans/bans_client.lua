@@ -58,22 +58,7 @@ function drawBanScreen ( )
 	dxDrawRectangle(sx*249, banY+sy*549, sx*563, sy*40, tocolor(0, 0, 0, 138), true)
 	dxDrawText(ban.reason, sx*259, banY+sy*549, sx*812, banY+sy*589, tocolor(255, 255, 255, 255), font_size, "default", "left", "center", true, false, true, false, false)
 	
-	
-	--dxDrawRectangle(sx*87, banY+sy*609, sx*725, sy*40, tocolor(0, 0, 0, 138), true)
-	--dxDrawText("Appeal your ban on our forum; nerd-gaming.com", sx*87, banY+sy*609, sx*812, banY+sy*649, tocolor(255, 255, 255, 255), 2, "default", "center", "center", true, false, true, false, false)
 	dxDrawBoarderedText("Appeal @ nerdgaming.org", sx*87, banY+sy*609, sx*812, banY+sy*649, tocolor(255, 255, 255, 255), 2, "default", "center", "center", true, false, true, false, false, 0, 0, 0, 2)
-	--[[
-	if ( banY ~= 0 ) then
-		if ( banY < 0 ) then
-			banY = banY + 10
-			if ( banY > 0 ) then
-				banY = 0
-			end
-		elseif ( banY > 0 ) then
-			banY = 0
-		end
-	end
-]]
 end
 
 addEvent ( "NGBans:OpenClientBanScreen", true )

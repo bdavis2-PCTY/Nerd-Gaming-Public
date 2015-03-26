@@ -1,3 +1,37 @@
+Version 1.1.2
+	- Admin Panel (p) -> Ban now opens with the custom ban system, not the default MTA
+	- Fixed an error with font in NGWarpManager
+	- Enabled OOP in NGInventory (Used OOP vars, never enabled it)
+	- Created settings in NGSQL for SQLite or MySQL
+	- Moved NGSQL connection info into NGSQL meta as settings
+	- Added software to compile the entire server
+ 	- Added Level 5 ACL group access to:
+		function.kickPlayer
+		function.removeAccount
+		function.setPlayerMuted
+		function.stopResource
+		function.startResource
+		function.restartResource
+	- Removed the default /report command from the admin resource
+	- Fixed road shine shader enable/disable
+	- Fixed Skybox shader enable/disable
+	- Fixed Wet Roads shader not fully destroying after disabled
+	- Fixed Skybox shader turning on automatically when joining
+	- Removed development command /f
+	- Removed development command /rt
+	- Removed development command /delaccnt
+	- Removed development command /saveall
+	- Removed development command /makeaccnt
+	- Improved README.md on GitHub a lot
+	- Changed /makeevent required ACL Levels 2-5
+	- Changed /stopevent required ACL Levels 2-5
+	- Removed custom staff skin (Only commented the meta.xml code for it in NGAdministration)
+	- Added /ngupdate command to check for any NG Gamemode updates
+	- Added /ngdownload command to copy NG GitHub link to clipboard
+	- Added /ngver command to check current version of Nerd Gaming
+	- Fixed an error with the player blips, when someone died
+	- Added a setting to enable/disable modshop blips
+
 Version 1.1.1
 	- Removed all compiled and excess files
 	- Changed c.lua to messages_c.lua in NGMessages
