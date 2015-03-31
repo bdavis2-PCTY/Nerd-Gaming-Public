@@ -70,7 +70,8 @@ Level 4-5 - /addupdate: Add a server update to the /updates list <br />
 Level 4-5 - /am: Account manager<br />
 level 4-5 - /ngupdate: Check for NG Gamemode update<br />
 <br />
-<h5>Bugs</h5>
+<h3>Bugs</h3>
 If you find any bugs, please report them to me.<br />
 Add me on Skype: Madex-MTA<br />
 Message me on the MTA Forum: <a href='http://forum.mtasa.com/memberlist.php?mode=viewprofile&u=65297'>xXMADEXx</a>
+<br />
