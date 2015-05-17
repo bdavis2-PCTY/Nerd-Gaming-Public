@@ -240,8 +240,8 @@ function useItem ( item )
 		rv = true
 	elseif ( item == "Drug.Marijuana" ) then
 		exports.NGDrugs:useDrug ( "Marijuana", 1 )
-		exports.NGMessages:sendClientMessage ( "~~~~~ Stoner ~~~~~", 0, 255, 0 )
-		exports.NGMessages:sendClientMessage ( "You smoked some that grade A shit, man!", 255, 255, 0)
+		--exports.NGMessages:sendClientMessage ( "~~~~~ Stoner ~~~~~", 0, 255, 0 )
+		--exports.NGMessages:sendClientMessage ( "You smoked some that grade A shit, man!", 255, 255, 0)
 		exports.NGMessages:sendClientMessage ( "You'll get 2% health every second", 255, 0, 0 )
 		rv = true
 	elseif ( item == "health_packs" ) then

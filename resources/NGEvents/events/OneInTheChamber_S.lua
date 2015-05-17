@@ -42,8 +42,8 @@ function StartOneInTheChamber ( )
 end
 
 function thisEventFunctions.OnPlayerDamage ( s, w )
-	if ( s and isElement ( s ) and w and w == 22 and not isPedDead ( source ) ) then
-		triggerEvent ( "onPlayerWasted", source, nil, s, w )
+	if ( s and isElement ( s ) and w and w == 22 and not isPedDead ( source ) and isPlayerInEvent ( source ) and isPlayerInEvent ( s ) ) then
+		killPed ( source );
 	end
 end
 
@@ -65,11 +65,13 @@ function thisEventFunctions.OnPlayerWasted ( _, killer )
 	if winner then
 		EventCore.WinPlayerEvent ( winner )
 	end
+	
 end
 
 function thisEventFunctions.OnEventEnded ( x )
 	if ( x.name == events[2].name ) then
 		removeEventHandler ( "onPlayerWasted", root, thisEventFunctions.OnPlayerWasted )
+		removeEventHandler ( "onPlayerDamage", root, thisEventFunctions.OnPlayerDamage )
 		removeEventHandler ( "NGEvents:onEventEnded", root, thisEventFunctions.OnEventEnded )
 	end
 end

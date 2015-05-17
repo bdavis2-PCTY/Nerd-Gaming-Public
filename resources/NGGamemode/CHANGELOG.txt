@@ -1,3 +1,33 @@
+Version 1.1.3
+	- Removed 2 messages when taking the Marijuana drug, as for they were a bit excessive (NGInventory/inven-client.lua)
+	- Removed jail map - Floor was bugged and didn't work right (NGPolice/mapping.lua)
+	- Fixed an error with NGGroups in group_c.lua:269 - table expected, got nil (NGGroups/group_c.lua)
+	- Added group GUI loading message, as for it can take a little while to load (NGGroups/group_c.lua)
+	- Fixed errors with LS Street Race spawn rotations (NGEvents/events/LSRace_s.lua)
+	- Changed the math question time from 600 seconds to 900 seconds (NGPlayerFunctions/server/math.lua)
+	- Added F5 panel for Pilot job (NGJobs/community/pilot/*)
+	- Increased the prices and lowered the time for the Fishermens net (NGJobs/community/fisherman/client.lua)
+	- Fixed fisherman job ranks (NGJobs/community/fisherman/server.lua)
+	- Fixed fisherman F5 job panel (NGJobs/community/fisherman/*)
+	- Fixed jail time bug for VIP players (NGJobs/law/general/arrest_server.lua)
+    - Fixed players arrest avoiding by disconnecting (NGJobs/law/general/arrest_server.lua)
+	- Added 'isPlayerJailed' as a client export (NGPolice/jail_c.lua)
+	- Fixed bug where players could escape jail with /kill (NGPlayerFunctions/client/kill_c.lua)
+	- Added a new default jail map - poorly mapped, you may want to change it (NGPolice/mapping_c.lua)
+	- Added settings to set default jail warp location (NGPolice/meta.xml, NGPolice/jail_s.lua)
+	- Fixed /unjail command not working
+	- Added unknown country flag to scoreboard - not sure how it got deleted (admin/meta.xml, admin/client/images/flags/unknown.png)
+	- Added 'waypointIsTracking' as a client export (NGPlayerFunctions/meta.xml, NGPlayerFunctions/client/waypoint.lua)
+	- Changed 'createWaypointLoc' return values to proper booleans (NGPlayerfunctions/client/waypoint.lua)
+	- Fixed waypoints app in NGPhone (NGPhone/client_core.lua, NGPhone/apps/waypoints.lua)
+	- Added scroll to the information panel (F1) (NGInformation/info_c.lua)
+	- Updated some information in information panel (NGInformation/data_c.lua)
+	- Added 'setWaypointAttachedToElement' as a client export to NGPlayerFunctions (NGPlayerFunctions/client/waypoint.lua)
+	- Fixed 'onPlayerDamage' event not being removed with the 'One in the chamber' event (NGEvents/events/OneInTheChamber_S.lua)
+	- Fixed players disconnecting to arrest avoid (NGJobs/law/general/arrest_server.lua)
+	- Changed NG version checker to every two hours (NGGamemode/ng_verCheck.server.lua)
+	- Fixed VIP cash not sending - somehow givePlayerMoney was commented out (NGVIP/vip_s.lua)
+	
 Version 1.1.2
 	- Admin Panel (p) -> Ban now opens with the custom ban system, not the default MTA
 	- Fixed an error with font in NGWarpManager

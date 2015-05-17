@@ -18,13 +18,13 @@ local shopLocations = {
 }
 
 local fisherman_itemsToCatch = { 
-	["Trout"]=5, 
-	["Rainbow Trout"]=15, 
-	["Catfish"]=17, 
-	["Shark"]=20, 
-	["Octopus"]=5, 
-	["Squid"]=5,
-	["Star Fish"]=7,
+	["Trout"]=15, 
+	["Rainbow Trout"]=35, 
+	["Catfish"]=50, 
+	["Shark"]=60, 
+	["Octopus"]=30, 
+	["Squid"]=25,
+	["Star Fish"]=15,
 	["Boot"]=0, 
 	["Coral"]=0, 
 	["Sea Weed"]=0 
@@ -86,7 +86,7 @@ addEventHandler ( "onClientPlayerVehicleEnter", root, function ( v, s )
 		fisherman_isRenderTextActive = true
 		exports.NGMessages:sendClientMessage ( "To catch fish, drive around the lake.", 0, 255, 255 )
 		addEventHandler ( "onClientRender", root, fisherman_onClientCatchRender )
-		fisherman_nextCatchTick = ( getTickCount ( ) + 12000 ) + math.random ( -2000, 2000 )
+		fisherman_nextCatchTick = ( getTickCount ( ) + 10000 ) + math.random ( -2000, 2000 )
 	end
 end )
 
@@ -235,12 +235,12 @@ end )
 
 
 addEvent ( "NGJobs:Fisherman:OnServerSendClientJobInformationForInterface", true )
-addEventHandler ( "NGJobs:Fisherman:OnServerSendClientJobInformationForInterface", root, function ( d )
-	guiSetText ( Fisherman.GUI2.username, "Username: ".. tostring(d.account) )
-	guiSetText ( Fisherman.GUI2.job, "Job: ".. tostring(d.job) )
-	guiSetText ( Fisherman.GUI2.caughtFish, "Caught Fish: ".. tostring(d.caughtFish) )
-	guiSetText ( Fisherman.GUI2.jobRank, "Job Rank: ".. tostring(d.jobRank) )
-	guiSetText ( Fisherman.GUI2.neededFish, "Next Rank: "..tostring(d.nextRank).."  ||  ".. tostring(d.requiredCatchesForNext) .." Fish Needed" )
+addEventHandler ( "NGJobs:Fisherman:OnServerSendClientJobInformationForInterface", root, function ( data )
+	guiSetText ( Fisherman.GUI2.username, "Username: ".. tostring ( data.account ) )
+	guiSetText ( Fisherman.GUI2.job, "Job: ".. tostring ( data.job ) )
+	guiSetText ( Fisherman.GUI2.caughtFish, "Caught Fish: ".. tostring ( data.caughtFish ) )
+	guiSetText ( Fisherman.GUI2.jobRank, "Job Rank: ".. tostring ( data.jobRank ) )
+	guiSetText ( Fisherman.GUI2.neededFish, "Next Rank: "..tostring(data.nextRank).."  ||  ".. tostring(data.requiredCatches) .." Fish Needed" )
 	guiSetText ( Fisherman.GUI2.jobDesc, jobDescriptions [ 'fisherman' ] )
 end )
 

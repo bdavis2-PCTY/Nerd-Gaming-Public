@@ -59,9 +59,8 @@ jobRanks = {
 		[180] = "Senior Captain",
 		[250] = "Commercial First Officer",
 		[310] = "Commercial Captain",
-		[390] = "Commercial Senior Commander",
-		[460] = "Commercial Commander",
-		[500] = "Commercial Senior Commander",
+		[390] = "Commercial Commander",
+		[460] = "Commercial Senior Commander",
 	},
 	['stunter'] = {
 		[0] = "Crash Dummy",
@@ -551,3 +550,16 @@ addEventHandler ( "NGJobs->SQL->UpdateColumn", root, function ( player, column, 
 end )
 
 addEvent ( "NGJobs:onPlayerJoinNewJob", true )
+
+function foreachinorder(t, f, cmp)
+    local keys = {}
+    for k,_ in pairs(t) do
+        keys[#keys+1] = k
+    end
+    table.sort(keys,cmp)
+    local data = { }
+    for _, k in ipairs ( keys ) do 
+    	table.insert ( data, { k, t[k] } )
+    end 
+    return data
+end

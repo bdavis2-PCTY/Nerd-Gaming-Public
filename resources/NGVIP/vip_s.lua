@@ -90,32 +90,12 @@ VipPayoutTimer = setTimer ( function ( )
 	print_ ( "Sending out VIP cash...." )
 	outputDebugString ( "Sending VIP cash" )
 	
-	local sentAccounts = { }
 	for i, v in ipairs ( getElementsByType ( "player" ) ) do
-		local acc = getPlayerAccount ( v )
 		if ( isPlayerVIP ( v ) ) then
 			local l = getVipLevelFromName ( getElementData ( v, "VIP" ) )
 			local money = payments [ l ]
-			--givePlayerMoney ( v, money )
+			givePlayerMoney ( v, money )
 			exports.NGMessages:sendClientMessage ( "Here is a free $"..money.." for being a VIP player!", v, 0, 255, 0 )
-			sentAccounts[getAccountName(getPlayerAccount(v))] = true
-		end
-	end
-	
-	
-	local query = exports.NGSQL:db_query ( "SELECT * FROM accountdata" );
-	for i, v in pairs( query ) do
-		if ( v['vip'] ~= "None" and not sentAccounts [ v['Username'] ] ) then
-			local expTime = v['vipexp'] or "0000-00-00";
-			if ( isDatePassed ( expTime ) ) then
-				exports.NGSQL:db_exec ( "UPDATE accountdata SET vip=?, vipexp=? WHERE Username=?", "None", "0000-00-00", v['Username'] )
-			else
-				local m = tonumber ( v['Money'] )
-				local level = v['vip'];
-				local money = payments [ getVipLevelFromName ( level ) ]
-				local m = m + money
-				exports.NGSQL:db_exec ( "UPDATE accountdata SET Money=? WHERE Username=?", tostring ( m ), v['Username'] )
-			end
 		end
 	end
 end, (60*60)*1000, 0 ) 

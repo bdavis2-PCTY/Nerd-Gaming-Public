@@ -112,17 +112,14 @@ function dxDrawSpeedo ()
 						x = i
 					end
 					--dxDrawLine ( x, y, x+1, y+1 )
-					if ( speedGraph[i+1] ) then
-						local speed = speedGraph[i+1]
-						local y2 = ((recY-5)-v)
-						if ( y2 < ( recY / 1.5 ) ) then 
-							y2 = ( recY / 1.5 )
-							x = i + 1
-						end
-						dxDrawLine ( x, y-1, x - 1, y2, tocolor ( 0, 0, 0, 255 ) )
-						dxDrawLine ( x, y, x - 1, y2, tocolor ( 255, 140, 0, 255 ) )
-						dxDrawLine ( x, y+1, x - 1, y2, tocolor ( 0, 0, 0, 255 ) )
+					local y2 = ((recY-5)-v)
+					if ( y2 < ( recY / 1.5 ) ) then 
+						y2 = ( recY / 1.5 )
+						x = i + 1
 					end
+					dxDrawLine ( x, y-1, x - 1, y2, tocolor ( 0, 0, 0, 255 ) )
+					dxDrawLine ( x, y, x - 1, y2, tocolor ( 255, 140, 0, 255 ) )
+					dxDrawLine ( x, y+1, x - 1, y2, tocolor ( 0, 0, 0, 255 ) )
 				end
 			end
 		end

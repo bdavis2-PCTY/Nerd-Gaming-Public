@@ -27,7 +27,7 @@ end
 
 if ( NG.MIX.TOBOOL ( get ( "*check_ng_updates" ) ) ) then 
 	NG.SERVER.CHECK_VERSION ( );
-	setTimer ( _G['NG'].SERVER.CHECK_VERSION, 60*60*1000, 0 ) -- Every hour
+	setTimer ( _G['NG'].SERVER.CHECK_VERSION, 120*60*1000, 0 ) -- Every two hours
 end 
 
 addCommandHandler ( "ngupdate", function ( p )

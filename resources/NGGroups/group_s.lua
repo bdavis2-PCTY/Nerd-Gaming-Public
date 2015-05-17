@@ -320,11 +320,20 @@ addEventHandler ( "NGGroups->GEvents:onPlayerAttemptGroupMake", root, function (
 		return exports.ngmessages:sendClientMessage ( "A group with this name already exists", source, 255, 255, 0 )
 	end
 
-	if ( createGroup ( data.name, data.color, data.type, getAccountName ( getPlayerAccount ( source ) ) ) ) then
-		setElementData ( source, "Group", data.name )
-		setElementData ( source, "Group Rank", "Founder" )
+	local created, __ = createGroup ( data.name, data.color, data.type, getAccountName ( getPlayerAccount ( source ) ) )
+	if ( created ) then
+	
+		setElementData ( source, "Group", data.name );
+		setElementData ( source, "Group Rank", "Founder" );
+		
+		--groups [ data.name ].members [ getAccountName ( getPlayerAccount ( source ) ) ].rank = "Founder";
+		
+		outputDebugString ( "CREATED GROUP "..tostring(data.name)..". Owner: "..getPlayerName(source) );
+		
 		refreshPlayerGroupPanel ( source )
 		return true
+	else 
+		outputDebugString ( "FAILED TO CREATE GROUP "..tostring(data.name).." FROM "..getplayerName(source) );
 	end
 	return false
 end )
@@ -399,7 +408,7 @@ addEventHandler ( "NGGroups:Modules->BankSys:onPlayerAttemptDeposit", root, func
 
 	exports.ngmessages:sendClientMessage ( "You deposited $"..tostring(amount).." into your group bank", source, 0, 255, 0 )
 	source.money = m - amount;
-	outputGroupLog ( group, "Depsoited $"..tostring(amount).." into the group bank", source )
+	outputGroupLog ( group, "Deposited $"..tostring(amount).." into the group bank", source )
 	setGroupBank ( group, getGroupBank ( group ) + amount )
 end )
 
@@ -520,7 +529,8 @@ end )
 			return false
 		end
 
-		groups [ group ].pendingInvites [ a ] = { inviter=getAccountName(getPlayerAccount(inviter)), time=getThisTime() } 
+		table.insert ( groups [ group ].pendingInvites, { to=getAccountName(getPlayerAccount(player)), inviter=getAccountName(getPlayerAccount(inviter)), time=getThisTime() } );
+		
 		return true
 	end
 
@@ -531,13 +541,18 @@ end )
 			return exports.ngmessages:sendClientMessage ( "Your group request couldn't be sent to "..plr.name, source, 255, 0, 0 )
 		end
 		local a = getAccountName ( a )
-		if ( groups [ group ].pendingInvites [ a ] ) then
-			return exports.ngmessages:sendClientMessage ( "This player is already invited to the group.", source, 255, 0, 0 )
+		
+		for _, info in pairs ( groups [ group ].pendingInvites ) do 
+			if ( info.to == a ) then 
+				return exports.ngmessages:sendClientMessage ( "This player is already invited by "..tostring(info.from), source, 255, 255, 0 )
+			end
 		end
 
 		outputGroupLog ( group, "Invited "..plr.name.." ("..a..")", source )
-		exports.ngmessages:sendClientMessage ( source.name.." wants you to join "..group..". Accept it in F2", plr, 255,  255,  0 )
-		exports.ngmessages:sendClientMessage ( "You have invited "..plr.name.." to the group", source, 0, 255, 0 )
+		
+		local r, g, b = getGroupColor ( group );
+		exports.ngmessages:sendClientMessage ( source.name.." invited you to "..group..". Accept it in F2", plr, r, g, b )
+		exports.ngmessages:sendClientMessage ( "You have invited "..plr.name.." to the group", source, r, g, b )
 		sendPlayerInvite ( plr, group, source ) 
 	end ) 
 
@@ -551,7 +566,13 @@ end )
 	addEvent ( "NGGroups->Modules->Groups->Invites->OnPlayerAccept", true )
 	addEventHandler ( "NGGroups->Modules->Groups->Invites->OnPlayerAccept", root, function ( g )
 		local a = getAccountName ( getPlayerAccount ( source ) )
-		groups [ g ].pendingInvites [ a ] = nil
+
+		for index, info in pairs ( groups [ g ].pendingInvites ) do 
+			if ( info.to == a ) then
+				table.remove ( groups [ g ].pendingInvites, index )
+			end 
+		end 
+		
 		groups [ g ].members [ a ] = { rank="Member", joined = getThisTime() }
 		setPlayerGroup ( source, g )
 		outputGroupMessage ( getPlayerName ( source ).." has joined the group!", g )

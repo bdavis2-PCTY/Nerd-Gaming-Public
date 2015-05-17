@@ -140,16 +140,40 @@ end
 ----------------------
 -- F5 Panel			--
 ----------------------
+pilotGui = { }
 function createPilotInterface ( )
-	pilotGui = { }
-	pilotGui.window = guiCreateWindow( ( sx / 2 - 471 / 2 ), ( sy / 2 - 330 / 2 ), 471, 330, "Fisherman", false)
+	if ( isElement ( pilotGui.window ) ) then 
+		removeEventHandler ( "onClientGUIClick", pilotGui.close, createPilotInterface );
+		destroyElement ( pilotGui.window );
+		pilotGui.window = false;
+		showCursor ( false );
+		return
+	end 
+	
+	local job = getElementData ( localPlayer, "Job" ) or "";
+	if ( job ~= "Pilot" ) then return false; end
+	
+	pilotGui.window = guiCreateWindow( ( sx / 2 - 471 / 2 ), ( sy / 2 - 330 / 2 ), 471, 330, "Pilot", false)
 	guiWindowSetSizable(pilotGui.window, false)
 	pilotGui.close = guiCreateButton(353, 295, 108, 25, "Close", false, pilotGui.window)
 	pilotGui.username = guiCreateLabel(10, 34, 437, 18, "Username: ".. tostring ( getElementData ( localPlayer, "AccountData:Username" ) ), false, pilotGui.window)
 	pilotGui.job = guiCreateLabel(10, 62, 437, 18, "Job: "..tostring ( getElementData ( localPlayer, "Job" ) ), false, pilotGui.window)
-	pilotGui.caughtFish = guiCreateLabel(10, 118, 437, 18, "Flights: Loading...", false, pilotGui.window)
+	pilotGui.completedFlights = guiCreateLabel(10, 118, 437, 18, "Flights: Loading...", false, pilotGui.window)
 	pilotGui.jobRank = guiCreateLabel(10, 90, 437, 18, "Job Rank: "..tostring ( getElementData ( localPlayer, "Job Rank" ) ), false, pilotGui.window)
-	pilotGui.neededFish = guiCreateLabel(10, 146, 437, 18, "Next Rank: Loading...", false, pilotGui.window)
+	pilotGui.nextRank  = guiCreateLabel(10, 146, 437, 18, "Next Rank: Loading || Loading", false, pilotGui.window)
 	pilotGui.jobDesc = guiCreateMemo(12, 187, 449, 98, jobDescriptions['pilot'], false, pilotGui.window)
-	triggerServerEvent ( "NGJobs->Module->Job->Pilot->OnClientRequestF5Data", localPlayer )
+	triggerServerEvent ( "NGJobs->Module->Job->Pilot->OnClientRequestF5Data", localPlayer );
+	showCursor ( true );
+	addEventHandler ( "onClientGUIClick", pilotGui.close, createPilotInterface );
 end
+
+addEvent ( "NGJobs->Module->Job->Pilot->onServerSendClientJobInfo", true );
+addEventHandler ( "NGJobs->Module->Job->Pilot->onServerSendClientJobInfo", root, function ( data )
+	if ( not isElement ( pilotGui.window ) ) then return false; end 
+	
+	guiSetText ( pilotGui.completedFlights, "Flights: "..tostring ( data.flights ) );
+	guiSetText ( pilotGui.nextRank, "Next Rank: "..tostring ( data.nextRank ).. " | Requires "..tostring(data.requiredFlights).." more flights");
+	
+end );
+
+bindKey ( "f5", "down", createPilotInterface );

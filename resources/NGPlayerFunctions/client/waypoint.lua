@@ -8,7 +8,8 @@ function createWaypointLoc ( x, y, z )
 	local px, py, pz = getElementPosition ( localPlayer )
 	local dist = getDistanceBetweenPoints2D ( px, py, x, y )
 	if ( dist <= 20 ) then
-		return exports.NGMessages:sendClientMessage ( "You're only "..tostring(math.floor(dist)).." meters from that location.", 255, 255, 255 )
+		exports.NGMessages:sendClientMessage ( "You're only "..tostring(math.floor(dist)).." meters from that location.", 255, 255, 255 )
+		return false;
 	end
 
 	if ( isLocating ) then
@@ -19,10 +20,17 @@ function createWaypointLoc ( x, y, z )
 	waypointBlip = exports.customblips:createCustomBlip ( x, y, 10, 10, "files/waypoint.png", 9999999999 )
 	WAYPOINTLOC = { x=x, y=y }
 	addEventHandler ( "onClientRender", root, onWaypointRender )
+	return true;
 end
+
+function waypointIsTracking ( )
+	return isLocating
+end 
 
 local sx, sy = guiGetScreenSize ( )
 local textY = sy/1.1
+local waypointUpdateTick = getTickCount ( );
+
 function waypointUnlocate ( ) 
 	if ( not isLocating ) then
 		return
@@ -57,6 +65,11 @@ function onWaypointRender ( )
 		else
 			x, y, _ = getElementPosition ( TRACKELEMENT )
 			
+			if ( getTickCount ( ) - waypointUpdateTick >= 2000 ) then 
+				waypointUpdateTick = getTickCount ( );
+				exports.customblips:setCustomBlipPosition ( waypointBlip, x, y );
+			end 
+			
 		end
 	end 
 
@@ -83,21 +96,7 @@ function onWaypointRender ( )
 	end
 	
 	local dist = math.floor ( dist )
-	if ( DistToPoint ~= dist ) then
-		if ( DistToPoint > dist ) then
-			DistToPoint = DistToPoint - 3
-			if ( DistToPoint < dist ) then
-				DistToPoint = dist
-			end
-		else
-			DistToPoint = DistToPoint + 3
-			if ( DistToPoint > dist ) then	
-				DistToPoint = dist
-			end
-		end
-	end
-	
-	local t = "You're "..tostring(convertNumber(DistToPoint)).." meters from  your destination"
+	local t = "You're "..tostring(convertNumber(dist)).." meters from  your destination"
 	dxDrawText ( t, 0, 0, sx/1.03+1, textY+1, tocolor ( 0, 0, 0, 255 ), 1, "default-bold", "right", "bottom" )
 	dxDrawText ( t, 0, 0, sx/1.03, textY, tocolor ( 255, 255, 255, 255 ), 1, "default-bold", "right", "bottom" )
 end

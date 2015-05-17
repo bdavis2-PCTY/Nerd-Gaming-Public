@@ -23,6 +23,8 @@ end
 function turnDxOn ( )
 	if isPedInVehicle ( localPlayer ) then
 		exports['NGMessages']: sendClientMessage ( "Please exit your vehicle first.", 255, 255, 0 )
+	elseif ( exports.ngpolice:isPlayerJailed ( ) ) then 
+		exports.ngmessages:sendClientMessage ( "You cannot kill yourself in jail!", 255, 255, 0 );
 	elseif getElementData ( localPlayer, "NGEvents:IsPlayerInEvent" ) then
 		exports['NGMessages']: sendClientMessage ( "You may not kill yourself while in an event.", 255, 255, 0 )
 	else

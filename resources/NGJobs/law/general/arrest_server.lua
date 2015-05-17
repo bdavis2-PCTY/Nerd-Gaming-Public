@@ -38,6 +38,8 @@ addEventHandler ( "onPlayerDamage", root, function ( cop, weapon, _, loss )
 					exports['NGMessages']:sendClientMessage ( getPlayerName ( cop ).." arrested you!", source, 255, 255, 0 )
 					setElementHealth ( source, getElementHealth ( source ) + loss )
 					setElementData ( source, "NGJobs:ArrestingOfficer", cop )
+					
+					addEventHandler ( "onPlayerQuit", source, onPlayerAttmemptArrestAvoid );
 				elseif ( weapon == 23 ) then
 					-- Taze Player
 					if ( tased [ source ] ) then
@@ -85,6 +87,11 @@ addEventHandler ( "onPlayerDamage", root, function ( cop, weapon, _, loss )
 		end	
 	end
 end )
+
+function onPlayerAttmemptArrestAvoid ( )
+	--outputChatBox ( getPlayerName ( source )..  " attempted to arrest avoid" )
+	triggerEvent ( "ngpolice:onJailCopCrimals", getElementData ( source, "NGJobs:ArrestingOfficer" ) )
+end
 
 addCommandHandler ( "release", function ( p, _, p2 )
 	if ( getPlayerTeam ( p ) and exports['NGPlayerFunctions']:isTeamLaw ( getTeamName ( getPlayerTeam ( p ) ) ) ) then
@@ -199,11 +206,11 @@ function releasePlayer ( p )
 	setElementData ( p, "NGJobs:ArrestingOfficer", nil )
 	arresties[p] = nil
 	showCursor ( p, false )
+	removeEventHandler ( "onPlayerQuit", p, onPlayerAttmemptArrestAvoid );
 end
 
 
-addEvent ( "ngpolice:onJailCopCrimals", true )
-addEventHandler ( "ngpolice:onJailCopCrimals", root, function ( )
+function onJailCopCriminals( )
 	for v, _ in pairs ( arresties ) do 
 		if ( getElementData ( v, "NGJobs:ArrestingOfficer" ) == source ) then
 			
@@ -219,10 +226,10 @@ addEventHandler ( "ngpolice:onJailCopCrimals", root, function ( )
 				exports.NGMessages:sendClientMessage ( "You're serving 25% less jail time due to gold VIP! (Original time: "..orgTime.." seconds)", v, 0, 255, 0 )
 			elseif ( exports.NGVIP:getVipLevelFromName ( vip ) == 2 ) then
 				time = time - ( time * 0.15 )
-				exports.NGMessages:sendClientMessage ( "You're serving 15% less jail time due to gold VIP! (Original time: "..orgTime.." seconds)", v, 0, 255, 0 )
+				exports.NGMessages:sendClientMessage ( "You're serving 15% less jail time due to silver VIP! (Original time: "..orgTime.." seconds)", v, 0, 255, 0 )
 			elseif ( exports.NGVIP:getVipLevelFromName ( vip ) == 1 ) then
-				time = time - ( time * 0.15 )
-				exports.NGMessages:sendClientMessage ( "You're serving 5% less jail time due to gold VIP! (Original time: "..orgTime.." seconds)", v, 0, 255, 0 )
+				time = time - ( time * 0.05 )
+				exports.NGMessages:sendClientMessage ( "You're serving 5% less jail time due to bronze VIP! (Original time: "..orgTime.." seconds)", v, 0, 255, 0 )
 			end
 			
 			local time = math.floor ( time )
@@ -233,4 +240,15 @@ addEventHandler ( "ngpolice:onJailCopCrimals", root, function ( )
 			updateJobColumn ( getAccountName ( getPlayerAccount ( source ) ), "Arrests", "AddOne" )
 		end
 	end
-end )
+end
+
+addEvent ( "ngpolice:onJailCopCrimals", true )
+addEventHandler ( "ngpolice:onJailCopCrimals", root, onJailCopCriminals )
+
+-- Prevent arrest avoid by disconnect
+addEventHandler ( "onPlayerLeave", root, function ( ) 
+    if ( arresties [ source ] ) then 
+
+            
+    end  
+end );

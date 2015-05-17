@@ -675,52 +675,78 @@ function clickingHandler2 ( b, s )
 			end
 		end
 	elseif ( LoadedPage == "waypoints" ) then
+		-- exports.NGPlayerFunctions:waypointUnlocate()
+		-- appFunctions.waypoints:onPanelLoad ( ) 
+	
 		if ( source == pages['waypoints'].grid ) then
-			local r, c = guiGridListGetSelectedItem ( source )
-			if ( r == -1 ) then 
-				return exports.NGPlayerFunctions:waypointUnlocate()
-			end
-			local t = guiGridListGetItemText ( source, r, 1 )
-			if ( WaypointPage == "main" ) then
-				
-				 --= t:lower ( )
-				guiGridListClear ( source )
-				guiGridListSetItemText ( source, guiGridListAddRow ( source ), 1, "<< Back <<", false, false )
-				guiGridListSetItemText ( source, guiGridListAddRow ( source ), 1, "", true, true )
-				if ( t ~= "Players" ) then
-					for i, v in pairs ( WayPointLocs [ t ] ) do
-						local row = guiGridListAddRow ( source )
-						guiGridListSetItemText ( source, row, 1, tostring ( i ), true, true )
-						for k, f in pairs ( WayPointLocs [ t ] [ i ] ) do
-							local row = guiGridListAddRow ( source )
-							guiGridListSetItemText ( source, row, 1, tostring ( f [ 1 ] ), false, false )
-							guiGridListSetItemData ( source, row, 1, f )
-						end
-					end
-				else
-					for i, v in pairs ( getElementsByType ( "player" ) ) do 
-						local r = guiGridListAddRow ( source )
-						guiGridListSetItemText ( source, r, 1, tostring ( getPlayerName ( v ) ), false, false )
-						guiGridListSetItemData ( source, r, 1, { getElementPosition ( v ) } )
+			
+			local row, col = guiGridListGetSelectedItem ( source );
+			local text = nil;
+			
+			if ( row == -1 and exports.ngplayerfunctions:waypointIsTracking( ) ) then 
+				exports.ngmessages:sendClientMessage ( "Un-locating current target!" );
+				exports.NGPlayerFunctions:waypointUnlocate( );
+			end 
+			
+			if ( row > -1 ) then 
+				text = guiGridListGetItemText ( source, row, 1 );
+			end 
+			
+			if ( WaypointPage == "main" ) then 
+				if ( WayPointLocs [ text ] ) then 
+					guiGridListClear ( source )
+					
+					guiGridListSetItemText ( source, guiGridListAddRow ( source ), 1, "<< Back <<", false, false  );
+					guiGridListSetItemText ( source, guiGridListAddRow ( source ), 1, "", true, true  );
+					
+					WaypointPage = text;
+					if ( WaypointPage == "Locations" ) then 
+						for location, data in pairs ( WayPointLocs [ 'Locations' ] ) do 
+							guiGridListSetItemText ( source, guiGridListAddRow ( source ), 1, tostring ( location ), true, true  );
+							for index, _data in ipairs ( data ) do 
+								local row = guiGridListAddRow ( source );
+								guiGridListSetItemText ( source, row, 1, tostring ( _data [ 1 ] ), false, false );
+								guiGridListSetItemData ( source, row, 1, table.concat({_data[2], _data[3], _data[4]},"," ) );
+							end 
+						end 
+					else
+						for index, _data in ipairs ( WayPointLocs [ text ] ) do 
+							local row = guiGridListAddRow ( source );
+							guiGridListSetItemText ( source, row, 1, tostring ( _data [ 1 ] ), false, false );
+							guiGridListSetItemData ( source, row, 1, table.concat({_data[2], _data[3], _data[4]},"," ) );
+						end 
 					end 
-				end
-			else 
-				if ( t == "<< Back <<" ) then
-					appFunctions.waypoints:onPanelLoad ( )
-					return
-				end
-
-				local d = guiGridListGetItemData ( source, r, 1 )
-				local x, y, z = d[2], d[3], d[4]
-				exports.NGPlayerFunctions:createWaypointLoc ( x, y, z )
-				if ( WaypointPage == "players" ) then
-					if ( not getPlayerFromName ( t ) ) then
-						exports.NGPlayerFunctions:waypointUnlocate()
-						return exports.NGMessages:sendClientMessage ( "Player not found", 255, 255, 0 )
-					end
-					exports.NGPlayerFunctions:setWaypointAttachedToElement ( getPlayerFromName ( t ) )
-				end
-			end
+					
+				end 
+			end 
+			
+			if ( text == "<< Back <<" ) then 
+				guiGridListClear ( source );
+				appFunctions.waypoints:onPanelLoad ( );
+				WaypointPage = "main";
+			elseif ( guiGridListGetItemData ( source, row, 1 ) ) then 
+				local pos = split ( guiGridListGetItemData ( source, row, 1 ), "," );
+				if ( #pos == 3 ) then 
+					if ( WaypointPage ~= "Players" ) then
+						local x, y, z = tonumber(pos[1]), tonumber(pos[2]), tonumber(pos[3])
+						if ( exports.ngplayerfunctions:createWaypointLoc ( x, y, z ) ) then
+							exports.ngmessages:sendClientMessage( "Now tracking '"..tostring(guiGridListGetItemText(source,row,1)).."'", 255, 255, 0 );
+						end
+					else 
+						if ( getPlayerFromName ( text ) ) then
+							if ( exports.ngplayerfunctions:createWaypointLoc ( 0, 0, 0 ) and exports.ngplayerfunctions:setWaypointAttachedToElement ( getPlayerFromName ( text ) ) ) then
+								exports.ngmessages:sendClientMessage( "Now tracking "..tostring(text), 255, 255, 0 );
+							else 
+								exports.ngmessages:sendClientMessage ( "Unable to track this player!", 200, 60, 60 );
+							end
+						else 
+							exports.ngmessages:sendClientMessage ( "Sorry, that player has changed their name or has disconnected", 200, 60, 60 );
+						end 
+					end 
+				end 
+			end 
+			
+			
 		elseif ( source == pages['waypoints'].add ) then
 			appFunctions.waypoints:addWaypoint ( )
 		end

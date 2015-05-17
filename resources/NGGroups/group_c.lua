@@ -7,6 +7,8 @@ local group = nil
 local gList = nil
 
 function createGroupGui ( )
+	exports.ngmessages:sendClientMessage ( "Loading interface, please wait...", 255, 255, 0 );
+
 	gui = { 
 		main ={ }, 
 		info = { create = { }, invites = { }, motd = { } }, 
@@ -198,10 +200,6 @@ function createGroupGui ( )
 		gui.my.motd.update = guiCreateButton(374, 370, 144, 30, "Update", false, gui.my.motd.window)
 		gui.my.motd.cancel = guiCreateButton(220, 370, 144, 30, "Cancel", false, gui.my.motd.window)
 
-	-- GUI events
-	addEventHandler ( "onClientGUIClick", root, onClientGuiClick )
-	addEventHandler ( "onClientGUIChanged", root, onClientGuiChanged )
-
 
 	local sx, sy = sx__, sy__
 	local doElements = { }
@@ -266,6 +264,10 @@ end
 
 function loadGroupPage ( p, AllowElementsToStay )
 	if ( not AllowElementsToStay ) then
+		if ( not gui ) then 
+			return exports.ngmessages:sendClientMessage ( "Please allow the GUI to finish loading...", 255, 255, 0 );
+		end 
+	
 		for i, t in pairs ( gui ) do 
 			for _, v in pairs ( t ) do 
 				if ( type ( v ) ~= "table" ) then
@@ -352,17 +354,20 @@ function loadGroupPage ( p, AllowElementsToStay )
 		gui.info.invites.window.visible = true
 		guiBringToFront(  gui.info.invites.window )
 		guiGridListClear ( gui.info.invites.list )
-		local a = getElementData ( localPlayer, "AccountData:Username" )
-		local c = 0
+		
 		for i, v in pairs ( gList ) do 
-			if ( v.pendingInvites and v.pendingInvites [ a ] ) then
-				local r = guiGridListAddRow ( gui.info.invites.list )
-				guiGridListSetItemText ( gui.info.invites.list, r, 1, tostring ( i ), false, false )
-				guiGridListSetItemText ( gui.info.invites.list, r, 2, tostring ( v.pendingInvites[a].time ), false, false )
-				guiGridListSetItemText ( gui.info.invites.list, r, 3, tostring ( v.pendingInvites[a].inviter ), false, false )
-				c=1
+			if ( #v.pendingInvites > 0 ) then
+				for index, info in pairs ( v.pendingInvites ) do 
+					if ( info.to == getElementData ( localPlayer, "AccountData:Username" ) ) then
+						local r = guiGridListAddRow ( gui.info.invites.list )
+						guiGridListSetItemText ( gui.info.invites.list, r, 1, tostring ( i ), false, false )
+						guiGridListSetItemText ( gui.info.invites.list, r, 2, tostring ( info.time ), false, false )
+						guiGridListSetItemText ( gui.info.invites.list, r, 3, tostring ( info.inviter ), false, false )
+					end
+				end
 			end 
 		end 
+		
 
 	elseif ( p == "my.basicInfo" ) then
 		guiSetVisible ( gui.my.basic.window, true )
@@ -838,8 +843,11 @@ addEvent ( "NGGroups->onServerSendClientGroupList", true )
 addEventHandler ( "NGGroups->onServerSendClientGroupList", root, function ( g ) 
 	gList = g
 	loadGroupPage ( "core.info" ) 
+	
+	addEventHandler ( "onClientGUIClick", root, onClientGuiClick )
+	addEventHandler ( "onClientGUIChanged", root, onClientGuiChanged )
 
-	-- Make sure the users group is valid
+	--[[ Make sure the users group is valid
 	if ( group and not gList [ group ] ) then
 		group = nil
 		rank = nil
@@ -856,7 +864,7 @@ addEventHandler ( "NGGroups->onServerSendClientGroupList", root, function ( g )
 		onPlayerOpenPanel ( )
 		onPlayerOpenPanel ( )
 		return false
-	end 
+	end ]]
 
 
 end )

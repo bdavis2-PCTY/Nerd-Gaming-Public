@@ -33,7 +33,8 @@
 			
 		<setting 
 			name="MYSQL_PORT"
-			value="3306" accept="Port #" 
+			value="3306" 
+            accept="Port #" 
 			description="Port for you MySQL Database" />
 			
 		<setting 

@@ -32,3 +32,16 @@ addEventHandler ( "NGJail:StopJailClientTimer", root, function ( )
 	l_tick = nil
 	removeEventHandler ( "onClientRender", root, dxDrawRemainingJailTime )
 end )
+
+
+-------------------------------
+-- Export functions 
+-- Implemented in NG V1.1.3
+-------------------------------
+function isPlayerJailed ( )
+	return ( 
+		getElementData ( localPlayer, 'NGPolice:JailTime' ) and 
+		tonumber ( getElementData ( localPlayer, 'NGPolice:JailTime' ) ) 
+		) and 
+		tonumber ( getElementData ( localPlayer, 'NGPolice:JailTime' ) ) > 0
+end

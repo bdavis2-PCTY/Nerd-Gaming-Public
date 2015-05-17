@@ -18,7 +18,9 @@ function makeGui ( )
 
 	img = GuiStaticImage.create(sx*61, sy*34, sx*272, sy*150, ":NGLogin/files/logo.png", false, window)
 
-	info = GuiLabel.create(sx*61, sy*234, sx*569, sy*186, "This is my text", false, window)
+	scrollpane = guiCreateScrollPane ( sx*61, sy*234, sx*569, sy*186, false, window )
+	
+	info = GuiLabel.create(0,0, sx*500, sy*186, "This is my text", false, scrollpane)
 	info:setFont  ( "default-bold-small" )
 	info:setHorizontalAlign  ( "left", true )
 
@@ -43,7 +45,18 @@ function onGuiClick ( )
 		info.text = "No item selected.";
 		local r, c = guiGridListGetSelectedItem ( source )
 		if ( r ~= -1) then
-			info.text = tostring ( guiGridListGetItemData ( grid, r, 1 ) ) 
+			local txt = tostring ( guiGridListGetItemData ( grid, r, 1 ) );
+			info.text = txt;
+			
+			-- Calculate the height of the label
+			local height = (string.len(txt)-string.len(string.gsub(txt,'\n','')))*15
+			
+			if ( height < sy*186 ) then 
+				height = sy*186
+			end
+			
+			guiSetSize ( info, sx*500, height, false );
+			
 		end 
 	elseif ( source == im2 ) then
 		cancelEvent ( )

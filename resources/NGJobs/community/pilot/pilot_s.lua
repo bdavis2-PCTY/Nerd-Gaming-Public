@@ -2,23 +2,27 @@ addEvent ( "NGJobs->Module->Job->Pilot->OnClientRequestF5Data", true )
 addEventHandler ( "NGJobs->Module->Job->Pilot->OnClientRequestF5Data", root, function ( )
 	local data = { }
 	local flights = getJobColumnData ( getAccountName ( getPlayerAccount ( source ) ), getDatabaseColumnTypeFromJob ( "pilot" ) )
-	data.flights = flights
+	data.flights = flights or 0
+	data.nextRank = "None"
+	data.requiredFlights = 0
+	data.rank = getElementData ( source, "Job Rank" ) or jobRanks [ 'pilot'] [ 0 ];
 
-	local nextrank = "None"
 	local rankTable = { }
-
+	local isNext = false;
+	for i, v in pairs ( foreachinorder ( jobRanks [ 'pilot'] ) ) do 
+		if ( isNext ) then 
+			data.nextRank = v[2];
+			data.requiredFlights = v[1] - data.flights;
+			isNext = false;
+			break;
+		end 
+		
+		if ( v[2]:lower() == data.rank:lower() ) then 
+			isNext = true;
+		end 
+	end 
+	
+	
+	triggerClientEvent ( source, "NGJobs->Module->Job->Pilot->onServerSendClientJobInfo", source, data );
 	
 end )
-
-function foreachinorder(t, f, cmp)
-    local keys = {}
-    for k,_ in pairs(t) do
-        keys[#keys+1] = k
-    end
-    table.sort(keys,cmp)
-    local data = { }
-    for _, k in ipairs ( keys ) do 
-    	table.insert ( data, { k, t[k] } )
-    end 
-    return data
-end

@@ -229,8 +229,9 @@ y=y+B  aTab1.VehicleHealth	= guiCreateLabel ( 0.26, y, 0.25, 0.04, "Vehicle Heal
 		aTab3.FPSSet		= guiCreateButton ( 0.50, 0.65, 0.10, 0.04, "Set", true, aTab3.Tab, "setfpslimit" )
 					 	 guiCreateLabel ( 0.63, 0.65, 0.1, 0.04, "( 25-100 )", true, aTab3.Tab )
 					 	 
-
-		aTab4 = {}
+		
+		-- Server Bans
+		--[[aTab4 = {}
 		aTab4.Tab			= guiCreateTab ( "Bans", aTabPanel, "bans" )
 		aTab4.BansList		= guiCreateGridList ( 0.03, 0.05, 0.80, 0.87, true, aTab4.Tab )
 						  guiGridListAddColumn( aTab4.BansList, "Name", 0.22 )
@@ -251,7 +252,8 @@ y=y+B  aTab1.VehicleHealth	= guiCreateLabel ( 0.26, y, 0.25, 0.04, "Vehicle Heal
 
 		aTab4.BansTotal		= guiCreateLabel ( 0.20, 0.94, 0.31, 0.04, "Showing  0 / 0  bans", true, aTab4.Tab )
 		aTab4.BansMore		= guiCreateButton ( 0.50, 0.94, 0.13, 0.04, "Get more...", true, aTab4.Tab, "listbans" )
-
+		]]
+		
 		aTab5 = {}
 		aTab5.Tab			= guiCreateTab ( "Admin Chat", aTabPanel, "adminchat" )
 		aTab5.AdminChat		= guiCreateMemo ( 0.03, 0.05, 0.75, 0.85, "", true, aTab5.Tab )
@@ -307,6 +309,7 @@ y=y+B  aTab1.VehicleHealth	= guiCreateLabel ( 0.26, y, 0.25, 0.04, "Vehicle Heal
 		--if ( tonumber ( aGetSetting ( "adminChatLines" ) ) ) then guiSetText ( aTab6.AdminChatLines, aGetSetting ( "adminChatLines" ) ) end
 		if ( ( tonumber ( aGetSetting ( "refreshDelay" ) ) ) and ( tonumber ( aGetSetting ( "refreshDelay" ) ) >= 50 ) ) then guiSetText ( aTab6.RefreshDelay, aGetSetting ( "refreshDelay" ) ) end
 
+	
 		addEventHandler ( "aClientLog", _root, aClientLog )
 		addEventHandler ( "aClientAdminChat", _root, aClientAdminChat )
 		addEventHandler ( "aClientSync", _root, aClientSync )
@@ -583,11 +586,11 @@ function aClientGUITabSwitched( selectedTab )
 					triggerServerEvent ( "getMaps_s", localPlayer, localPlayer, true ) 
 				end
 			end
-		elseif selectedTab == aTab4.Tab then
+		--[[elseif selectedTab == aTab4.Tab then
 			if not g_GotLatestBansList then
 				-- Request full bans list if bans tab is selected and current list is out of date
 				triggerServerEvent ( "aSync", localPlayer, "bans" )
-			end
+			end]]
 		end	
 	end 
 end
@@ -1075,7 +1078,7 @@ function aClientClick ( button )
 			triggerServerEvent ( "aSync", localPlayer, "server" )
 			end
 		-- TAB 4, BANS
-		elseif ( getElementParent ( source ) == aTab4.Tab ) then
+		--[[elseif ( getElementParent ( source ) == aTab4.Tab ) then
 			if ( source == aTab4.Details ) then
 				if ( guiGridListGetSelectedItem ( aTab4.BansList ) == -1 ) then
 					aMessageBox ( "error", "No ban row selected!" )
@@ -1106,7 +1109,7 @@ function aClientClick ( button )
 				triggerServerEvent ( "aSync", localPlayer, "bans" )
 			elseif ( source == aTab4.BansMore ) then
 				triggerServerEvent ( "aSync", localPlayer, "bansmore", guiGridListGetRowCount( aTab4.BansList ) )
-			end
+			end]]
 		-- TAB 5, ADMIN CHAT
 		elseif ( getElementParent ( source ) == aTab5.Tab ) then
 			if ( source == aTab5.AdminSay ) then

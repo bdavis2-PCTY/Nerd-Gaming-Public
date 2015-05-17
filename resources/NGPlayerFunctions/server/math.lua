@@ -32,7 +32,7 @@ function createMathProblem ( p )
 		createMathProblem ( )
 	end
 end 
-setTimer ( createMathProblem, 600000, 0 )
+setTimer ( createMathProblem, 900000, 0 )
 addCommandHandler ( "math", createMathProblem )
 
 addCommandHandler ( "result", function ( p, cmd, answer )

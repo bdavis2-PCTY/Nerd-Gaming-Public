@@ -43,37 +43,31 @@ WayPointLocs = {
 	['Custom'] = { },
 }
 
-function appFunctions.waypoints:reloadUserWaypoints( isFailed ) 
-	WayPointLocs.Custom = { }
-	WayPointLocs.Custom['Your waypoints'] = { }
-	
-	local d = fromJSON ( tostring ( getSetting ( "user_waypoints" ) ) )
-	if ( not d or type ( d ) ~= "table" ) then
-		updateSetting ( "user_waypoints", toJSON ( { } ) )
-		if ( isFailed ) then
-			outputChatBox ( "Loading Failed" )
-			return
-		end
-		
-		appFunctions.waypoints:reloadUserWaypoints ( true )
-		return
-	end
-	
-	for i, v in pairs ( d ) do
-		table.insert ( WayPointLocs.Custom['Your waypoints'], v )
-	end
-end
-setTimer ( function ( )
-	appFunctions.waypoints:reloadUserWaypoints ( false )
-end, 1000, 1 )
-
 function appFunctions.waypoints:onPanelLoad ( )
 	WaypointPage = "main"
 	guiGridListClear ( pages['waypoints'].grid  )
+	WayPointLocs.Custom = { }
+	WayPointLocs.Players = { }
+	
 	for i, v in pairs ( WayPointLocs ) do
 		local r = guiGridListAddRow ( pages['waypoints'].grid  )
 		guiGridListSetItemText ( pages['waypoints'].grid , r, 1, tostring ( i ), false, false )
 	end
+	
+	local waypns = fromJSON ( getSetting ( "user_waypoints" ) );
+	if ( type ( waypns ) == "table" ) then 
+		for i,v in pairs ( waypns ) do 
+			table.insert(WayPointLocs.Custom,v);
+			--outputDebugString(string.format("Loading waypoint '%s' (%s, %s, %s)",unpack(v)))
+		end 
+	end 
+	
+	for _, p in pairs ( getElementsByType ( "player" ) ) do
+		if ( p ~= localPlayer ) then
+			local x, y, z = getElementPosition ( p )
+			table.insert(WayPointLocs.Players,{getPlayerName(p),x,y,z})
+		end
+	end 
 end
 
 function appFunctions.waypoints:addWaypoint ( )
@@ -85,8 +79,8 @@ function appFunctions.waypoints:addWaypoint ( )
 	end
 	
 	local x, y, z = getElementPosition ( localPlayer ) 
-	table.insert ( WayPointLocs.Custom['Your waypoints'], { name, x, y, z } )
-	updateSetting ( "user_waypoints", toJSON ( WayPointLocs.Custom['Your waypoints'] ) )
+	table.insert ( WayPointLocs.Custom, { name, x, y, z } )
+	updateSetting ( "user_waypoints", toJSON ( WayPointLocs.Custom ) )
 	exports.NGMessages:sendClientMessage ( "You have added the '"..tostring(name).."' waypoint!", 0, 255, 0 )
 	appFunctions.waypoints:onPanelLoad ( )
 	guiSetText ( pages['waypoints'].add_name, '' )

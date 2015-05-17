@@ -39,6 +39,8 @@
     <export function="outputDxLog" type="client" />
     <export function="createWaypointLoc" type="client" />
     <export function="waypointUnlocate" type="client" />
+    <export function="waypointIsTracking" type="client" />
+    <export function="setWaypointAttachedToElement" type="client" />
     
 	
 	<!-- Shared -->
@@ -47,6 +49,6 @@
     <export function="getToday" type="server" />
     
 	
-	<!-- Other Shit -->
+	<!-- Others  -->
     <min_mta_version server="1.3.4-0.00000" client="1.3.5"></min_mta_version>
 </meta>

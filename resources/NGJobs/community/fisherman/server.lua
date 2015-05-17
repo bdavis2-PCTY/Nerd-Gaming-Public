@@ -8,8 +8,6 @@ local netloads =  {
 	["Underwater Trap Setter"]=150
 }
 
-local col = getDatabaseColumnTypeFromJob ( "fisherman" )
-
 addEvent ( "NGJobs:Fisherman:onClientSellCatch", true )
 addEventHandler ( "NGJobs:Fisherman:onClientSellCatch", root, function ( t, items, prices )
 	givePlayerMoney ( source, t )
@@ -46,26 +44,30 @@ addEventHandler ( "NGJobs:Fisherman:getClientNetLimit", root, fisherman_refreshM
 addEvent ( "NGJobs:Fisherman:GetClientFisherStatsForInterface", true )
 addEventHandler ( "NGJobs:Fisherman:GetClientFisherStatsForInterface", root, function ( )
 	
-	local account_ = getAccountName(getPlayerAccount(source))
-	local job_ = getElementData ( source, "Job" )
-	local rank_ = getElementData ( source, "Job Rank" )
-	local caught = tonumber ( getJobColumnData ( account_, col ) ) or 0
-	local nextRank_ = "None"
-	local requiredCatchesForNext_ = "No"
+	local data = { }
+	data.account = getAccountName(getPlayerAccount(source));
+	data.job = getElementData ( source, "Job" );
+	data.jobRank = getElementData ( source, "Job Rank" );
+	data.caughtFish = tonumber ( getJobColumnData ( data.account, getDatabaseColumnTypeFromJob ( "fisherman" ) ) ) or 0
+	data.nextRank = nil;
+	data.requiredCatches = nil;
 	
-	local k = 0
-	local dn = false
+	local isNext = false;
+	for _, v in ipairs ( foreachinorder ( jobRanks['fisherman'] ) ) do 
+		if ( isNext ) then 
+			data.nextRank = v[2];
+			data.requiredCatches = v[1] - data.caughtFish;
+			break;
+		end 
+
+		if ( v[2]:lower() == data.jobRank:lower() ) then 
+			isNext = true;
+		end 
+	end 
 	
-	for i, v in pairs ( jobRanks [ 'fisherman' ] ) do
-		k = k + 1
-		if ( dn ) then
-			nextRank_ = v
-			requiredCatchesForNext_ = i - caught
-		end
-		if ( v == rank_ ) then dn = true end
-	end
-	local d = { job = job_, jobRank = rank_, caughtFish = caught, nextRank = nextRank_, requiredCatchesForNext = requiredCatchesForNext_, account = account_ }
-	triggerClientEvent ( source, "NGJobs:Fisherman:OnServerSendClientJobInformationForInterface", source, d )
+	
+	
+	triggerClientEvent ( source, "NGJobs:Fisherman:OnServerSendClientJobInformationForInterface", source, data )
 end )
 
 for i, v in ipairs ( getElementsByType ( "player" ) ) do
