@@ -71,11 +71,8 @@ Level 4-5 - /am: Account manager<br />
 level 4-5 - /ngupdate: Check for NG Gamemode update<br />
 <br />
 <h3>Bugs</h3>
- - The GPS in the phone doesn't work
- - Scrolling for F1 doesn't work
- - Players being arrested can disconnect and avoid arrest
- - Players in jail can type /kill and escape
-
+<em>Currently none known</em>
+<br /><br />
 If you find any bugs, please report them to me.<br />
 Add me on Skype: Madex-MTA<br />
 Message me on the MTA Forum: <a href='http://forum.mtasa.com/memberlist.php?mode=viewprofile&u=65297'>xXMADEXx</a>
