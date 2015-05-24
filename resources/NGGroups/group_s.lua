@@ -697,6 +697,21 @@ addEventHandler ( "NGGroups->GEvents:onPlayerClearGroupLog", root, function ( gr
 	group = nil
 end ) 
 
+addEvent( "NGGroups->GroupStaff:OnAdminDeleteGroup", true );
+addEventHandler ( "NGGroups->GroupStaff:OnAdminDeleteGroup", root, function ( group )
+	exports.nglogs:outputActionLog ( "Staff "..source.name.." ("..source.account.name..") delete the '"..group.."' group" );
+	
+	for _, p in pairs ( getElementsByType ( "player" ) ) do 
+		if ( tostring ( getElementData ( p, "Group" ) ) == group ) then 
+			outputChatBox ( "Admin "..tostring(source.name).." has deleted your group.", p, 255, 0, 0 );
+		end 
+	end 
+	
+	deleteGroup ( group );
+	
+	refreshPlayerGroupPanel ( source );
+end );
+
 
 ------------------------------
 -- Misc Functions			--
