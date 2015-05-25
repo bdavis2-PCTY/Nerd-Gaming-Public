@@ -1,0 +1,12 @@
+<meta>
+	<info author="NG Scripting Team" version="1.0" type="script" name="NG Used Vehicle Shop" />
+	
+	<file src="blip.png" />
+	
+	<script src="c_used_vehicles.lua" type="client" />
+	<script src="c_sell_vehicle.lua" type="client" />
+	<script src="confirm_c.lua" type="client" />
+	<script src="s_used_vehicles.lua" type="server" />
+	
+	<min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000" />
+</meta>

@@ -196,7 +196,8 @@ local UserSettings = {
 		{ "UserSettings_ShowSpeedGraph", 			"Toggle vehicle speed meter graph" 	},
 		{ "usersetting_display_vipchat", 			"Toggle VIP Chat (VIP Only)" 		},
 		{ "usersettings_display_clouds",			"Toggle Clouds"						},
-		{ "usersettings_display_clienttoserverstats","Show client-server stats"			}},
+		{ "usersettings_display_clienttoserverstats","Show client-server stats"			},
+	},
 	
 	['Blips'] = {
 		{ "usersetting_display_createfuelblips", 		"Fuel station blips" 			},
@@ -208,13 +209,16 @@ local UserSettings = {
 		{ "usersetting_display_usershopblips", 			"User Shop Blips"				},
 		{ "usersetting_display_vehicleshopblips", 		"Vehicle Shop Blips"			},
 		{ "usersetting_display_gymblips",				"Gym Blips"						},
-		{ "usersetting_display_modshopblips",			"Modshop Blips"					}},
+		{ "usersetting_display_modshopblips",			"Modshop Blips"					},
+		{ "usersetting_display_usedvehicleshopblips",	"Use Vehicle Shop Blips"		},
+	},
 		
 	['Notifications'] = {
 		{ "usersetting_notification_joinquitmessages", 		"Show join/quit messages" 	},
 		{ "usersetting_notification_nickchangemessages", 	"Show name change messages" },
 		{ "usersettings_showmoneylogs", 					"Toggle money messages"     },
-		{ "usersettings_display_lowfpswarning",				"Low FPS notifications"		}},
+		{ "usersettings_display_lowfpswarning",				"Low FPS notifications"		},
+	},
 		
 	['Shaders'] = {
 		{ "usersetting_shader_bloom", 				"Bloom" 			},
@@ -224,7 +228,8 @@ local UserSettings = {
 		{ "usersetting_shader_roadshine", 			"Road Shine" 		},
 		{ "usersetting_shader_vehiclereflections", 	"Vehicle Reflections"},
 		{ "usersetting_shader_water", 				"Water quality" 	},
-		{ "usersetting_shader_wetroad", 			"Wet Roads" 		}},
+		{ "usersetting_shader_wetroad", 			"Wet Roads" 		},
+	},
 		
 	['Others'] = {
 		{ "usersetting_misc_playsoundonguiclick", 	"Play sound when clicking GUI buttons" },
@@ -248,7 +253,7 @@ local SettingPreferences = {
 		['usersetting_misc_playsoundonguiclick'] = true,		['usersettings_display_clouds'] = true,
 		['usersetting_display_usershopblips'] = true,			['usersettings_display_clienttoserverstats']=true,
 		['usersettings_display_lowfpswarning'] = true,			['usersetting_display_gymblips'] = true,
-		["usersetting_display_modshopblips"] = true,
+		["usersetting_display_modshopblips"] = true,			['usersetting_display_usedvehicleshopblips'] = true,
 
 	}, 
 	['performance'] = {
@@ -267,7 +272,7 @@ local SettingPreferences = {
 		['usersetting_misc_playsoundonguiclick'] = false,		['usersettings_display_clouds'] = false,
 		['usersetting_display_usershopblips'] = false,			['usersettings_display_clienttoserverstats'] = false,
 		['usersettings_display_lowfpswarning'] = false,			['usersetting_display_gymblips'] = false,
-		["usersetting_display_modshopblips"] = false,
+		["usersetting_display_modshopblips"] = false,			['usersetting_display_usedvehicleshopblips'] = false,
 	},
 	['mix'] = {
 		['UserSettings_UseCustomRadio'] = false, 				['UserSettings_UseCustomHud'] = false,
@@ -285,7 +290,7 @@ local SettingPreferences = {
 		['usersetting_misc_playsoundonguiclick'] = true,		['usersettings_display_clouds'] = false,
 		['usersetting_display_usershopblips'] = true,			['usersettings_display_clienttoserverstats'] = true,
 		['usersettings_display_lowfpswarning'] = true,			['usersetting_display_gymblips'] = true,
-		["usersetting_display_modshopblips"] = true
+		["usersetting_display_modshopblips"] = true,			['usersetting_display_usedvehicleshopblips'] = false,
 	}
 }
 
