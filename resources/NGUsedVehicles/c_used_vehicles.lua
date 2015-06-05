@@ -28,7 +28,7 @@ addEventHandler ( "onClientResourceStart", resourceRoot, function ( )
 				points.blip[i] = exports.customblips:createCustomBlip ( x, y, 20, 20, "blip.png", 245 )
 			end 
 		end 
-	end, 50, 1 );
+	end, 1500, 1 );
 end );
 
 addEvent( "onClientUserSettingChange", true );
@@ -94,7 +94,7 @@ function createWindow ( )
 	guiSetVisible ( gui.details.window, false );
 	gui.details.details = guiCreateMemo(sx*9, sy*21, sx*459, sy*317, "", false, gui.details.window)
 	guiMemoSetReadOnly(gui.details.details, true)
-	gui.details.ok = guiCreateButton(sx*10, sx*348, sy*458, sy*28, "OK!", false, gui.details.window)
+	gui.details.ok = guiCreateButton(sx*10, sy*348, sy*458, sy*28, "OK!", false, gui.details.window)
 
 	showCursor ( true );
 	exports.ngmessages:sendClientMessage ( "Please wait as the used vehicle shop is loaded", 255, 140, 0 );

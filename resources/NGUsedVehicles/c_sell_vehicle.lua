@@ -33,7 +33,7 @@ function createSellWindow ( )
 			color = { 255, 0, 0 }
 		end 
 		
-		guiGridListSetItemText ( sell.list, r, 1, getVehicleNameFromID ( var.ID ), false, false );
+		guiGridListSetItemText ( sell.list, r, 1, getVehicleNameFromModel ( var.ID ), false, false );
 		guiGridListSetItemText ( sell.list, r, 2, visible, false, false );
 		guiGridListSetItemText ( sell.list, r, 3, impounded, false, false );
 		guiGridListSetItemData ( sell.list, r, 1, var );
