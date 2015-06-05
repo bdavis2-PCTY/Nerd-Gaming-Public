@@ -164,6 +164,9 @@ function modTheVehicle( vehicle, upgrades, colors, paintjob, shopName )
         if trigger then
             triggerEvent( "onVehicleMod", vehicle, upgs, colors, paintjob, shopname )
         end
+		
+		local rx, ry, rz = getElementRotation ( vehicle );
+		setElementRotation ( vehicle, rx, ry, rz - 180 );
     end
 end
 

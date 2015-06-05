@@ -47,7 +47,8 @@ addEventHandler( "onClientPlayerEnterModShop", g_root,
             showUpgradeButtons()
             upgradeChanged = { }
             newUpgrades = { }
-            outputChatBox( "#FFFF00Welcome to #00FF00".. shopname .." #FFFF00mod shop!", 0,0,0, true )
+            
+			-- outputChatBox( "#FFFF00Welcome to #00FF00".. shopname .." #FFFF00mod shop!", 0,0,0, true )
             
             emptyShoppingCart( )
             guiSetText( shoppingCostLbl, "0" )
@@ -400,7 +401,9 @@ end
 
 function hideAllButtonsInMainWnd( )
     for i = 1, 17 do
-        guiSetVisible( shopGUI.buttons[ i ], false )
+		if ( isElement ( shopGUI.buttons[ i ] ) ) then
+			guiSetVisible( shopGUI.buttons[ i ], false )
+		end
     end
     guiSetVisible( shopGUI.buttons[ "Paintjob" ], false )
 end
@@ -428,29 +431,31 @@ function performAction( button )
         end
         
         for i = 1, 17 do
-            if buttonName == guiGetText( shopGUI.buttons[ i ] ) then
-                if not hideSubToo and btnPressed ~= shopGUI.buttons[ i ] then
-                    if guiGetVisible( colorsWnd ) then
-                        guiSetVisible( colorsWnd, false )
-                        colorButtonClicked( "hide" )
-                    end
-                    showSpecificSlotWindow( i - 1 )
-                    btnPressed = shopGUI.buttons[ i ]
-                    removeEventHandler( "onClientGUIClick", getResourceRootElement( ), performAction )
-                    return
-                elseif guiGetText( shopGUI.buttons[ i ] ) == guiGetText( upgradeGUI.wnd ) then
-                    removeEventHandler( "onClientGUIClick", getResourceRootElement( ), performAction )
-                    addEventHandler( "onClientRender", getRootElement(), contractSubWindow )
-                    btnPressed = shopGUI.buttons[ i ]
-                    return
-                elseif source ~= upgradeGUI.wnd and source ~= shopGUI.wnd then
-                    showNewSub = true
-                    showSpecificSlotWindow( guiGetText( source ) )
-                    removeEventHandler( "onClientGUIClick", getResourceRootElement( ), performAction )
-                    btnPressed = shopGUI.buttons[ i ]
-                    return
-                end
-            end
+			if ( isElement ( shopGUI.buttons[ i ] ) ) then 
+				if buttonName == guiGetText( shopGUI.buttons[ i ] ) then
+					if not hideSubToo and btnPressed ~= shopGUI.buttons[ i ] then
+						if guiGetVisible( colorsWnd ) then
+							guiSetVisible( colorsWnd, false )
+							colorButtonClicked( "hide" )
+						end
+						showSpecificSlotWindow( i - 1 )
+						btnPressed = shopGUI.buttons[ i ]
+						removeEventHandler( "onClientGUIClick", getResourceRootElement( ), performAction )
+						return
+					elseif guiGetText( shopGUI.buttons[ i ] ) == guiGetText( upgradeGUI.wnd ) then
+						removeEventHandler( "onClientGUIClick", getResourceRootElement( ), performAction )
+						addEventHandler( "onClientRender", getRootElement(), contractSubWindow )
+						btnPressed = shopGUI.buttons[ i ]
+						return
+					elseif source ~= upgradeGUI.wnd and source ~= shopGUI.wnd then
+						showNewSub = true
+						showSpecificSlotWindow( guiGetText( source ) )
+						removeEventHandler( "onClientGUIClick", getResourceRootElement( ), performAction )
+						btnPressed = shopGUI.buttons[ i ]
+						return
+					end
+				end
+			end
         end
     end
 end
@@ -531,7 +536,9 @@ function layoutButtons( slotname )
         guiSetSize( upgradeGUI.wnd, upgWidth, rowHeight * rows + headerHeight + footerHeight + 40, false )
         guiSetSize( upgradeGUI.gridList.grd, upgWidth, (rowHeight * rows) + headerHeight + footerHeight, false )
         guiSetSize( upgradeGUI.wnd, upgWidth, 0, false )
-        guiSetPosition( upgradeGUI.wnd, guiGetPosition( shopGUI.wnd, false ), false )
+		
+		local __x, __y = guiGetPosition( shopGUI.wnd, false )
+        guiSetPosition( upgradeGUI.wnd, __x, __y, false )
         guiSetVisible( upgradeGUI.wnd, true )
         addEventHandler( "onClientRender", getRootElement(), flyIn_window )
     end
@@ -807,6 +814,8 @@ end
 
 
 function getBtnsInWindow( )
+	if ( not btnPressed ) then return { } end 
+
     local slotname = guiGetText( btnPressed )
     local upgrades = getVehicleCompatibleUpgrades( moddingVeh )
     local btns = 1
