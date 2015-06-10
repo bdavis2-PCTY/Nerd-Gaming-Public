@@ -19,7 +19,7 @@ addEventHandler ( "onClientResourceStart", resourceRoot, function ( )
 			local x, y, z = unpack ( loc )
 			points.marker[i] = createMarker ( x, y, z - 1, 'cylinder', 3.5, 255, 140, 0, 120 );
 			addEventHandler ( "onClientMarkerHit", points.marker[i], function ( p )
-				if ( p == localPlayer ) then 
+				if ( p == localPlayer and not isPedInVehicle ( p ) ) then 
 					createWindow ( )
 				end 
 			end );
