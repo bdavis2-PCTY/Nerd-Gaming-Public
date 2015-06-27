@@ -1,0 +1,234 @@
+-- Links --
+
+Community: https://community.multitheftauto.com/index.php?p=resources&s=details&id=9510
+Forum: http://forum.mtasa.com/viewtopic.php?f=108&t=76902
+Wiki: https://wiki.multitheftauto.com/wiki/Resource:Gang_Manager
+
+
+-- Client --
+
+createGang ( string GangName )
+  Required Arguments:
+   (string) GangName      -- Name of the gang you wish to create
+  Returns:
+   (string) Gang          -- ID of the gang that was created
+
+deleteGang ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to delete
+  Returns:
+   (boolean) Success      -- Boolean that is true if the gang was deleted or false otherwise
+
+getPlayerGang ( player Player )
+  Required Arguments:
+   (player) Player        -- Player element whose gang ID you want to get
+  Returns:
+   (string) Gang          -- ID of the gang the player is currently in
+
+getPlayerLevel ( player Player )
+  Required Arguments:
+   (player) Player        -- Player element whose gang level you want to get
+  Returns:
+   (integer) Level        -- Level of the player in the gang he is currently in
+
+isPlayerLeader ( player Player )
+  Required Arguments:
+   (player) Player        -- Player element who you want to check if he is the leader of his current gang
+  Returns:
+   (boolean) IsLeader     -- Boolean that is true if player is leader of his current gang and false otherwise
+
+leaveGang ( player Player )
+  Required Arguments:
+   (player) Player        -- Player who you want to leave his current gang that he is in
+  Returns:
+   (boolean) Success      -- Boolean that is true if player left his gang or false if player is the current leader of his gang
+
+outputGangChat ( string Gang, string AccountName, string PlayerName, string Message )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to output message to
+   (string) AccountName   -- Name of the account that is the source of the message (can be any string)
+   (string) PlayerName    -- Name of the player that is the source of the message (can be any string)
+   (string) Message       -- Message to output to gang chat
+  Returns:
+   (boolean) Success      -- Boolean that is true if message was successfully sent or false otherwise
+
+setPlayerGang ( player Player, string Gang )
+  Required Arguments:
+   (player) Player        -- Player element whose gang you want to set
+   (string) Gang          -- ID of the gang that you want to set as the player's gang
+  Returns:
+   (boolean) Success      -- Boolean that is true if the player's gang has been set or false if the player already is in the gang
+
+setPlayerLevel ( player Player, integer Level )
+  Required Arguments:
+   (player) Player        -- Player whose level you want to change
+   (integer) Level        -- Integer of the level you want to set as player's level from 1 to 5
+  Returns:
+   (boolean) Success      -- Boolean that is true if the level was changed successfully or false otherwise
+
+
+-- Server --
+
+createGang ( string GangName )
+  Required Arguments:
+   (string) GangName      -- Name of the gang you wish to create
+  Returns:
+   (string) Gang          -- ID of the gang that was created
+
+deleteGang ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to delete
+  Returns:
+   (boolean) Success      -- Boolean that is true if the gang was deleted or false otherwise
+
+getGangColor ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang that you want to get colors of
+  Returns:
+   (integer) R            -- Amount of red from 0 to 255
+   (integer) G            -- Amount of green from 0 to 255
+   (integer) B            -- Amount of blue from 0 to 255
+
+getGangLeader ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang that you want to get leader of
+  Returns:
+   (string) AccountName   -- Account name of the account that is used by a gang leader
+
+getGangMoney ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to get money of
+  Returns:
+   (integer) Money        -- Amount of money that is currently deposited in the gang
+
+getGangName ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to get name of
+  Returns:
+   (string) GangName      -- Name of the gang
+
+getGangPermissions ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to get permissions of
+  Returns:
+   (integer) MinSettings  -- Minimal member level required to edit settings
+   (integer) MinRules     -- Minimal member level required to edit rules
+   (integer) MinDeposit   -- Minimal member level required to deposit money
+   (integer) MinWithdraw  -- Minimal member level required to withdraw money
+   (integer) MinLevel     -- Minimal member level required to change level of members with lower level
+   (integer) MinInvKick   -- Minimal member level required to invite and kick members with lower level
+
+getGangRules ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to get rules of
+  Returns:
+   (string) Rules         -- Rules of the gang
+
+getGangTag ( string Gang )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to get tag of
+  Returns:
+   (string) Tag           -- Tag of the gang
+
+getPlayerGang ( player Player )
+  Required Arguments:
+   (player) Player        -- Player element whose gang ID you want to get
+  Returns:
+   (string) Gang          -- ID of the gang the player is currently in
+
+getPlayerLevel ( player Player )
+  Required Arguments:
+   (player) Player        -- Player element whose gang level you want to get
+  Returns:
+   (integer) Level        -- Level of the player in the gang he is currently in
+
+isPlayerLeader ( player Player )
+  Required Arguments:
+   (player) Player        -- Player element who you want to check if he is the leader of his current gang
+  Returns:
+   (boolean) IsLeader     -- Boolean that is true if player is leader of his current gang and false otherwise
+
+leaveGang ( player Player )
+  Required Arguments:
+   (player) Player        -- Player who you want to leave his current gang that he is in
+  Returns:
+   (boolean) Success      -- Boolean that is true if player left his gang or false if player is the current leader of his gang
+
+outputGangChat ( string Gang, string AccountName, string PlayerName, string Message )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to output message to
+   (string) AccountName   -- Name of the account that is the source of the message (can be any string)
+   (string) PlayerName    -- Name of the player that is the source of the message (can be any string)
+   (string) Message       -- Message to output to gang chat
+  Returns:
+   (boolean) Success      -- Boolean that is true if message was successfully sent or false otherwise
+
+setGangColor ( string Gang, integer R, integer G, integer B )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you want to change the color of
+   (integer) R            -- Amount of red from 0 to 255
+   (integer) G            -- Amount of green from 0 to 255
+   (integer) B            -- Amount of blue from 0 to 255
+  Returns:
+   (boolean) Success      -- Boolean that is true if gang's color was successfully changed
+
+setGangLeader ( string Gang, string AccountName )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to change the leader of
+   (string) AccountName   -- Account name of the player which you wish to set as leader
+  Returns:
+   (boolean) Success      -- Boolean that is true if the gang leader was set successfully or false otherwise
+
+setGangMoney ( string Gang, integer Money )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to set money of
+   (integer) Money        -- Amount of money that you wish to change the gang money to
+  Returns:
+   (boolean) Success      -- Boolean that is true if the gang money is successfully set or false otherwise
+
+setGangName ( string Gang, string GangName )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to set name of
+   (string) GangName      -- New name of the gang that you wish to set
+  Returns:
+   (boolean) Success      -- Boolean that is true if gang name was successfully set or false otherwise
+
+setGangPermissions ( string Gang, integer MinSettings, integer MinRules, integer MinDeposit, integer MinWithdraw, integer MinLevel, integer MinInvKick )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to set permissions of
+   (integer) MinSettings  -- Minimal member level required to edit settings
+   (integer) MinRules     -- Minimal member level required to edit rules
+   (integer) MinDeposit   -- Minimal member level required to deposit money
+   (integer) MinWithdraw  -- Minimal member level required to withdraw money
+   (integer) MinLevel     -- Minimal member level required to change level of members with lower level
+   (integer) MinInvKick   -- Minimal member level required to invite and kick members with lower level
+  Returns:
+   (boolean) Success      -- Boolean that is true if gang permissions were successfully set
+
+setGangRules ( string Gang, string Rules )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to set rules of
+   (string) Rules         -- Rules of the gang
+  Returns:
+   (boolean) Success      -- Boolean that is true if gang rules were successfully set or false otherwise
+
+setGangTag ( string Gang, string Tag )
+  Required Arguments:
+   (string) Gang          -- ID of the gang you wish to set tag of
+   (string) Tag           -- New tag of the gang that you wish to set
+  Returns:
+   (boolean) Success      -- Boolean that is true if gang tag was successfully set or false otherwise
+
+setPlayerGang ( player Player, string Gang )
+  Required Arguments:
+   (player) Player        -- Player element whose gang you want to set
+   (string) Gang          -- ID of the gang that you want to set as the player's gang
+  Returns:
+   (boolean) Success      -- Boolean that is true if the player's gang has been set or false if the player already is in the gang
+
+setPlayerLevel ( player Player, integer Level )
+  Required Arguments:
+   (player) Player        -- Player whose level you want to change
+   (integer) Level        -- Integer of the level you want to set as player's level from 1 to 5
+  Returns:
+   (boolean) Success      -- Boolean that is true if the level was changed successfully or false otherwise

@@ -1,0 +1,34 @@
+<meta>
+	<oop>true</oop>
+	<min_mta_version client="1.4.0" server="1.4.0" />	
+	
+	<!-- Shared -->
+		<script src="dxgui/shared/middleclass.lua" type="client" />
+		<script src="dxgui/shared/classlib.lua" type="client" />
+		<script src="dxgui/shared/util.lua" type="client" />
+		<script src="dxgui/shared/Cursor.lua" type="client" />
+	<!-- -->
+	
+	<!-- dxLib -->
+		<script src="dxgui/dx_library.lua" type="client" />
+		<script src="dxgui/elements/dx_movable.lua" type="client" />
+		<script src="dxgui/elements/dx_button.lua" type="client" />
+		<script src="dxgui/elements/dx_checkbox.lua" type="client" />
+		<script src="dxgui/elements/dx_combobox.lua" type="client" />
+		<script src="dxgui/elements/dx_editfield.lua" type="client" />
+		<script src="dxgui/elements/dx_font.lua" type="client" />
+		<script src="dxgui/elements/dx_gridlist.lua" type="client" />
+		<script src="dxgui/elements/dx_image.lua" type="client" />
+		<script src="dxgui/elements/dx_memo.lua" type="client" />
+		<script src="dxgui/elements/dx_progressbar.lua" type="client" />
+		<script src="dxgui/elements/dx_radiobutton.lua" type="client" />
+		<script src="dxgui/elements/dx_scrollbar.lua" type="client" />
+		<script src="dxgui/elements/dx_scrollpane.lua" type="client" />
+		<script src="dxgui/elements/dx_tab.lua" type="client" />
+		<script src="dxgui/elements/dx_tabpanel.lua" type="client" />
+		<script src="dxgui/elements/dx_text.lua" type="client" />
+		<script src="dxgui/elements/dx_treeview.lua" type="client" />
+		<script src="dxgui/elements/dx_treeviewitem.lua" type="client" />
+		<script src="dxgui/elements/dx_window.lua" type="client" />
+	<!-- -->
+</meta>

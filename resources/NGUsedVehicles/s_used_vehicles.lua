@@ -136,7 +136,7 @@ addEventHandler ( "NGShops->UsedVehicles->onPlayerTryBuyVehicle", root, function
 	end 
 	
 	takePlayerMoney ( source, data.price );
-	exports.ngmessages:sendClientMessage ( "You have purchased this "..getVehicleNameFromID(data.vehicle_id).." for $"..data.price.."!", source, 0, 255, 0 );
+	exports.ngmessages:sendClientMessage ( "You have purchased this "..getVehicleNameFromModel(data.vehicle_id).." for $"..data.price.."!", source, 0, 255, 0 );
 	
 	local loc = setVehicleOwner ( id, getAccountName ( acc ) );
 	exports.ngmessages:sendClientMessage ( "Your vehicle will be available at "..tostring ( loc ), source, 0, 255, 0 );
@@ -145,7 +145,7 @@ addEventHandler ( "NGShops->UsedVehicles->onPlayerTryBuyVehicle", root, function
 	for _, p in pairs ( getElementsByType ( "player" ) ) do 
 		if ( getAccountName ( getPlayerAccount ( p ) ) == data.seller ) then 
 			givePlayerMoney ( p, data.price );
-			exports.ngmessages:sendClientMessage ( getPlayerName ( source ).." bought your "..getVehicleNameFromID(data.vehicle_id).." for $"..data.price.."!", p, 0, 255, 0 );
+			exports.ngmessages:sendClientMessage ( getPlayerName ( source ).." bought your "..getVehicleNameFromModel(data.vehicle_id).." for $"..data.price.."!", p, 0, 255, 0 );
 			foundPlayer = true;
 			break;
 		end 

@@ -173,10 +173,22 @@ function givePlayerVehicle ( player, vehID, r, g, b )
 	if ( isGuestAccount ( getPlayerAccount ( player ) ) ) then return false end
 	local r, g, b = r or 0, g or 0, b or 0
 	local ids = exports['NGSQL']:db_query ( "SELECT VehicleID FROM vehicles" )
-	local id = 1
+	local id = math.random ( 0, 999999999 );
 	local idS = { }
+	
 	for i, v in ipairs ( ids ) do idS[tonumber(v['VehicleID'])] = true end
-	while ( idS[id] ) do id = id + 1 end
+	
+	local q = exports.ngsql:db_query ( "SELECT uniq_id FROM used_vehicles" );
+	if ( q and type ( q ) == "table" ) then
+		for _, v in pairs ( q ) do 
+			idS[v.uniq_id] = true;
+		end
+	end
+	
+	while ( idS[id] ) do 
+		id = math.random ( 0, 999999999 );
+	end
+	
 	local pos = toJSON ( createToString ( getElementPosition ( player ) ) )
 	local rot = toJSON ( createToString ( 0, 0, getPedRotation ( player ) ) )
 	local color = toJSON ( createToString ( r, g, b ) )

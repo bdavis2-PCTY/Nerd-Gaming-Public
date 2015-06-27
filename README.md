@@ -70,6 +70,11 @@ Level 4-5 - /addupdate: Add a server update to the /updates list <br />
 Level 4-5 - /am: Account manager<br />
 level 4-5 - /ngupdate: Check for NG Gamemode update<br />
 <br />
+<h5>Development Commands</h5>
+<em>For these commands, NG.IS_IN_DEVELOPMENT in resources/NGGamemode/ng_development.shared.lua must be set to true and your username must be defined as a key in the NG.DEVELOPOERS table in resources/NGGamemode/ng_development.shared.lua)</em><br/>
+/devsetpos: Save your current position, interior and dimension 
+/devgopos: Goto your last saved position, interior and dimension
+<br/>
 <h3>Bugs</h3>
 <em>Currently none known</em>
 <br /><br />

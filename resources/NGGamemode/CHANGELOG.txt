@@ -1,8 +1,13 @@
 Version 1.1.4 (DEVELOPMENT BUILD)
 	- Added staff group management (NGGroups/group_c.lua, NGGroups/group_s.lua)
 	- Added remove account from all SQL tables when deleting an account (NGAdministration/aManager/aServer.lua)
+	- Added used vehicle shop (resource NGUsedVehicles) (NGUsedVehicles/*.*)
+	- Modified mtaserver.conf to auto-start NGUsedVehicles (mtaserver.conf)
+	- Added 'usersetting_display_usedvehicleshopblips' setting for used vehicle shop blips (NGPhone/client_core.lua, NGPhone/apps/default_settings.lua)
+	- Added server development mode (not actual purpose for it yet) (NGGamemode/meta.xml, NGGamemode/ng_development.shared.lua)
+	- Added development warp commands (NGGamemode/ng_development.shared.lua)
+	- Enabled OOP in NGGamemode (NGGamemode/meta.xml)
 	
-
 Version 1.1.3 (LATEST-STABLE BUILD)
 	- Removed 2 messages when taking the Marijuana drug, as for they were a bit excessive (NGInventory/inven-client.lua)
 	- Removed jail map - Floor was bugged and didn't work right (NGPolice/mapping.lua)

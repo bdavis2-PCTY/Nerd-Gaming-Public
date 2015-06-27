@@ -1,0 +1,14 @@
+<meta>
+<info author="Drug-System" type="script" version="1.0" />
+	<file src="lsd.png" />
+	<script src="m5drat_s.lua" type="server" />
+	<script src="m5drat_c.lua" type="client" />
+<settings>
+<setting name='*WeedPrice' friendlyname='Weed Price' value='10000' desc='Weed Price' />
+<setting name='*GodPrice' friendlyname='God Price' value='12000' desc='God Price' />
+<setting name='*SpeedPrice' friendlyname='Speed Price' value='8000' desc='Speed Price' />
+<setting name='*LsdPrice' friendlyname='Lsd Price' value='9000' desc='Lsd Price' />
+<setting name='*SteroidsPrice' friendlyname='Steroids Price' value='15000' desc='Steroids Price' />
+<setting name='*HeroinPrice' friendlyname='Heroin Price' value='8500' desc='Heroin Price' />
+</settings>
+</meta>
