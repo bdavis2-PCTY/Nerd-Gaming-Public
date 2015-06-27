@@ -1,9 +1,0 @@
-<meta>
-	<info author='xXMADEXx' name='Sell-Drugs' type='script' version='1.0' />
-	
-	<oop>true</oop>
-	<script src="messages.shared.lua" type="shared" />
-	<script src="setup.client.lua" type="client" />
-	<script src="buying.client.lua" type="client" />
-	<script src="server.server.lua" type="server" />
-</meta>

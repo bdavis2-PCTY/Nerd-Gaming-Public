@@ -12,6 +12,8 @@ local points = {
 	blip = { }
 }
 
+local InMarker = nil
+
 addEventHandler ( "onClientResourceStart", resourceRoot, function ( )
 	setTimer ( function ( )
 		local makeBlips = exports.ngphone:getSetting ( "usersetting_display_usedvehicleshopblips" );
@@ -20,6 +22,7 @@ addEventHandler ( "onClientResourceStart", resourceRoot, function ( )
 			points.marker[i] = createMarker ( x, y, z - 1, 'cylinder', 3.5, 255, 140, 0, 120 );
 			addEventHandler ( "onClientMarkerHit", points.marker[i], function ( p )
 				if ( p == localPlayer and not isPedInVehicle ( p ) ) then 
+					InMarker = source;
 					createWindow ( )
 				end 
 			end );
@@ -138,6 +141,11 @@ function destroyWindow ( )
 	removeEventHandler ( "onClientPreRender", root, onRender );
 	showPlayerHudComponent ( 'all', true );
 	setCameraTarget ( localPlayer );
+	
+	if ( InMarker ) then 
+		local x, y, z = getElementPosition ( InMarker )
+		setElementPosition ( localPlayer, x, y, z + 2 );
+	end
 end 
 
 function onGuiClick ( )

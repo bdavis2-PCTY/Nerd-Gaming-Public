@@ -268,6 +268,8 @@ createJob ( "Detective", 1559.69, -1690.48, 5.89, 180 )
 createJob ( "Detective",-1573.45, 653.08, 7.19, 90 )
 createJob ( "Detective", 2297.12, 2455.66, 10.82, 90 )
 createJob ( "Stunter", 1948.64, -1364.5, 18.58, 90 )
+createJob ( "Criminal", 2143.14, -1583.53, 14.35, 180 );
+createJob ( "Criminal", 2216.16, 2711.91, 10.82, -90 );
 
 
 
@@ -288,9 +290,13 @@ function setPlayerJob ( p, job, prtyJob )
 	end
 
     if ( job == 'criminal' ) then
+		local skin = getElementData ( p, 'NGUser.UnemployedSkin' )
+		if ( not tonumber ( skin ) ) then skin = 109
+		else skin = tonumber ( skin ) end
+	
         setElementData ( p, 'Job', 'Criminal' )
         exports['NGPlayerFunctions']:setTeam ( p, "Criminals" )
-        setElementModel ( p, 109 )
+        setElementModel ( p, skin )
         job = "Criminal"
     elseif ( job == 'mechanic' ) then
         setElementData ( p, 'Job', 'Mechanic' )

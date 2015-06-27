@@ -2,7 +2,7 @@
 <i>An MTA RPG base gamemode</i>
 <br/>
 <br />
-<h3>NG:Installation (<a href='https://www.youtube.com/watch?v=_959whBQcdI'>YouTube</a> | <a href='https://vimeo.com/131475853'>Vimeo</a>)</h3>
+<h3>NG:Installation (<a href='https://www.youtube.com/watch?v=_959whBQcdI' target=_blank>YouTube</a> | <a href='https://vimeo.com/131475853' target=_blank>Vimeo</a>)</h3>
 	- Download the Nerd-Gaming-Public repository from GitHub (Download ZIP towards mid-right of the page)
 	- Navigate to your  MTA server folder {mta_installation_directory}/mods/deathmatch
 	- Extract the downloaded files into this folder (acl.xml, mtaserver.conf, resources folder)

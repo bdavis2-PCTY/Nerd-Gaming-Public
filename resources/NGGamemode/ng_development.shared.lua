@@ -43,7 +43,7 @@ else
 			
 			if ( dev_x and dev_y and dev_z ) then 
 				outputChatBox ( "Travelling to "..table.concat({dev_x,dev_y,dev_z},", "), p, 0, 255, 0 );
-				setElementPosition  ( p, dev_x, dev_y, dev_y );
+				setElementPosition  ( p, dev_x, dev_y, dev_z + 2 );
 				
 				if ( dev_int ) then 
 					p.interior = dev_int 

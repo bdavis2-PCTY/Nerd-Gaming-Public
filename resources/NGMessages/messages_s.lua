@@ -10,14 +10,23 @@ sec = {{{{{{},{},{},{}}}}}}				--
 ------------------------------------------
 
 local TheResourceName = getResourceName ( getThisResource ( ) )
-function sendClientMessage ( msg, who, r, g, b, pos, time )
+function sendClientMessage ( msg, who, r, g, b, img, checkImagePath )
 	if ( msg and who ) then
 		if ( isElement ( who ) ) then
-			triggerClientEvent ( who, TheResourceName..":sendClientMessage", who, msg, r, g, b, pos, time )
+			
+			if ( checkImagePath == nil ) then checkImagePath = true; end
+			
+			if ( img and sourceResource and checkImagePath ) then 
+				img = ":"..tostring(getResourceName(sourceResource)).."/"..img;
+			end 
+			
+			triggerClientEvent ( who, TheResourceName..":sendClientMessage", who, msg, r, g, b, img )
+			
 			return true
 		else return false end
 	else return false end
 end
+
 
 addEventHandler ( "onPlayerLogin", root, function ( )
 	if ( not exports['NGAdministration']:isPlayerStaff ( source ) ) then
