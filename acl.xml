@@ -30,20 +30,6 @@
         <acl name="Level_5"></acl>
         <object name="resource.*"></object>
         <object name="user.Console"></object>
-        <object name="user.xXMADEXx"></object>
-        <object name="user.anis11"></object>
-    </group>
-    <group name="autoGroup_guied">
-        <acl name="autoACL_guied"></acl>
-        <object name="resource.guied"></object>
-    </group>
-    <group name="autoGroup_irc">
-        <acl name="autoACL_irc"></acl>
-        <object name="resource.irc"></object>
-    </group>
-    <group name="autoGroup_acpanel">
-        <acl name="autoACL_acpanel"></acl>
-        <object name="resource.acpanel"></object>
     </group>
     <acl name="Default">
         <right name="general.ModifyOtherObjects" access="false"></right>
@@ -603,30 +589,5 @@
         <right name="function.stopResource" access="true"></right>
         <right name="function.startResource" access="true"></right>
         <right name="function.restartResource" access="true"></right>
-    </acl>
-    <acl name="autoACL_guied">
-        <right name="general.ModifyOtherObjects" access="true" who="Console" pending="false" date="2015-03-15 20:51:19"></right>
-        <right name="function.callRemote" access="true" who="Console" pending="false" date="2015-03-15 20:51:19"></right>
-    </acl>
-    <acl name="autoACL_irc">
-        <right name="function.kickPlayer" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.addBan" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.removeBan" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.getPlayerIP" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.getPlayerSerial" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.setPlayerFrozen" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.setPlayerMuted" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.killPed" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.startResource" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.stopResource" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.restartResource" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.callRemote" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.fileOpen" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-        <right name="function.fileRead" access="true" who="Console" pending="false" date="2015-03-15 20:50:52"></right>
-    </acl>
-    <acl name="autoACL_acpanel">
-        <right name="function.setServerConfigSetting" access="false" who="" pending="true" date=""></right>
-        <right name="function.kickPlayer" access="false" who="" pending="true" date=""></right>
-        <right name="function.fetchRemote" access="false" who="" pending="true" date=""></right>
     </acl>
 </acl>

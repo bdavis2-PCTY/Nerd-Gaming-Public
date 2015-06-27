@@ -44,12 +44,42 @@ local TheResourceName = getResourceName ( getThisResource ( ) )
 local lastAutoMessage = 1
 local t = 0
 
-function sendClientMessage ( msg, r, g, b )
+function sendClientMessage ( msg, r, g, b, img, checkImgPath )
+	
+	if ( checkImgPath == nil ) then checkImgPath = true; end
+
+	if ( img and sourceResource and checkImgPath ) then 
+		img = ":"..tostring(getResourceName(sourceResource)).."/"..img;
+	end 
+	
+	return _sendClientMessage ( msg, r, g, b, img );
+end 
+
+
+function _sendClientMessage ( msg, r, g, b, img )
 	
 	if ( useTopbar ) then
 		if ( not exports.NGLogin:isClientLoggedin ( ) ) then return end
 		local msg, r, g, b = tostring ( msg ), tonumber ( r ) or 255, tonumber ( g ) or 255, tonumber ( b ) or 255
-		local data = { msg, r, g, b, getTickCount ( ) + DefaultTime*1000, -25, true }
+		
+		local img = img or "";
+		
+		if ( img ~= "" and not fileExists ( img ) ) then 
+			img = ""
+		end
+		
+		local data = { 
+			msg, 
+			r, 
+			g, 
+			b, 
+			getTickCount ( ) + DefaultTime*1000, 
+			-25, 
+			true,
+			img	
+		}
+		
+		
 		if ( getTickCount ( ) - t >= messageDelay ) then
 			table.insert ( messages_top, data )
 			t = getTickCount ( )
@@ -61,7 +91,7 @@ function sendClientMessage ( msg, r, g, b )
 	end
 end 
 addEvent ( TheResourceName..":sendClientMessage", true )
-addEventHandler ( TheResourceName..":sendClientMessage", root, sendClientMessage )
+addEventHandler ( TheResourceName..":sendClientMessage", root, _sendClientMessage )
 
 local width = (sx/1.95)
 local t2 = getTickCount ( )
@@ -75,6 +105,7 @@ local t2 = getTickCount ( )
 	[5] = Remove Time,
 	[6] = Y Axis,
 	[7] = Is Locked,
+	[8] = Image icon path
 ]]
 
 function dxDrawNotificationBar ( )
@@ -131,7 +162,15 @@ function dxDrawNotificationBar ( )
 		dxDrawLine ( (sx/2-width/2), rsy*y, (sx/2-width/2), rsy*(y+25), lColor )
 		dxDrawLine ( (sx/2+width/2), rsy*y, (sx/2+width/2), rsy*(y+25), lColor )
 		dxDrawLine ( (sx/2+width/2)-width, rsy*(y+25), (sx/2+width/2), rsy*(y+25), lColor )
+		
+		if ( v[8] and v[8] ~= "" ) then
+			dxDrawImage ( (sx/2-width/2)+3, (rsy*y)+2, rsx*21, rsy*21, v[8] );
+			dxDrawImage ( (sx/2-width/2)+(width-25), (rsy*y)+2, rsx*21, rsy*21, v[8] );
+		end 
+		
 		dxDrawText ( v[1], 0, rsy*y, sx, rsy*(y+25), tocolor ( v[2], v[3], v[4], 255 ), rsx*1, "default-bold", "center", "center", true, false, false, true )
+		
+		
 		if ( not continue ) then
 			table.insert ( doRemove, i+1 )
 		end

@@ -2,15 +2,24 @@
 	<!-- This script is used for general gamemode things
 		such as checking the version -->
 		
-	<info author="xXMADEXx" name="NGGameMode" type="script" version="1.1.3" />
+	<info author="xXMADEXx" name="NGGameMode" type="script" version="1.1.4" />
+	
+	<oop>true</oop>
+	
 	<script src="ng_global.shared.lua" type="shared" />
 	<script src="ng_verCheck.server.lua" type="server" />
 	<script src="ng_copyDownload.client.lua" type="client" />
-	
+	<script src="ng_development.shared.lua" type="shared" />
 	
 	<settings>
 		<setting name="*check_ng_updates" value="true" friendlyname="Check for NG Gamemode updates" accept="true, false" desc="Check MTA community website for gamemode updates" />
 		<setting name="*notify_ng_updates" value="true" friendlyname="NG Gamemode Update Notifications" accept="true, false" desc="Print updates to server console and debugscript" />
 	</settings>
+	
+	<export function='isDeveloper' type='client' />
+	<export function='isGameInDevelopment' type='client' />
+	
+	<export function='isDeveloper' type='server' />
+	<export function='isGameInDevelopment' type='server' />
 	
 </meta>

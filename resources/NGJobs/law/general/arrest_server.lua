@@ -181,6 +181,10 @@ function onTimer ( crim, cop )
 				setControlState ( crim, "forwards", false )
 			end
 		end
+		
+		crim.interior = cop.interior;
+		crim.dimension = cop.dimension
+		
 		setTimer ( onTimer, 500, 1, crim, cop )
 	else
 		arresties[crim] = false

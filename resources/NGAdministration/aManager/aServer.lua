@@ -48,7 +48,10 @@ function removeAccount ( account, source )
 	end
 	exports.NGSQL:db_exec ( "DELETE FROM accountdata WHERE Username=?", account )
 	exports.NGSQL:db_exec ( "DELETE FROM bank_accounts WHERE Account=?", account )
+	exports.NGSQL:db_exec ( "DELETE FROM bank_transactions WHERE account=?", account )
 	exports.NGSQL:db_exec ( "DELETE FROM jobdata WHERE Username=?", account )
+	exports.NGSQL:db_exec ( "DELETE FROM log_punish WHERE account=?", account )
+	exports.NGSQL:db_exec ( "DELETE FROM user_shop WHERE seller_account=?", account )
 	exports.NGSQL:db_exec ( "DELETE FROM vehicles WHERE Owner=?", account )
 	local acc = getAccount ( account )
 	if acc then removeAccount_ ( acc ) end

@@ -1,14 +1,18 @@
 <meta>
     <info author="NG Scripting Team" type="script" name="NG Shops" version="1.0" />
-    <script src="pns/pns_s.lua" />
+    
+	<!-- Pay N' Spray Shop -->
+	<script src="pns/pns_s.lua" />
     <script src="pns/pns_c.lua" type="client" />
+	
+	<!-- Skin shop -->
 	<script src="skin//skin_s.lua" />
     <script src="skin/skin_c.lua" type="client" />
+	
+	<!-- User Shop -->
 	<script src="user_shop/user_shop_s.lua" />
 	<script src="user_shop/user_shop_c.lua" type="client" />
 	<script src="user_shop/user_shop_shared.lua" type="shared" />
-	
-	
 	
     <min_mta_version server="1.3.4-0.00000" client="1.3.4-0.00000"></min_mta_version>
 </meta>

@@ -72,3 +72,24 @@ function getOnlineStaff ( )
 	end
 	return online
 end
+
+
+-- NG 1.1.4 --
+-- Set element data to make getting staff on client side --
+function setNewPlayerStaffData ( p )
+	if ( isPlayerStaff ( p ) ) then 
+		setElementData ( p, "staffLevel", getPlayerStaffLevel ( p, 'int' ) )
+	else 
+		setElementData ( p, 'staffLevel', 0 );
+	end 
+end
+
+addEventHandler ( "onPlayerLogin", root, function ( )
+	setNewPlayerStaffData ( source )
+end );
+
+addEventHandler ( "onResourceStart", resourceRoot, function ( )
+	for _, p in pairs ( getElementsByType ( "player" ) ) do 
+		setNewPlayerStaffData ( p );
+	end 
+end );

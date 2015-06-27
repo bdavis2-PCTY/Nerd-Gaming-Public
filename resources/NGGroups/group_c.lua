@@ -13,6 +13,13 @@ function createGroupGui ( )
 		main ={ }, 
 		info = { create = { }, invites = { }, motd = { } }, 
 		list = { }, 
+		admin = { 
+			admin = { },
+			info = { },
+			members = { },
+			ranks = { },
+			logs = { }
+		},
 		my = { 
 			basic = { },
 			logs_ = { },
@@ -30,9 +37,13 @@ function createGroupGui ( )
 	gui.main.info = guiCreateButton(sx*10, sy*26, sx*128, sy*40, "Information", false, gui.main.window)
 	gui.main.list = guiCreateButton(sx*148, sy*26, sx*128, sy*40, "Group list", false, gui.main.window)
 	gui.main.my = guiCreateButton(sx*286, sy*26, sx*128, sy*40, "My group", false, gui.main.window)
+	gui.main.admin = guiCreateButton(sx*500, sy*26, sx*128, sy*40, "Groups Manager", false, gui.main.window)
 	gui.main.line = guiCreateLabel(0, 74, sx*660, 24, string.rep ( "_", 200 ), false, gui.main.window)  
+	
+	gui.main.admin.visible = ( getElementData ( localPlayer, "staffLevel" ) or 0 ) > 2
+	
 	guiWindowSetSizable(gui.main.window, false)
-
+	
 	-- information
 	gui.info.account = guiCreateLabel(sx*42, sy*136, sx*269, sy*20, "Account name: none", false, gui.main.window)
 	gui.info.group = guiCreateLabel(sx*42, sy*156, sx*269, sy*20, "Group name: none", false, gui.main.window)
@@ -200,7 +211,57 @@ function createGroupGui ( )
 		gui.my.motd.update = guiCreateButton(374, 370, 144, 30, "Update", false, gui.my.motd.window)
 		gui.my.motd.cancel = guiCreateButton(220, 370, 144, 30, "Cancel", false, gui.my.motd.window)
 
+	
+	-- Administration Panel (NG 1.1.4)
+	gui.admin.window = guiCreateWindow(386, 123, 608, 421, "NG Group Manager (Staff)", false)
+	guiWindowSetSizable(gui.admin.window, false)
 
+	gui.admin.admin.groupList = guiCreateGridList(9, 21, 401, 390, false, gui.admin.window)
+	guiGridListSetSortingEnabled ( gui.admin.admin.groupList, false );
+	guiGridListAddColumn ( gui.admin.admin.groupList, "Group", 0.5 );
+	guiGridListAddColumn ( gui.admin.admin.groupList, "Founder", 0.3 );
+	guiGridListAddColumn ( gui.admin.admin.groupList, "Members", 0.15 );
+	
+	gui.admin.admin.groupInfo = guiCreateButton(412, 26, 186, 29, "Basic Information", false, gui.admin.window)
+	gui.admin.admin.groupMembers = guiCreateButton(412, 65, 186, 29, "Members", false, gui.admin.window)
+	gui.admin.admin.groupRanks = guiCreateButton(412, 104, 186, 29, "Ranks", false, gui.admin.window)
+	gui.admin.admin.groupLogs = guiCreateButton(412, 143, 186, 29, "Logs", false, gui.admin.window)
+	gui.admin.admin.closeWindow = guiCreateButton(412, 382, 186, 29, "Close", false, gui.admin.window)
+	gui.admin.admin.deleteGroup = guiCreateButton(412, 182, 186, 29, "Delete Group", false, gui.admin.window)
+	guiSetProperty(gui.admin.admin.deleteGroup, "NormalTextColour", "FFFF0000")
+		-- manager->Basic Information
+		gui.admin.info.window = guiCreateWindow(445, 148, 559, 399, "Group Information", false)
+		guiWindowSetSizable(gui.admin.info.window, false)
+		gui.admin.info.list = guiCreateGridList(9, 29, 540, 314, false, gui.admin.info.window)
+		guiGridListAddColumn(gui.admin.info.list, "Data Set", 0.4)
+		guiGridListAddColumn(gui.admin.info.list, "Value", 0.5)
+		gui.admin.info.close = guiCreateButton(10, 353, 164, 36, "Close", false, gui.admin.info.window)
+		-- manager->members
+		gui.admin.members.window = guiCreateWindow(445, 148, 559, 399, "Group Members", false)
+		guiWindowSetSizable(gui.admin.members.window, false)
+		gui.admin.members.list = guiCreateGridList(9, 29, 540, 314, false, gui.admin.members.window)
+		guiGridListAddColumn(gui.admin.members.list, "Account", 0.3)
+		guiGridListAddColumn(gui.admin.members.list, "Rank", 0.3)
+		guiGridListAddColumn(gui.admin.members.list, "Joined", 0.3)
+		gui.admin.members.close = guiCreateButton(10, 353, 164, 36, "Close", false, gui.admin.members.window)
+		-- manager->ranks 
+		gui.admin.ranks.window = guiCreateWindow(445, 148, 559, 399, "Group Members", false)
+		guiWindowSetSizable(gui.admin.ranks.window, false)
+		gui.admin.ranks.list = guiCreateGridList(9, 29, 540, 314, false, gui.admin.ranks.window)
+		guiGridListAddColumn(gui.admin.ranks.list, "Permission", 0.5)
+		guiGridListAddColumn(gui.admin.ranks.list, "Access", 0.4)
+		gui.admin.ranks.close = guiCreateButton(10, 353, 164, 36, "Close", false, gui.admin.ranks.window)
+		-- manager->logs 
+		gui.admin.logs.window = guiCreateWindow(445, 148, 559, 399, "Group Logs", false)
+		guiWindowSetSizable(gui.admin.logs.window, false)
+		gui.admin.logs.list = guiCreateGridList(9, 29, 540, 314, false, gui.admin.logs.window)
+		guiGridListAddColumn(gui.admin.logs.list, "Account", 0.25)
+		guiGridListAddColumn(gui.admin.logs.list, "Time", 0.25)
+		guiGridListAddColumn(gui.admin.logs.list, "Log", 0.8)
+		gui.admin.logs.close = guiCreateButton(10, 353, 164, 36, "Close", false, gui.admin.logs.window)
+		
+	
+	
 	local sx, sy = sx__, sy__
 	local doElements = { }
 	for i, v in pairs ( gui ) do 
@@ -221,7 +282,7 @@ function createGroupGui ( )
 		end
 	end
 
-	-- Window Visiblilities
+	-- Window Visibilities
 	guiSetVisible ( gui.my.basic.window , false )
 	guiSetVisible ( gui.my.logs_.window, false )
 	guiSetVisible ( gui.info.create.window, false )
@@ -234,8 +295,13 @@ function createGroupGui ( )
 	gui.my.ranks_.window.visible = false
 	gui.my.motd.window.visible = false
 	gui.info.motd.window.visible = false
+	gui.admin.window.visible = false
+	gui.admin.info.window.visible = false
+	gui.admin.members.window.visible = false
+	gui.admin.ranks.window.visible = false
+	gui.admin.logs.window.visible = false
 
-	-- repos and resize
+	-- reposition and resize
 	for i, v in pairs ( doElements ) do 
 		local t = getElementType ( v )
 		local x, y = guiGetPosition ( v, false )
@@ -262,7 +328,7 @@ function isset ( f )
 	return false
 end 
 
-function loadGroupPage ( p, AllowElementsToStay )
+function loadGroupPage ( p, AllowElementsToStay, arg1 )
 	if ( not AllowElementsToStay ) then
 		if ( not gui ) then 
 			return exports.ngmessages:sendClientMessage ( "Please allow the GUI to finish loading...", 255, 255, 0 );
@@ -280,7 +346,24 @@ function loadGroupPage ( p, AllowElementsToStay )
 	end
 
 	-- core features
-	if ( p == "core.info" ) then 
+	if ( p == "core.admin" ) then 
+		gui.admin.window.visible = true;
+		gui.admin.window:bringToFront();
+		guiGridListClear ( gui.admin.admin.groupList );
+		
+		for gName, info in pairs ( gList ) do 
+			local row = guiGridListAddRow ( gui.admin.admin.groupList );
+			if ( not r ) then r = 255; end 
+			if ( not g ) then g = 255; end
+			if ( not b ) then b = 255; end
+			guiGridListSetItemText ( gui.admin.admin.groupList, row, 1, tostring ( gName ), false, false );
+			guiGridListSetItemText ( gui.admin.admin.groupList, row, 2, tostring ( info.info.founder ), false, false );
+			guiGridListSetItemText ( gui.admin.admin.groupList, row, 3, table.len ( info.members ), false, false );
+			for i=1,3 do 
+				guiGridListSetItemColor ( gui.admin.admin.groupList, row, i, info.info.color.r, info.info.color.g, info.info.color.b );
+			end 
+		end
+	elseif ( p == "core.info" ) then 
 		for i, v in pairs ( gui.info ) do 
 			if ( v and isElement ( v ) ) then
 				guiSetVisible ( v, true )
@@ -374,10 +457,10 @@ function loadGroupPage ( p, AllowElementsToStay )
 		guiBringToFront ( gui.my.basic.window )
 		guiSetText ( gui.my.basic.group, "Group: ".. tostring ( group or "none" ) )
 		if ( gList and group and gList[group] ) then
-			guiSetText ( gui.my.basic.founder, "Origianl founder: "..tostring ( gList[group].info.founder or "none" ) )
+			guiSetText ( gui.my.basic.founder, "Original founder: "..tostring ( gList[group].info.founder or "none" ) )
 			guiSetText ( gui.my.basic.founded, "Founded on: "..tostring ( gList[group].info.founded_time or "unknown" ))
 		else
-			guiSetText ( gui.my.basic.founder, "Origianl founder: none" )
+			guiSetText ( gui.my.basic.founder, "Original founder: none" )
 			guiSetText ( gui.my.basic.founded, "Founded on: unknown")
 		end
 	elseif ( p == "my.logs" ) then
@@ -438,7 +521,89 @@ function onClientGuiClick ( )
 		loadGroupPage ( "core.list" )
 	elseif ( source == gui.main.my ) then
 		loadGroupPage ( "core.my" ) 
-
+	elseif ( source == gui.main.admin ) then 
+		loadGroupPage ( "core.admin", true );
+		
+	-- Group administration (Staff)
+	elseif ( source == gui.admin.admin.closeWindow ) then 
+		gui.admin.window.visible = false;
+	elseif ( source == gui.admin.info.close ) then 
+		gui.admin.info.window.visible = false;
+	elseif ( source == gui.admin.members.close ) then 
+		gui.admin.members.window.visible = false;
+	elseif ( source == gui.admin.ranks.close ) then 
+		gui.admin.ranks.window.visible = false;
+	elseif ( source == gui.admin.logs.close ) then 
+		gui.admin.logs.window.visible = false;
+	elseif ( source == gui.admin.admin.groupInfo ) then 
+		local r, c = guiGridListGetSelectedItem ( gui.admin.admin.groupList );
+		if ( r == -1 ) then return exports.ngmessages:sendClientMessage ( "No group is selected", 255, 255, 255 ); end
+		gui.admin.info.window.visible = true;
+		gui.admin.info.window:bringToFront ( );
+		guiGridListClear ( gui.admin.info.list );
+		for index, value in pairs ( gList [ guiGridListGetItemText ( gui.admin.admin.groupList, r, 1 ) ].info ) do 
+			local r = guiGridListAddRow ( gui.admin.info.list );
+			guiGridListSetItemText ( gui.admin.info.list, r, 1, tostring ( index ), false, false )
+			if ( index == "color" ) then value = table.concat ( { value.r, value.g, value.b }, ", " );end
+			guiGridListSetItemText ( gui.admin.info.list, r, 2, tostring ( value ), false, false )
+		end 
+	elseif ( source == gui.admin.admin.groupMembers ) then 
+		local r, c = guiGridListGetSelectedItem ( gui.admin.admin.groupList );
+		if ( r == -1 ) then return exports.ngmessages:sendClientMessage ( "No group is selected", 255, 255, 255 ); end
+		gui.admin.members.window.visible = true;
+		gui.admin.members.window:bringToFront ( );
+		guiGridListClear ( gui.admin.members.list );
+		for member, info in pairs ( gList [ guiGridListGetItemText ( gui.admin.admin.groupList, r, 1 ) ].members ) do 
+			local r = guiGridListAddRow ( gui.admin.members.list );
+			guiGridListSetItemText ( gui.admin.members.list, r, 1, tostring ( member ), false, false )
+			guiGridListSetItemText ( gui.admin.members.list, r, 2, tostring ( info.rank ), false, false )
+			guiGridListSetItemText ( gui.admin.members.list, r, 3, tostring ( info.joined ), false, false )
+		end 
+	elseif ( source == gui.admin.admin.groupRanks ) then 
+		local r, c = guiGridListGetSelectedItem ( gui.admin.admin.groupList );
+		if ( r == -1 ) then return exports.ngmessages:sendClientMessage ( "No group is selected", 255, 255, 255 ); end
+		gui.admin.ranks.window.visible = true;
+		gui.admin.ranks.window:bringToFront ( );
+		guiGridListClear ( gui.admin.ranks.list );
+		for rank, permissions in pairs ( gList [ guiGridListGetItemText ( gui.admin.admin.groupList, r, 1 ) ].ranks ) do 
+			guiGridListSetItemText ( gui.admin.ranks.list, guiGridListAddRow ( gui.admin.ranks.list ), 1, tostring ( rank ), true, true );
+			for permission, access in pairs ( permissions ) do 
+				local r = guiGridListAddRow ( gui.admin.ranks.list );
+				local sAccess = ( access and "Yes" ) or "No";
+				guiGridListSetItemText ( gui.admin.ranks.list, r, 1, tostring ( permission ), false, false );
+				guiGridListSetItemText ( gui.admin.ranks.list, r, 2, sAccess, false, false );
+				if ( sAccess == "Yes" ) then 
+					guiGridListSetItemColor ( gui.admin.ranks.list, r, 1, 0, 255, 0 );
+					guiGridListSetItemColor ( gui.admin.ranks.list, r, 2, 0, 255, 0 );
+				else 
+					guiGridListSetItemColor ( gui.admin.ranks.list, r, 1, 255, 0, 0 );
+					guiGridListSetItemColor ( gui.admin.ranks.list, r, 2, 255, 0, 0 );
+				end
+			end 
+		end 
+	elseif ( source == gui.admin.admin.groupLogs ) then 
+		local r, c = guiGridListGetSelectedItem ( gui.admin.admin.groupList );
+		if ( r == -1 ) then return exports.ngmessages:sendClientMessage ( "No group is selected", 255, 255, 255 ); end
+		gui.admin.logs.window.visible = true;
+		gui.admin.logs.window:bringToFront ( );
+		guiGridListClear ( gui.admin.logs.list );
+		for _, log in pairs ( gList [ guiGridListGetItemText ( gui.admin.admin.groupList, r, 1 ) ].log ) do 
+			local r = guiGridListAddRow ( gui.admin.logs.list );
+			guiGridListSetItemText ( gui.admin.logs.list, r, 1, tostring ( log.account ), false, false );
+			guiGridListSetItemText ( gui.admin.logs.list, r, 2, tostring ( log.time ), false, false );
+			guiGridListSetItemText ( gui.admin.logs.list, r, 3, tostring ( log.log ), false, false );
+		end 
+	elseif ( source == gui.admin.admin.deleteGroup ) then 
+		local r, c = guiGridListGetSelectedItem ( gui.admin.admin.groupList );
+		if ( r == -1 ) then return exports.ngmessages:sendClientMessage ( "No group is selected", 255, 255, 255 ); end
+		
+		local group = tostring ( guiGridListGetItemText ( gui.admin.admin.groupList, r, 1 ) );
+		
+		askConfirm ( "Are you really sure you want to delete this group?", function ( done, group )
+			if ( not done )then return end 
+			triggerServerEvent ( "NGGroups->GroupStaff:OnAdminDeleteGroup", localPlayer, group );
+		end, group )
+	
 	-- my buttons
 	elseif ( source == gui.my.info ) then 
 		loadGroupPage ( "my.basicInfo", true )
@@ -819,6 +984,16 @@ function onPlayerOpenPanel ( )
 			destroyElement ( gui.my.motd.window )
 		end if ( isElement ( gui.info.motd.window ) ) then
 			destroyElement ( gui.info.motd.window )
+		end if ( isElement ( gui.admin.window ) ) then 
+			destroyElement ( gui.admin.window )
+		end if ( isElement ( gui.admin.info.window ) ) then 
+			destroyElement ( gui.admin.info.window )
+		end if ( isElement ( gui.admin.members.window ) ) then 
+			destroyElement ( gui.admin.members.window )
+		end if ( isElement ( gui.admin.ranks.window ) ) then 
+			destroyElement ( gui.admin.ranks.window )
+		end if ( isElement ( gui.admin.logs.window ) ) then 
+			destroyElement ( gui.admin.logs.window )
 		end
 
 		showCursor ( false )
@@ -846,7 +1021,10 @@ addEventHandler ( "NGGroups->onServerSendClientGroupList", root, function ( g )
 	
 	addEventHandler ( "onClientGUIClick", root, onClientGuiClick )
 	addEventHandler ( "onClientGUIChanged", root, onClientGuiChanged )
-
+	
+	-- Bugged, not sure why 
+	-- Removed NG 1.1.3
+	
 	--[[ Make sure the users group is valid
 	if ( group and not gList [ group ] ) then
 		group = nil

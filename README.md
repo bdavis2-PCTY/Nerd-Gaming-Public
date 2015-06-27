@@ -2,7 +2,7 @@
 <i>An MTA RPG base gamemode</i>
 <br/>
 <br />
-<h3>NG:Installation</h3>
+<h3>NG:Installation (<a href='https://www.youtube.com/watch?v=_959whBQcdI' target=_blank>YouTube</a> | <a href='https://vimeo.com/131475853' target=_blank>Vimeo</a>)</h3>
 	- Download the Nerd-Gaming-Public repository from GitHub (Download ZIP towards mid-right of the page)
 	- Navigate to your  MTA server folder {mta_installation_directory}/mods/deathmatch
 	- Extract the downloaded files into this folder (acl.xml, mtaserver.conf, resources folder)
@@ -70,6 +70,12 @@ Level 4-5 - /addupdate: Add a server update to the /updates list <br />
 Level 4-5 - /am: Account manager<br />
 level 4-5 - /ngupdate: Check for NG Gamemode update<br />
 <br />
+<h5>Development Commands</h5>
+<em>For these commands, NG.IS_IN_DEVELOPMENT in resources/NGGamemode/ng_development.shared.lua must be set to true and your username must be defined as a key in the NG.DEVELOPOERS table in resources/NGGamemode/ng_development.shared.lua)</em><br/>
+<br />
+/devsetpos: Save your current position, interior and dimension <br/>
+/devgopos: Goto your last saved position, interior and dimension <br />
+<br/>
 <h3>Bugs</h3>
 <em>Currently none known</em>
 <br /><br />

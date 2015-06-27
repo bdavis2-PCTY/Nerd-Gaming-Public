@@ -83,7 +83,7 @@ function createCustomBlip ( x, y, width, height, path, fRadius )
 	
 	addEventHandler ( "onClientResourceStop", getResourceRootElement(sourceResource),
 		function()
-			streamedBlips[image] = nil
+			streamedBlips[4] = nil
 			VISIBLE_BLIP_COUNT = VISIBLE_BLIP_COUNT - 1
 			destroyWidget ( image )
 		end

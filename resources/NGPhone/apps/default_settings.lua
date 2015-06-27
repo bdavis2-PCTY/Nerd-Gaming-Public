@@ -36,7 +36,8 @@ local defaultSettings = {
 	{ "usersetting_display_vipchat", "true" },
     { "usersettings_display_clienttoserverstats", "true"},
     { "usersettings_display_lowfpswarning", "true" },
-    { "usersetting_display_gymblips", "true" }
+    { "usersetting_display_gymblips", "true" },
+    { "usersetting_display_usedvehicleshopblips", "true" },
 }
 
 function doesSettingExist ( name )
