@@ -27,6 +27,14 @@ function sendClientMessage ( msg, who, r, g, b, img, checkImagePath )
 	else return false end
 end
 
+function addNoteMessage ( player, text, r, g, b)
+	if text then
+		local r = r or 225
+		local g = g or 225
+		local b = b or 220
+	 	triggerClientEvent (player, "addTextChat", root, text, r, g, b)	
+	end
+end
 
 addEventHandler ( "onPlayerLogin", root, function ( )
 	if ( not exports['NGAdministration']:isPlayerStaff ( source ) ) then
