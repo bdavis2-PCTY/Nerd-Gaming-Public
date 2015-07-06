@@ -27,7 +27,6 @@ function sendClientMessage ( msg, who, r, g, b, img, checkImagePath )
 	else return false end
 end
 
-
 addEventHandler ( "onPlayerLogin", root, function ( )
 	if ( not exports['NGAdministration']:isPlayerStaff ( source ) ) then
 		sendClientMessage ( getPlayerName ( source ).." has logged into NG:RPG!", root, 0, 255, 0 )
