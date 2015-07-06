@@ -42,8 +42,8 @@ end
 
 function addTurf( player, cmd, width, height )
 	if ( exports.NGAdministration:isPlayerStaff ( player ) and exports.NGAdministration:getPlayerStaffLevel ( player, 'int' ) >= 4 ) then
-		if (not width) then width = math.random ( 50, 250 ) end
-		if (not height) then height = math.random ( 50, 250 ) end
+		if ( not width ) then return exports.NGMessages:sendClientMessage ( "Missing width argument, correct syntax: /addturf width height", player, 225, 0, 0) end
+		if ( not height ) then return exports.NGMessages:sendClientMessage ( "Missing height argument, correct syntax: /addturf width height", player, 225, 0, 0) end
 		if ( type ( width ) == 'number' and type ( height ) == 'number' ) then
 			local x, y, z = getElementPosition ( player )
 			createTurf ( x, y, z, width, height, "server", id )
