@@ -40,6 +40,49 @@ function createTurf ( x, y, z, width, height, owner, forcedId )
 	return turfLocs[id];
 end
 
+function addTurf( player, cmd, width, height )
+	if ( exports.NGAdministration:isPlayerStaff ( player ) and exports.NGAdministration:getPlayerStaffLevel ( player, 'int' ) >= 4 ) then
+		if (not width) then width = math.random ( 50, 250 ) end
+		if (not height) then height = math.random ( 50, 250 ) end
+		if ( type ( width ) == 'number' and type ( height ) == 'number' ) then
+			local x, y, z = getElementPosition ( player )
+			createTurf ( x, y, z, width, height, "server", id )
+			exports.NGSQL:db_query ( "INSERT INTO turfs(`id`, `owner`, `x`, `y`, `z`, `width`, `height`)  VALUES (?, ?, ?, ?, ?, ?, ?)", id, 'server', math.floor(x), math.floor(y), math.floor(z), tonumber(width), tonumber(height))
+			exports.NGMessages:sendClientMessage( "NGTurf: A new turf was added successfully", player, 0, 255, 0 )
+		else
+			exports.NGMessages:sendClientMessage( "NGTurf: Expected numbers for width and/or height", player, 0, 255, 0 )
+		end
+	end
+end
+addCommandHandler( "addturf", addTurf )
+
+function deleteturf( player, cmd )
+	if ( exports.NGAdministration:isPlayerStaff ( player ) and exports.NGAdministration:getPlayerStaffLevel ( player, 'int' ) >= 4 ) then
+		local x, y, z = getElementPosition(player)
+		local counter = 0
+		for w, area in ipairs(getElementsByType("radararea")) do
+			local ax, ay, az = getElementPosition ( area )
+			if ax > (x-5) and ax < (x+5) and ay > (y-5) and ay < (y+5) then
+				destroyElement(area)
+				counter = counter + 1
+			end
+		end
+		for w, colshape in ipairs(getElementsByType("colshape")) do
+			local ax,ay,az = getElementPosition(colshape)
+			if ax > (x-5) and ax < (x+5) and ay > (y-5) and ay < (y+5) and getElementData( colshape, "NGTurf:TurfId") then
+				destroyElement(colshape)
+			end
+		end
+		if counter > 0 then
+			exports.NGMessages:sendClientMessage( "NGTurf: Turf was removed from database successfully", player, 0, 255, 0 )
+			exports.NGSQL:db_exec("DELETE FROM turfs WHERE X>? AND X<? AND Y>? AND Y<?", math.floor(x)-5, math.floor(x)+5, math.floor(y)-5, math.floor(y)+5 )
+		else
+			exports.NGMessages:sendClientMessage( "NGTurf: No turfs was found within this range, stand near by the left corner of radar area", player, 255, 0, 0 )
+		end
+	end
+end
+addCommandHandler( "deleteturf", deleteturf )
+
 function updateTurfGroupColor ( group )
 	local r, g, b = exports.nggroups:getGroupColor ( group )
 	for i, v in pairs ( turfLocs ) do
