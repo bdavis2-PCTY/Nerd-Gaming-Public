@@ -42,11 +42,11 @@ end
 
 function addTurf( player, cmd, width, height )
 	if ( exports.NGAdministration:isPlayerStaff ( player ) and exports.NGAdministration:getPlayerStaffLevel ( player, 'int' ) >= 4 ) then
-		if not sx then sx = math.random ( 50, 250 ) end
-		if not sy then sy = math.random ( 50, 250 ) end
+		if not width then width = math.random ( 50, 250 ) end
+		if not height then height = math.random ( 50, 250 ) end
 		local x, y, z = getElementPosition ( player )
-		createTurf ( x, y, z, sx, sy, "server", id )
-		exports.NGSQL:db_query ( "INSERT INTO turfs(`id`, `owner`, `x`, `y`, `z`, `width`, `height`)  VALUES (?, ?, ?, ?, ?, ?, ?)", id, 'server', math.floor(x), math.floor(y), math.floor(z), math.floor(sx), math.floor(sy))
+		createTurf ( x, y, z, width, height, "server", id )
+		exports.NGSQL:db_query ( "INSERT INTO turfs(`id`, `owner`, `x`, `y`, `z`, `width`, `height`)  VALUES (?, ?, ?, ?, ?, ?, ?)", id, 'server', math.floor(x), math.floor(y), math.floor(z), math.floor(width), math.floor(height))
 		exports.NGMessages:sendClientMessage( "NGTurf: A new turf was added successfully", player, 0, 255, 0 )
 	end
 end
