@@ -1,4 +1,4 @@
-local bans = { }		-- All bans are saved here, until server save, or this resource stops
+bans = { }		-- All bans are saved here, until server save, or this resource stops
 
 --[[ bans table format:
 	bans[serial] = {
