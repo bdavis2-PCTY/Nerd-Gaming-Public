@@ -68,8 +68,8 @@ Level 2-5 - /stopevent: End a current event<br />
 Level 3-5 - /spawners: Open interface to create spawners<br />
 Level 4-5 - /addupdate: Add a server update to the /updates list <br />
 Level 4-5 - /am: Account manager<br />
-level 4-5 - /ngupdate: Check for NG Gamemode update<br />
-level 4-5 - /bans: View banned and unban players<br />
+Level 4-5 - /ngupdate: Check for NG Gamemode update<br />
+Level 4-5 - /bans: View banned and unban players<br />
 <br />
 <h5>Development Commands</h5>
 <em>For these commands, NG.IS_IN_DEVELOPMENT in resources/NGGamemode/ng_development.shared.lua must be set to true and your username must be defined as a key in the NG.DEVELOPOERS table in resources/NGGamemode/ng_development.shared.lua)</em><br/>
