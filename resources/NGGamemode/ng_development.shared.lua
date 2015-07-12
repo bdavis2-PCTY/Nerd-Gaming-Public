@@ -4,7 +4,7 @@ NG.DEVELOPERS = {
 
 }
 
-NG.IS_IN_DEVELOPMENT = true; 
+NG.IS_IN_DEVELOPMENT = false; 
 
 local isClient = ( _G['triggerServerEvent'] ~= nil );
 
