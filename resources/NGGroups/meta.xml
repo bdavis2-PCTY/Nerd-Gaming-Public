@@ -31,5 +31,7 @@
 	<export function="isRankInGroup"		type="server" />
 	<export function="getPlayerGroup"		type="server" />
 	<export function="outputGroupMessage"	type="server" />
+	<export function="getGroupType"			type="server" />
+	
 	<oop>true</oop>
 </meta>
