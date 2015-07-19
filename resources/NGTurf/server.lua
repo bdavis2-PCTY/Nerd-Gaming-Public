@@ -1,34 +1,38 @@
-local _setElementData = setElementData
-function setElementData ( element, group, value )
-	return _setElementData ( element, group, value, true )
-end
-
 local turfLocs = { }
 function createTurf ( x, y, z, width, height, owner, forcedId )
+
 	local owner = tostring ( owner or "server" )
 	local r, g, b = exports.NGGroups:getGroupColor ( owner )
-	if not r then r = 255 end
-	if not g then g = 255 end
-	if not b then b = 255 end
-
+	
+	if ( not r and not g and not b ) then
+		owner = "server"
+	else
+		if ( not r ) then r = 255; end
+		if ( not g ) then g = 255; end
+		if ( not b ) then b = 255; end
+	end
+	
 	if ( owner == "server" ) then
 		r, g, b = 255, 255, 255
 	end
 
-	local rad = createRadarArea ( x, y, width, height, r, g, b, 170, getRootElement ( ) )
+	local _rad = createRadarArea ( x, y, width, height, r, g, b, 170, getRootElement ( ) )
 	local col = createColCuboid ( x, y, z-5, width, height, 35)
-	if ( not forcedId or turfLocs [ id ] ) then
-		id = 0
-		while ( turfLocs [ id ] ) do
-			id = id + 1
-		end
+
+	local id = 0;
+	
+	if ( forcedId ) then
+		if ( turfLocs [ forcedId ] ) then destroyTurf ( forcedId ); end
+		id = forcedId;
 	else
-		id = forcedId
+		while ( turfLocs [ id ] ) do
+			id = id + 1;
+		end
 	end
 
 	turfLocs[id] = { }
 	turfLocs[id].col = col
-	turfLocs[id].radar = rad
+	turfLocs[id].radar = _rad
 	turfLocs[id].owner = owner or "server"
 	turfLocs[id].attackers = nil
 	turfLocs[id].attackProg = 0
@@ -39,6 +43,68 @@ function createTurf ( x, y, z, width, height, owner, forcedId )
 	addEventHandler ( "onColShapeLeave", turfLocs[id].col, onColShapeLeave )
 	return turfLocs[id];
 end
+
+function destroyTurf ( id )
+	if ( turfLocs [ id ] ) then
+		
+		removeEventHandler ( "onColShapeHit", turfLocs[id].col, onColShapeHit )
+		removeEventHandler ( "onColShapeLeave", turfLocs[id].col, onColShapeLeave )
+		
+		destroyElement ( turfLocs[id].col );
+		destroyElement ( turfLocs[id].radar );
+		
+		outputDebugString ( "NGTurf: Turf #"..tostring(id).." has been destroyed (Owner: "..turfLocs[id].owner..")" );
+		
+		turfLocs[id] = nil;
+		
+		return true;
+		
+	end
+	return false;
+end 
+
+function addTurf( player, cmd, width, height )
+	if ( exports.NGAdministration:isPlayerStaff ( player ) and exports.NGAdministration:getPlayerStaffLevel ( player, 'int' ) >= 4 ) then
+		if ( not width ) then return exports.NGMessages:sendClientMessage ( "Missing width argument, correct syntax: /addturf width height", player, 225, 0, 0) end
+		if ( not height ) then return exports.NGMessages:sendClientMessage ( "Missing height argument, correct syntax: /addturf width height", player, 225, 0, 0) end
+		if ( type ( width ) == 'number' and type ( height ) == 'number' ) then
+			local x, y, z = getElementPosition ( player )
+			createTurf ( x, y, z, width, height, "server", id )
+			exports.NGSQL:db_query ( "INSERT INTO turfs(`id`, `owner`, `x`, `y`, `z`, `width`, `height`)  VALUES (?, ?, ?, ?, ?, ?, ?)", id, 'server', math.floor(x), math.floor(y), math.floor(z), tonumber(width), tonumber(height))
+			exports.NGMessages:sendClientMessage( "NGTurf: A new turf was added successfully", player, 0, 255, 0 )
+		else
+			exports.NGMessages:sendClientMessage( "NGTurf: Expected numbers for width and/or height", player, 0, 255, 0 )
+		end
+	end
+end
+addCommandHandler( "addturf", addTurf )
+
+function deleteturf( player, cmd )
+	if ( exports.NGAdministration:isPlayerStaff ( player ) and exports.NGAdministration:getPlayerStaffLevel ( player, 'int' ) >= 4 ) then
+		local x, y, z = getElementPosition(player)
+		local counter = 0
+		for w, area in ipairs(getElementsByType("radararea")) do
+			local ax, ay, az = getElementPosition ( area )
+			if ax > (x-5) and ax < (x+5) and ay > (y-5) and ay < (y+5) then
+				destroyElement(area)
+				counter = counter + 1
+			end
+		end
+		for w, colshape in ipairs(getElementsByType("colshape")) do
+			local ax,ay,az = getElementPosition(colshape)
+			if ax > (x-5) and ax < (x+5) and ay > (y-5) and ay < (y+5) and getElementData( colshape, "NGTurf:TurfId") then
+				destroyElement(colshape)
+			end
+		end
+		if counter > 0 then
+			exports.NGMessages:sendClientMessage( "NGTurf: Turf was removed from database successfully", player, 0, 255, 0 )
+			exports.NGSQL:db_exec("DELETE FROM turfs WHERE X>? AND X<? AND Y>? AND Y<?", math.floor(x)-5, math.floor(x)+5, math.floor(y)-5, math.floor(y)+5 )
+		else
+			exports.NGMessages:sendClientMessage( "NGTurf: No turfs was found within this range, stand near by the left corner of radar area", player, 255, 0, 0 )
+		end
+	end
+end
+addCommandHandler( "deleteturf", deleteturf )
 
 function updateTurfGroupColor ( group )
 	local r, g, b = exports.nggroups:getGroupColor ( group )
@@ -59,6 +125,7 @@ function onColShapeHit ( player )
 		end
 
 		local id = tonumber ( getElementData ( source, "NGTurf:TurfId" ) )
+		
 		if ( turfLocs[id].owner == gang ) then
 			return
 		end
@@ -112,7 +179,7 @@ setTimer ( function ( )
 				-- Add Points To Attackers
 				if ( isGangInTurf ) then 
 					-- Prep the war 
-					if ( turfLocs[id].attackProg == 0 ) then
+					if ( turfLocs[id].attackProg <= 0 ) then
 						turfLocs[id].prepProg = data.prepProg + 2
 						if ( turfLocs[id].prepProg >= 100 ) then
 							turfLocs[id].prepProg = 0
@@ -122,7 +189,7 @@ setTimer ( function ( )
 					-- Attack War
 					else
 						turfLocs[id].attackProg = turfLocs[id].attackProg + 1
-						if ( turfLocs[id].attackProg == 100 ) then 
+						if ( turfLocs[id].attackProg >= 100 ) then 
 							exports.NGGroups:outputGroupMessage ( "Your gang has captured a turf in "..getZoneName ( x,y,z )..", "..getZoneName ( x,y,z, true ).." from the "..turfLocs[id].owner.." gang! Great job!", turfLocs[id].attackers, 0, 255, 0)
 							exports.NGGroups:outputGroupMessage ( "Your gang lost a turf in "..getZoneName ( x,y,z )..", "..getZoneName ( x,y,z, true ).." to the "..turfLocs[id].attackers.." gang.", turfLocs[id].owner, 255, 0, 0)
 							setTurfOwner ( id, turfLocs[id].attackers )
@@ -132,7 +199,7 @@ setTimer ( function ( )
 				-- Take points from attackers
 				else 
 					-- Prepare war
-					if ( turfLocs[id].attackProg == 0 ) then
+					if ( turfLocs[id].attackProg <= 0 ) then
 						turfLocs[id].prepProg = data.prepProg - 2
 						if ( turfLocs[id].prepProg <= 0 ) then
 							exports.NGGroups:outputGroupMessage ( "Your gang lost the turf preparation war in "..getZoneName(x,y,z)..", "..getZoneName ( x,y,z, true ).." to the "..turfLocs[id].owner.." gang!", turfLocs[id].attackers, 255, 0, 0 )
@@ -167,17 +234,14 @@ addCommandHandler ( "attackprog", function ( p )
 	if ( not g ) then
 		return exports.NGMessages:sendclientMessage ( "You're not in a gang", p, 255, 255, 0)
 	end
-
 	for i, v in pairs ( turfLocs ) do
 		if ( v.attackers and v.attackers == g ) then
 			gangAttacks [ i ] = true
 		end 
 	end 
-
 	if ( table.len ( gangAttacks ) == 0 ) then
 		return exports.NGMessages:sendClientMessage ( "Your gang isn't involved in any gang wars right now.", p, 255, 255, 0 )
 	end 
-
 	for id, _ in pairs ( gangAttacks ) do 
 		local x ,y, z = getElementPosition ( turfLocs[id].col )
 		outputChatBox ( "----Turf War Status---", p, 255, 255, 255, false )
@@ -188,7 +252,6 @@ addCommandHandler ( "attackprog", function ( p )
 		outputChatBox ( "Turf Location: "..getZoneName ( x, y, z )..", "..getZoneName ( x, y, z, true ), p, 255, 255, 255, false )
 		outputChatBox ( "Turf Server-ID: "..id, p, 255, 255, 255, false )
 	end
-
 end )]]
 
 function table.len ( tb ) 
@@ -208,12 +271,14 @@ function beginTurfWarOnTurf ( id )
 end
 
 function setTurfOwner ( id, owner )
+	local r, g, b = exports.NGGroups:getGroupColor ( owner )
+	if ( owner == "server" ) then r, g, b = 255, 255, 255 end
+	
 	setRadarAreaFlashing ( turfLocs[id].radar, false )
 	turfLocs[id].owner = owner
 	turfLocs[id].attackers = nil
 	turfLocs[id].attackProg = 0
-	local r, g, b = exports.NGGroups:getGroupColor ( owner )
-	setRadarAreaColor ( turfLocs[id].radar, r, g, b, 120 )
+	setRadarAreaColor ( turfLocs[id].radar, r or 255, g or 255, b or 255, 120 )
 	saveTurfs ( )
 end
 

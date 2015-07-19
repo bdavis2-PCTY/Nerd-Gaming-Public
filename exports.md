@@ -237,6 +237,7 @@ Below is a list of exports and what they do for Nerd Gaming V1.1.3
 			<li>boolean isRankInGroup ( string group, string rank ): <em>Returns if a group contains a rank</em></li>
 			<li>nil/string getPlayerGroup ( player thePlayer ): <em>Returns the group name of a player</em></li>
 			<li>nil outputGroupMessage ( string message, string group [, boolean blockTag ] ): <em>Outputs a message to all online members of a group</em></li>
+			<li>string/nil getGroupType ( string goupName ): <em>Returns a string representing the group type: Group, Gang, Service</em></li>
 		</ul>
     </li>
 </ul>

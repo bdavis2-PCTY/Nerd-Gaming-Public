@@ -1,7 +1,13 @@
 <meta>
 	<info author="xXMADEXx" type="script" version="1.0" name="Nerd Gaming User Banning System" />
+	
+	<script src="confirm_c.lua" type="client" />
+	
 	<script src="bans_server.lua" type="server" />
 	<script src="bans_client.lua" type="client" />
+	
+	<script src="unban_c.lua" type="client" />
+	<script src="unban_s.lua" type="server" />
 	
 	<export function="banAccount" type="server" />
 	<export function="saveBans" type="server" />

@@ -280,6 +280,9 @@ function createGroup ( name, color, type, owner )
  	return true, groups [ name ]
 end
 
+------------------------------
+-- Group Deleting			--
+------------------------------
 function deleteGroup ( group )
 	if ( not doesGroupExist ( group ) ) then 
 		return false
@@ -322,14 +325,9 @@ addEventHandler ( "NGGroups->GEvents:onPlayerAttemptGroupMake", root, function (
 
 	local created, __ = createGroup ( data.name, data.color, data.type, getAccountName ( getPlayerAccount ( source ) ) )
 	if ( created ) then
-	
 		setElementData ( source, "Group", data.name );
 		setElementData ( source, "Group Rank", "Founder" );
-		
-		--groups [ data.name ].members [ getAccountName ( getPlayerAccount ( source ) ) ].rank = "Founder";
-		
 		outputDebugString ( "CREATED GROUP "..tostring(data.name)..". Owner: "..getPlayerName(source) );
-		
 		refreshPlayerGroupPanel ( source )
 		return true
 	else 
@@ -425,9 +423,7 @@ end
 
 
 function refreshPlayerGroupPanel ( player )
-	triggerClientEvent ( player, "NGGroups->pEvents:onPlayerRefreshPanel", player )
-
-	-- memory sweep 
+	triggerClientEvent ( player, "NGGroups->pEvents:onPlayerRefreshPanel", player ) 
 	player = nil
 end 
 
@@ -485,133 +481,134 @@ addEventHandler ( "NGGroups->Modules->Groups->OnPlayerLeave", root, function ( g
 	outputGroupLog ( g, "Has left the group", source  )
 end )
 
-	------------------------------------------
-	-- Players -> Group Ranking Functions 	--
-	------------------------------------------
-	function setAccountRank ( group, account, newrank )
-		local account, newrank = tostring ( account ), tostring ( newrank )
-		exports.ngsql:db_exec ( "UPDATE accountdata SET GroupRank=? WHERE Username=?", newrank, account )
-		groups[group].members[account].rank = newrank
-		for i, v in pairs ( getElementsByType ( "player" ) ) do
-			local a = getPlayerAccount ( v )
-			if ( a and not isGuestAccount ( a ) and a == account ) then
-				setElementData ( v, "Group Rank", tostring ( newrank ) )
-				outputChatBox ( "You rank has been changed to "..tostring ( newrank ), v, 255, 255, 0)
-				break
-			end
+------------------------------------------
+-- Players -> Group Ranking Functions 	--
+------------------------------------------
+function setAccountRank ( group, account, newrank )
+	local account, newrank = tostring ( account ), tostring ( newrank )
+	exports.ngsql:db_exec ( "UPDATE accountdata SET GroupRank=? WHERE Username=?", newrank, account )
+	groups[group].members[account].rank = newrank
+	for i, v in pairs ( getElementsByType ( "player" ) ) do
+		local a = getPlayerAccount ( v )
+		if ( a and not isGuestAccount ( a ) and a == account ) then
+			setElementData ( v, "Group Rank", tostring ( newrank ) )
+			outputChatBox ( "You rank has been changed to "..tostring ( newrank ), v, 255, 255, 0)
+			break
 		end
-
-		return true
 	end
 
-	addEvent ( "NGGroups->Modules->Gangs->Ranks->UpdatePlayerrank", true )
-	addEventHandler ( "NGGroups->Modules->Gangs->Ranks->UpdatePlayerrank", root, function ( group, account, newrank )
-		if ( not groups[group] or not groups[group].ranks[newrank] ) then
-			exports.ngmessages:sendClientMessage ( "Oops, something went wrong. Please try again", source, 255, 0, 0 )
-			refreshPlayerGroupPanel ( source )
-			return false
-		end
-		outputGroupLog ( group, "Changed "..account.."'s rank from "..groups[group].members[account].rank.." to "..newrank, source )
-		setAccountRank ( group, account, newrank )
-		exports.ngmessages:sendClientMessage ( "You have changed "..tostring ( account ).."'s rank!", source, 255, 255, 0)
+	return true
+end
+
+addEvent ( "NGGroups->Modules->Gangs->Ranks->UpdatePlayerrank", true )
+addEventHandler ( "NGGroups->Modules->Gangs->Ranks->UpdatePlayerrank", root, function ( group, account, newrank )
+	if ( not groups[group] or not groups[group].ranks[newrank] ) then
+		exports.ngmessages:sendClientMessage ( "Oops, something went wrong. Please try again", source, 255, 0, 0 )
 		refreshPlayerGroupPanel ( source )
-	end )
-
-
-	function sendPlayerInvite ( player, group, inviter )
-		local a = getPlayerAccount ( player )
-		if ( isGuestAccount( a ) ) then
-			return  false
-		end
-
-		local a = getAccountName ( a )
-		if ( groups [ group ].pendingInvites [ a ] ) then 
-			return false
-		end
-
-		table.insert ( groups [ group ].pendingInvites, { to=getAccountName(getPlayerAccount(player)), inviter=getAccountName(getPlayerAccount(inviter)), time=getThisTime() } );
-		
-		return true
-	end
-
-	addEvent ( "NGGroups->Modules->Groups->InvitePlayer", true )
-	addEventHandler ( "NGGroups->Modules->Groups->InvitePlayer", root, function ( group, plr )
-		local a = getPlayerAccount ( plr )
-		if ( isGuestAccount ( a ) ) then
-			return exports.ngmessages:sendClientMessage ( "Your group request couldn't be sent to "..plr.name, source, 255, 0, 0 )
-		end
-		local a = getAccountName ( a )
-		
-		for _, info in pairs ( groups [ group ].pendingInvites ) do 
-			if ( info.to == a ) then 
-				return exports.ngmessages:sendClientMessage ( "This player is already invited by "..tostring(info.from), source, 255, 255, 0 )
-			end
-		end
-
-		outputGroupLog ( group, "Invited "..plr.name.." ("..a..")", source )
-		
-		local r, g, b = getGroupColor ( group );
-		exports.ngmessages:sendClientMessage ( source.name.." invited you to "..group..". Accept it in F2", plr, r, g, b )
-		exports.ngmessages:sendClientMessage ( "You have invited "..plr.name.." to the group", source, r, g, b )
-		sendPlayerInvite ( plr, group, source ) 
-	end ) 
-
-	addEvent ( "NGGroups->Modules->Groups->Invites->OnPlayerDeny", true )
-	addEventHandler( "NGGroups->Modules->Groups->Invites->OnPlayerDeny", root, function ( g )
-		local a = getAccountName ( getPlayerAccount ( source ) )
-		groups [ g ].pendingInvites [ a ] = nil
-		refreshPlayerGroupPanel ( source )
-	end )
-
-	addEvent ( "NGGroups->Modules->Groups->Invites->OnPlayerAccept", true )
-	addEventHandler ( "NGGroups->Modules->Groups->Invites->OnPlayerAccept", root, function ( g )
-		local a = getAccountName ( getPlayerAccount ( source ) )
-
-		for index, info in pairs ( groups [ g ].pendingInvites ) do 
-			if ( info.to == a ) then
-				table.remove ( groups [ g ].pendingInvites, index )
-			end 
-		end 
-		
-		groups [ g ].members [ a ] = { rank="Member", joined = getThisTime() }
-		setPlayerGroup ( source, g )
-		outputGroupMessage ( getPlayerName ( source ).." has joined the group!", g )
-		refreshPlayerGroupPanel ( source )
-	end )
-
-	function addRankToGroup ( group, name, info )
-		if ( not groups [ group ] ) then return false end
-		for i, v in pairs ( groups [ group ].ranks ) do
-			if ( i:lower() == name:lower() ) then
-				return false
-			end
-		end
-		groups [ group ].ranks [ name ] = info
-		return true
-	end 
-
-	addEvent ( "NGGroups->Modules->Groups->Ranks->AddRank", true )
-	addEventHandler ( "NGGroups->Modules->Groups->Ranks->AddRank", root, function ( group, name, info )
-		outputGroupLog ( group, "Added rank '"..tostring(name).."'", source )
-		addRankToGroup ( group, name, info )
-		refreshPlayerGroupPanel ( source )
-		exports.ngmessages:sendClientMessage ( "The rank has been added.", source, 0, 255, 0 )
-	end )
-
-	function setGroupMotd ( group, motd )
-		if ( groups [ group ] ) then
-			groups[group].info.desc = tostring ( motd )
-			return true
-		end
 		return false
 	end
 
-	addEvent ( "NGGroups->Modules->Groups->MOTD->Update", true )
-	addEventHandler ( "NGGroups->Modules->Groups->MOTD->Update", root, function ( g, mo )
-		outputGroupLog ( g, "Changed the group MOTD", source )
-		setGroupMotd ( g, mo )
-		refreshPlayerGroupPanel ( source )
-	end )
+	outputGroupLog ( group, "Changed "..account.."'s rank from "..groups[group].members[account].rank.." to "..newrank, source )
+	setAccountRank ( group, account, newrank )
+	exports.ngmessages:sendClientMessage ( "You have changed "..tostring ( account ).."'s rank!", source, 255, 255, 0)
+	refreshPlayerGroupPanel ( source )
+end )
+
+
+function sendPlayerInvite ( player, group, inviter )
+	local a = getPlayerAccount ( player )
+	if ( isGuestAccount( a ) ) then
+		return  false
+	end
+
+	local a = getAccountName ( a )
+	if ( groups [ group ].pendingInvites [ a ] ) then 
+		return false
+	end
+
+	table.insert ( groups [ group ].pendingInvites, { to=getAccountName(getPlayerAccount(player)), inviter=getAccountName(getPlayerAccount(inviter)), time=getThisTime() } );
+	
+	return true
+end
+
+addEvent ( "NGGroups->Modules->Groups->InvitePlayer", true )
+addEventHandler ( "NGGroups->Modules->Groups->InvitePlayer", root, function ( group, plr )
+	local a = getPlayerAccount ( plr )
+	if ( isGuestAccount ( a ) ) then
+		return exports.ngmessages:sendClientMessage ( "Your group request couldn't be sent to "..plr.name, source, 255, 0, 0 )
+	end
+	local a = getAccountName ( a )
+		
+	for _, info in pairs ( groups [ group ].pendingInvites ) do 
+		if ( info.to == a ) then 
+			return exports.ngmessages:sendClientMessage ( "This player is already invited by "..tostring(info.from), source, 255, 255, 0 )
+		end
+	end
+	
+	outputGroupLog ( group, "Invited "..plr.name.." ("..a..")", source )
+	
+	local r, g, b = getGroupColor ( group );
+	exports.ngmessages:sendClientMessage ( source.name.." invited you to "..group..". Accept it in F2", plr, r, g, b )
+	exports.ngmessages:sendClientMessage ( "You have invited "..plr.name.." to the group", source, r, g, b )
+	sendPlayerInvite ( plr, group, source ) 
+end ) 
+
+addEvent ( "NGGroups->Modules->Groups->Invites->OnPlayerDeny", true )
+addEventHandler( "NGGroups->Modules->Groups->Invites->OnPlayerDeny", root, function ( g )
+	local a = getAccountName ( getPlayerAccount ( source ) )
+	groups [ g ].pendingInvites [ a ] = nil
+	refreshPlayerGroupPanel ( source )
+end )
+
+addEvent ( "NGGroups->Modules->Groups->Invites->OnPlayerAccept", true )
+addEventHandler ( "NGGroups->Modules->Groups->Invites->OnPlayerAccept", root, function ( g )
+	local a = getAccountName ( getPlayerAccount ( source ) )
+
+	for index, info in pairs ( groups [ g ].pendingInvites ) do 
+		if ( info.to == a ) then
+			table.remove ( groups [ g ].pendingInvites, index )
+		end 
+	end 
+	
+	groups [ g ].members [ a ] = { rank="Member", joined = getThisTime() }
+	setPlayerGroup ( source, g )
+	outputGroupMessage ( getPlayerName ( source ).." has joined the group!", g )
+	refreshPlayerGroupPanel ( source )
+end )
+
+function addRankToGroup ( group, name, info )
+	if ( not groups [ group ] ) then return false end
+	for i, v in pairs ( groups [ group ].ranks ) do
+		if ( i:lower() == name:lower() ) then
+			return false
+		end
+	end
+	groups [ group ].ranks [ name ] = info
+	return true
+end 
+
+addEvent ( "NGGroups->Modules->Groups->Ranks->AddRank", true )
+addEventHandler ( "NGGroups->Modules->Groups->Ranks->AddRank", root, function ( group, name, info )
+	outputGroupLog ( group, "Added rank '"..tostring(name).."'", source )
+	addRankToGroup ( group, name, info )
+	refreshPlayerGroupPanel ( source )
+	exports.ngmessages:sendClientMessage ( "The rank has been added.", source, 0, 255, 0 )
+end )
+
+function setGroupMotd ( group, motd )
+	if ( groups [ group ] ) then
+		groups[group].info.desc = tostring ( motd )
+		return true
+	end
+	return false
+end
+
+addEvent ( "NGGroups->Modules->Groups->MOTD->Update", true )
+addEventHandler ( "NGGroups->Modules->Groups->MOTD->Update", root, function ( g, mo )
+	outputGroupLog ( g, "Changed the group MOTD", source )
+	setGroupMotd ( g, mo )
+	refreshPlayerGroupPanel ( source )
+end )
 
 
 
@@ -759,6 +756,13 @@ addEventHandler("NGGroups->Modules->Groups->Colors->UpdateColor",root,function(g
 	refreshPlayerGroupPanel ( source )
 end )
 
+function getGroupType ( name )
+	if ( doesGroupExist ( name ) ) then
+		return groups [ name ].info.type;
+	end
+	return false;
+end
+
 
 function isRankInGroup ( group, rank )
 	if ( doesGroupExist ( group ) ) then
@@ -793,6 +797,8 @@ function table.len ( t )
 	end
 	return c
 end
+
+
 
 -- group chat --
 addCommandHandler ( "gc", function ( plr, _, ... )

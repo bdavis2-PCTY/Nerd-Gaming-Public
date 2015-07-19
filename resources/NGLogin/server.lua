@@ -7,6 +7,7 @@
 -- All rights reserved.					--
 ------------------------------------------
 
+
 local cameras = {
 	{ 329.10980224609, -2117.2749023438, 50.161201477051, 329.65179443359, -2116.4926757813, 49.853763580322 },
 	{ 1266.0053710938, -1965.7087402344, 114.59829711914, 1265.1549072266, -1966.1115722656, 114.25980377197 },
@@ -46,7 +47,7 @@ function attemptLogin ( user, pass )
 		local account = getAccount ( user )
 		if ( account ) then
 			if ( not logIn ( source, account, pass ) ) then
-				message ( source, "Incorrect password." )
+				message ( source, "Failed to login. Possible reasons:\n- Already logged in\n- Incorrect password\n- Incorrect username\n\nSolutions:\n- Reconnect & try again\n- Register new account" )
 				return false
 			end
 			exports['NGLogs']:outputActionLog ( getPlayerName ( source ).." has logged in as "..tostring(user).." (IP: "..getPlayerIP(source).."  || Serial: "..getPlayerSerial(source)..")" )
@@ -73,6 +74,19 @@ addEventHandler ( "NGLogin:RequestClientLoginConfirmation", root, function ( )
 end )
 
 function attemptRegister ( user, pass )
+	local MAX_ACCOUNTS_SERIAL = get("*MAX_ACCOUNTS_PER_SERIAL");
+	if ( not MAX_ACCOUNTS_SERIAL or not tonumber ( MAX_ACCOUNTS_SERIAL ) or tonumber ( MAX_ACCOUNTS_SERIAL ) == 0 ) then
+		MAX_ACCOUNTS_SERIAL = 999999999;
+	else
+		MAX_ACCOUNTS_SERIAL = tonumber ( MAX_ACCOUNTS_SERIAL );
+	end
+	
+	local query = exports.ngsql:db_query ( "SELECT * FROM accountdata WHERE LastSerial=?", getPlayerSerial ( source ) );
+	if ( query and #query >= MAX_ACCOUNTS_SERIAL ) then
+		message ( source, "You have "..tostring(#query).." accounts on this server\nalready. The maximum is "..tostring(MAX_ACCOUNTS_SERIAL).."." );
+		return false;
+	end
+	
 	if ( user and pass and type ( user ) == 'string' and type ( pass ) == 'string' ) then
 		--local user = string.lower ( user )
 		--local pass = string.lower ( pass )
