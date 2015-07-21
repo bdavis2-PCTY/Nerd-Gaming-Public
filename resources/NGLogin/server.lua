@@ -154,4 +154,16 @@ addEventHandler ( "onPlayerJoin", root, function ( )
 	setElementData ( source, "Playtime", "0 Minutes" )
 	setElementData ( source, "FPS", "0" )
 end )
+
+
+
+addEventHandler ( "onPlayerLogout", root, function ( )
+	-- Set a timer - this event is called when they disconnect
+	-- We need to confirm they did /logout
+	setTimer ( function ( source )
+		if ( isElement ( source ) ) then
+			kickPlayer ( source, "You may not logout while playing" );
+		end
+	end, 400, 1, source );
+end );
 	
