@@ -1,3 +1,5 @@
+<h3 style="color:red;">This gamemode is depricated and no longer supported!</h3>
+
 <img src='http://i60.tinypic.com/2jw7cn.png' /><br />
 <i>An MTA RPG base gamemode</i>
 <br/>
@@ -75,13 +77,3 @@ level 4-5 - /ngupdate: Check for NG Gamemode update<br />
 <br />
 /devsetpos: Save your current position, interior and dimension <br/>
 /devgopos: Goto your last saved position, interior and dimension <br />
-<br/>
-<h3>Bugs</h3>
-<em>Currently none known</em>
-<br /><br />
-If you find any bugs, please report them to me.<br />
-Add me on Skype: Madex-MTA<br />
-Message me on the MTA Forum: <a href='http://forum.mtasa.com/memberlist.php?mode=viewprofile&u=65297'>xXMADEXx</a>
-<br />
-<br />
-<i>(All bugs will be fixed in future versions of NG)</i>
